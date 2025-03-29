@@ -24,7 +24,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 </head>
 <body>
     <div class="menulateral">
-        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -61,13 +61,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM10.5 9L9.75 9.75V12L10.5 12.75H12.75V13.5H9.75V15H11.25V15.75H12.75V15H13.5L14.25 14.25V12L13.5 11.25H11.25V10.5H14.25V9H12.75V8.25H11.25V9H10.5Z" fill="#ffffff"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../pagamentos/index.php">Pagamentos</a>
+                <a href="../pagamentos_pilates/index.php">Pagamentos</a>
             </div><!--FIM DA OPÇÃO PAGAMENTO-->
             <div class="options" id="optUsuario">
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../usuarios/index.php">Usuários</a>
+                <a href="../usuarios_pilates/index.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -78,7 +78,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--FIM DO BOX DAS OPÇÕES-->
 </div><!-- FIM DO MENU LATERAL-->
     <div class="menulateral" id="menuConfig">
-    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
+        
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -104,9 +105,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <label class="config-label" for="appname">Nome do sistema:</label><br>
                 <input type="text" name="appname" value="<?php echo $appname?>">
                 <label class="config-label" for="corlinhasuperior">Cor da linha superior:</label><br>
-                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperior?>">
+                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperiorpilates?>">
                 <label class="config-label" for="corlinhasuperiormenu">Cor da linha superior do menu:</label><br>
-                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenu?>">
+                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenupilates?>">
                 <label class="config-label" for="foto">Mudar foto de Perfil:</label><br>
                 <input class="config-input" type="file" name="foto" id="foto" accept="image/*">
                 <div class="button-box"><button class="save-btn" id="save-btn" type="submit">Salvar</button>
@@ -116,7 +117,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--BACK BTN-->
         </div><!--CONFIG FORM-->
 </div><!-- FIM DO MENU DE CONFIGURAÇÕES-->
-    <div class="linhasuperior" id="linhasuperiorf" style='background-color:<?php echo("$corlinhasuperior");?>'></div><!--fim da linha superior-->
+    <div class="linhasuperior" id="linhasuperiorf" style='background-color:<?php echo("$corlinhasuperiorpilates");?>'></div><!--fim da linha superior-->
+    
     <div class="painel" id=painelf>
         <div class="titulo" id="titulof">
             <h1 id="h1titulof">Alunos - Ativos</h1>
@@ -245,10 +247,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     // Garante que 'pagina' seja um número válido
     pagina = parseInt(pagina) || 1;
 
-   
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../../controllers/AlunoController.php?mostrarDesativado=true&pagina=' + pagina, true);
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarDesativadoPilates=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
@@ -291,6 +293,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     var painelPrincipal = document.getElementById("painelf");
     var painelDesativado = document.getElementById("paineldesativado");
     var btnAtivos = document.getElementById("btnativos");
+    
+    console.log(optHome, optAlunos, optPagamento, optUsuario, optConfig, menuConfig, btnVoltar,);
 </script>
 <script>
     btnVoltar.addEventListener("click", function() {
@@ -300,10 +304,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         window.location.href = "../dashboard/dashboard.php";
     });
     optPagamento.addEventListener("click", function() {
-        window.location.href = "../pagamentos/index.php";
+        window.location.href = "../pagamentos_pilates/index.php";
     });
     optUsuario.addEventListener("click", function() {
-        window.location.href = "../usuarios/index.php";
+        window.location.href = "../usuarios_pilates/index.php";
     });
     optHome.addEventListener("mouseover", function() {
         optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
@@ -395,10 +399,10 @@ function atualizaAtivados(pagina) {
     // Garante que 'pagina' seja um número válido
     pagina = parseInt(pagina) || 1;
 
-  
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../../controllers/AlunoController.php?mostrarAtivado=true&pagina=' + pagina, true);
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarAtivadoPilates=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {

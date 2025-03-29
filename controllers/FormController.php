@@ -28,9 +28,17 @@ function recebedadospagamentonotificado() {
         $idpagarnotificado = $_POST['idpagarnotificado'];
         $data_pagamentonotificada = $_POST['data_pagamentonotificada'];
         $valornotificado = $_POST['valornotificado'];
+        $valornotificado = str_replace('R$', '', $valornotificado);
+$valornotificado = trim($valornotificado);
+$valornotificado = str_replace(',', '.', $valornotificado);
+$valor_decimal = (float) $valornotificado;
+if ($valor_decimal === 0.00){
+    echo "Valor Inválido!";
+    exit;
+}
         $datavencimentonotificada = $_POST['datavencimentonotificada'];
         $resposta_notificado = new Pagamento();
-        $resposta_notificado -> atualizaPagamento($idpagarnotificado, $data_pagamentonotificada, $valornotificado, $datavencimentonotificada);
+        $resposta_notificado -> atualizaPagamento($idpagarnotificado, $data_pagamentonotificada, $valor_decimal, $datavencimentonotificada);
         if ($resposta_notificado) {
             echo "Dados atualizados com sucesso.";
         } else {
@@ -175,6 +183,10 @@ $valor = str_replace('R$', '', $valor);
 $valor = trim($valor);
 $valor = str_replace(',', '.', $valor);
 $valor_decimal = (float) $valor;
+if ($valor_decimal === 0.00){
+    echo "Valor Inválido!";
+    exit;
+}
 if (!empty($lesao_detalhes)) {
     $lesao_articular = $lesao_detalhes;
 }
@@ -296,7 +308,7 @@ VALUES (:idPessoa, :profissao, :escolaridade, :estadoCivil, :tipoSanguineo, :mod
             // Executar a query para inserir o aluno
             $stmt->execute();
 
-            echo "Aluno <span id='alert'>" . $nomeAlunoMaiusculo  . "</span> Cadastrado com sucesso!";
+            echo "Aluno <span id='alert'>" . $nomeAlunoMaiusculo   . "</span> Cadastrado com sucesso!";
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }
@@ -391,6 +403,7 @@ if (!empty($coluna_detalhes)) {
 if (!empty($doenca_detalhes)) {
     $doenca_cardiaca = $doenca_detalhes;
 }
+
 function criarEndereco($cep, $rua, $estado, $bairro, $cidade, $numero, $complemento) {
     $cep = !empty($cep) ? $cep : "Não Informado";
     $rua = !empty($rua) ? $rua : "Não Informado";

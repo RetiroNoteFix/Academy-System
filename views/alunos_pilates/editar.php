@@ -352,7 +352,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     </div>
     <div class="form-group">
         <label for="dorme_bem">Quantas horas de sono?</label>
-        <input type="text" id="dorme_bem"  value="<?php echo $aluno->getDormeBem()?>"  name="dorme_bem" placeholder="Quantidade de horas de sono" >
+        <input type="number" id="dorme_bem"  value="<?php echo $aluno->getDormeBem()?>"  name="dorme_bem" placeholder="Quantidade de horas de sono" >
     </div>
     <div class="form-group">
         <label for="lesao_articular">Lesão articular?</label>

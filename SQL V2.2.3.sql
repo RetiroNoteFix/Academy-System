@@ -50,7 +50,7 @@ CREATE TABLE `alunos` (
   `observacoes` varchar(255) DEFAULT 'Não Informado',
   `percentualGordura` varchar(15) DEFAULT 'Não Informado',
   `imc` varchar(15) DEFAULT 'Não Informado',
-  `valor` varchar(20) DEFAULT NULL,
+  `valor` decimal(10,2) DEFAULT NULL,
   `data_pagamento` varchar(20) DEFAULT NULL,
   `situacao` enum('Ativo','Inativo') NOT NULL DEFAULT 'Ativo',
   `plano` enum('Mensal','Trimestral','Anual') DEFAULT 'Mensal'

@@ -212,7 +212,7 @@ atualizaAtivados();
     var optConfig = document.getElementById("optConfig");
     var menuConfig = document.getElementById("menuConfig");
     var btnVoltar = document.getElementById("btnvoltar");
-   
+    console.log(optHome, optAlunos, optPagamento, optUsuario, optConfig, menuConfig, btnVoltar,);
 </script>
 <script>
     btnVoltar.addEventListener("click", function() {

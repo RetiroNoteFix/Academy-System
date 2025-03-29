@@ -1,7 +1,6 @@
 <?php
 include '../../config/config.php';
 include '../../models/Usuario.php';
-include '../../models/Aluno.php';
 include '../../controllers/AuthController.php';
 if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     $authController = new AuthController();
@@ -11,78 +10,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     header("Location: /Academy-System/");
     exit();
 }
-
-$alunoId = isset($_GET['id']) && is_numeric($_GET['id']) ? (int) $_GET['id'] : null;
-if ($alunoId === null) {
-    die("ERRO Interno.");
-}
-try {
-   $database = new Database();
-   $conexao = $database->getConnection();
-    $aluno = Aluno::listarPorId($conexao, $alunoId);
-    if ($aluno) { } else {
-        echo "Aluno não encontrado.";
-    }
-
-} catch (PDOException $e) {
-    echo "Erro: " . $e->getMessage();
-}
-
-$endereco = $aluno->getEndereco();
-
-// Separar os componentes do endereço
-$resultado = separarEndereco($endereco);
-
-function separarEndereco($enderecoCompleto) {
-    // Padrão esperado: "Rua, Número, Bairro, Cidade-Estado, CEP, Complemento"
-    $partes = explode(',', $enderecoCompleto);
-
-    $rua = trim($partes[0] ?? '');
-    $numero = trim($partes[1] ?? 'SN'); // Considera "SN" como padrão para sem número
-    $bairro = trim($partes[2] ?? '');
-    $cidadeEstadoCep = trim($partes[3] ?? '');
-    $cep = trim($partes[4] ?? '');
-    $complemento = trim($partes[5] ?? '');
-
-    // Extrair cidade e estado do campo "Cidade-Estado"
-    $cidadeEstadoPartes = explode('-', $cidadeEstadoCep);
-    $cidade = trim($cidadeEstadoPartes[0] ?? '');
-    $estado = trim($cidadeEstadoPartes[1] ?? '');
-
-    return [
-        'rua' => $rua,
-        'numero' => $numero,
-        'bairro' => $bairro,
-        'cidade' => $cidade,
-        'estado' => $estado,
-        'cep' => $cep,
-        'complemento' => $complemento
-    ];
-}
-
-function converterData($data, $formato = 'br') {
-    // Verifica se a data foi fornecida e não está vazia
-    if (empty($data)) {
-        return null;
-    }
-
-    // Define os formatos permitidos: 'br' para DD/MM/YYYY e 'us' para YYYY-MM-DD
-    if ($formato === 'br') {
-        // Converte de formato americano (YYYY-MM-DD) para brasileiro (DD/MM/YYYY)
-        $dataConvertida = DateTime::createFromFormat('Y-m-d', $data);
-        return $dataConvertida ? $dataConvertida->format('d/m/Y') : null;
-    } elseif ($formato === 'us') {
-        // Converte de formato brasileiro (DD/MM/YYYY) para americano (YYYY-MM-DD)
-        $dataConvertida = DateTime::createFromFormat('d/m/Y', $data);
-        return $dataConvertida ? $dataConvertida->format('Y-m-d') : null;
-    }
-
-    // Retorna null caso o formato não seja reconhecido
-    return null;
-}
-
-$dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
-
 ?>
 <!DOCTYPE html>
 <html lang="PT-BR">
@@ -132,13 +59,13 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM10.5 9L9.75 9.75V12L10.5 12.75H12.75V13.5H9.75V15H11.25V15.75H12.75V15H13.5L14.25 14.25V12L13.5 11.25H11.25V10.5H14.25V9H12.75V8.25H11.25V9H10.5Z" fill="#ffffff"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../interfaces/pagamentos.php">Pagamentos</a>
+                <a href="../pagamentos/index.php">Pagamentos</a>
             </div><!--FIM DA OPÇÃO PAGAMENTO-->
             <div class="options" id="optUsuario">
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../usuarios/usuarios.php">Usuários</a>
+                <a href="../usuarios/index.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -154,7 +81,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
 
         <div class="titulo" >
 
-            <h1 id="h1titulof">Editar Aluno</h1>
+            <h1 id="h1titulof">Adicionar Aluno</h1>
         </div>
         <!--fim do titulo-->
         <div class="dashboard" id="dashboardcriaraluno">
@@ -164,26 +91,22 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             <div class="form-titulo">
                 <h1>Informações Pessoais</h1>
             </div>
-            <div class="form-group" style="display: none;">
-                <label for="idaluno">ID:</label>
-                <input  style="text-transform: uppercase;" value="<?php echo $alunoId?>" type="text" id="idaluno" name="idAlunoEditado" required maxlenght="255" placeholder="Nome completo">
-            </div>
             <div class="form-group">
                 <label for="nome">Nome completo:</label>
-                <input  style="text-transform: uppercase;" value="<?php echo $aluno->getNome()?>" type="text" id="nome" name="nomeEditado" required maxlenght="255" placeholder="Nome completo">
+                <input  style="text-transform: uppercase;" type="text" id="nome" name="nome" required maxlenght="255" placeholder="Nome completo">
             </div>
             <div class="form-group">
                 <label for="data_nascimento">Data de nascimento:</label>
-                <input type="date" id="data_nascimento" value="<?php echo $aluno->getDatanascimento()?>"name="data_nascimento" >
+                <input type="date" id="data_nascimento" name="data_nascimento" >
             </div>
             <div class="form-group">
                 <label for="idade">Idade:</label>
-                <input type="text" id="idade" value="<?php echo $aluno->getIdade()?>" name="idade" placeholder="Idade" >
+                <input type="text" id="idade" name="idade" placeholder="Idade" >
             </div>
             <div class="form-group">
                 <label for="estado_civil">Estado Civil:</label>
                 <select id="estado_civil" name="estado_civil" >
-                    <option value="<?php echo $aluno->getEstadoCivil()?>" disable selected><?php echo $aluno->getEstadoCivil()?></option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="Solteiro(a)">Solteiro(a)</option>
                     <option value="Casado(a)">Casado(a)</option>
                     <option value="Separado(a)">Separado(a)</option>
@@ -194,39 +117,39 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             </div>
             <div class="form-group">
                 <label for="rg">Número do RG:</label>
-                <input type="text"id="rg" value="<?php echo $aluno->getRg()?>" name="rg" placeholder="00.000.000-00"  maxlength="13" pattern="\d{2}\.\d{3}\.\d{3}-[\d{2}]" >
+                <input type="text"id="rg" name="rg" placeholder="00.000.000-00"  maxlength="13" pattern="\d{2}\.\d{3}\.\d{3}-[\d{2}]" >
             </div>
             <div class="form-group">
                 <label for="cpf">CPF:</label>
-                <input type="text" id="cpf" name="cpf" value="<?php echo $aluno->getCpf()?>" maxlength="14" placeholder="000.000.000-00" >
+                <input type="text" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00" >
             </div>
             <div class="form-group">
                 <label for="telefone">Telefone:</label>
-                <input type="tel" id="telefone" name="telefone" value="<?php echo $aluno->getTelefone()?>" maxlength="15" placeholder="(00) 00000-0000" >
+                <input type="tel" id="telefone" name="telefone" maxlength="15" placeholder="(00) 00000-0000" >
             </div>
             <div class="form-group">
                 <label for="telefone_familia">Telefone de algum familiar:</label>
-                <input type="tel" id="telefone_familia"  maxlength="15"  value="<?php echo $aluno->getTelefoneFamilia()?>" name="telefone_familia" placeholder="(00) 00000-0000" >
+                <input type="tel" id="telefone_familia"  maxlength="15" name="telefone_familia" placeholder="(00) 00000-0000" >
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo $aluno->getEmail()?>" placeholder="email@email.com" >
+                <input type="email" id="email" name="email" placeholder="email@email.com" >
             </div>
             <div class="form-group">
                 <h1 id="h1endereco">Endereço</h1>
                 <label for="cep">CEP:</label>
-                <input type="text" id="cep" name="cep" value="<?php echo $resultado['cep'];?>" placeholder="00000-000" maxlength="9">
+                <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9">
 
             </div>
             <div class="form-group">
                 <label for="estado">Estado:</label>
                 <select id="estado" name="estado" >
-                    <option  value="<?php echo $resultado['estado'];?>"><?php echo $resultado['estado'];?></option>
+                    <option value="">Selecione seu estado</option>
                     <option value="AC">Acre (AC)</option>
                     <option value="AL">Alagoas (AL)</option>
                     <option value="AP">Amapá (AP)</option>
                     <option value="AM">Amazonas (AM)</option>
-                    <option value="BA">Bahia (BA)</option>
+                    <option value="BA" selected >Bahia (BA)</option>
                     <option value="CE">Ceará (CE)</option>
                     <option value="DF">Distrito Federal (DF)</option>
                     <option value="ES">Espírito Santo (ES)</option>
@@ -253,43 +176,42 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             </div>
             <div class="form-group">
                 <label for="rua">Rua:</label>
-                <input type="text" id="rua" name="rua"  value="<?php echo $resultado['rua'];?>" placeholder="Digite sua rua">
+                <input type="text" id="rua" name="rua" placeholder="Digite sua rua">
             </div>
             <div class="form-group">
                 <label for="bairro">Bairro:</label>
-                <input type="text" id="bairro" name="bairro"  value="<?php echo $resultado['bairro'];?>"  placeholder="Digite seu bairro" >
+                <input type="text" id="bairro" name="bairro" placeholder="Digite seu bairro" >
             </div>
             <div class="form-group">
                 <label for="cidade">Cidade:</label>
-                <input type="text" id="cidade" name="cidade"  value="<?php echo $resultado['cidade'];?>"  placeholder="Digite sua cidade" >
+                <input type="text" id="cidade" name="cidade" placeholder="Digite sua cidade" >
             </div>
             <div class="form-group">
                 <label for="numero">Número:</label>
-                <input type="text" id="numero" name="numero"  value="<?php echo $resultado['numero'];?>" placeholder="Número da residência" >
+                <input type="text" id="numero" name="numero" placeholder="Número da residência" >
             </div>
             <div class="form-group">
                 <label for="complemento">Complemento:</label>
-                <input type="text" id="complemento" name="complemento"   value="<?php echo $resultado['complemento'];?>" placeholder="Apartamento, bloco, sala (opcional)">
+                <input type="text" id="complemento" name="complemento" placeholder="Apartamento, bloco, sala (opcional)">
             </div>
-            
+          
             <div class="form-group">
-                <label for="planoAlunoEditado">Plano:</label>
-                <select id="plano" name="planoAlunoEditado" >
-                    <option  value="<?php echo $aluno->getPlano()?>"selected><?php echo $aluno->getPlano()?> </option>
-                    <option value="Diario">Diário</option>
+                <label for="plano">Plano:</label>
+                <select id="plano" name="plano" >
+                    <option value="Mensal" selected>Selecione</option>
                     <option value="Mensal">Mensal</option>
                     <option value="Semestral">Semestral</option>
                     <option value="Anual">Anual</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="profissao">Profissão:</label>
-                <input type="text" id="profissao" name="profissao"   value="<?php echo $aluno->getProfissao()?>"  placeholder="Profissão" >
+                <label for="profissão">Profissão:</label>
+                <input type="text" id="profissao" name="profissao" placeholder="Profissão" >
             </div>
             <div class="form-group">
                 <label for="escolaridade">Escolaridade:</label>
                 <select id="escolaridade" name="escolaridade" >
-                    <option  value="<?php echo $aluno->getEscolaridade()?>"  disabled selected><?php echo $aluno->getEscolaridade()?></option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="Ensino Fundamental Completo">Ensino Fundamental Completo</option>
                     <option value="Ensino Fundamental Incompleto">Ensino Fundamental Incompleto</option>
                     <option value="Ensino Médio Completo">Ensino Médio Completo</option>
@@ -309,16 +231,12 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             <div class="form-group">
                 <h1 id="h1dados">Dados Antropométricos <br><span id="edesaude">e de Saúde</span></h1>
                 <label for="peso">Peso:</label>
-                <input type="text" id="peso"   value="<?php echo $aluno->getPeso()?>"  name="peso" placeholder="Peso" >
-            </div>
-            <div class="form-group">
-                <label for="altura">Altura:</label>
-                <input type="text" id="altura"  value="<?php echo $aluno->getAltura()?>"  name="altura" placeholder="Altura" >
+                <input type="text" id="peso" name="peso" placeholder="Peso" >
             </div>
             <div class="form-group">
                 <label for="tipo_sanguineo">Tipo Sanguíneo:</label>
                 <select id="tipo_sanguineo" name="tipo_sanguineo" >
-                    <option value="<?php echo $aluno->getTipoSanguineo()?>"  disabled selected><?php echo $aluno->getTipoSanguineo()?></option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="A+">A+</option>
                     <option value="A-">A-</option>
                     <option value="B+">B+</option>
@@ -332,7 +250,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             <div class="form-group">
                 <label for="pressao_arterial">Pressão Arterial:</label>
                 <select id="pressao_arterial" name="pressao_arterial" >
-                    <option  value="<?php echo $aluno->getPressaoArterial()?>" disabled selected><?php echo $aluno->getPressaoArterial()?></option>
+                    <option value="" disabled selected>Selecione</option>
                     <option value="Baixa">Baixa</option>
                     <option value="Normal">Normal</option>
                     <option value="Alta">Alta</option>
@@ -348,52 +266,52 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
         <h1 id="historicoS">Histórico de Saúde</h1>
         
         <label for="cirurgia">Já fez cirurgia? Qual?</label>
-        <input type="text" id="cirurgia" name="cirurgia"  value="<?php echo $aluno->getCirurgia()?>"  placeholder="Descreva a cirurgia" >
+        <input type="text" id="cirurgia" name="cirurgia" placeholder="Descreva a cirurgia" >
     </div>
     <div class="form-group">
         <label for="dorme_bem">Quantas horas de sono?</label>
-        <input type="text" id="dorme_bem"  value="<?php echo $aluno->getDormeBem()?>"  name="dorme_bem" placeholder="Quantidade de horas de sono" >
+        <input type="number" id="dorme_bem" name="dorme_bem" placeholder="Quantidade de horas de sono" >
     </div>
     <div class="form-group">
         <label for="lesao_articular">Lesão articular?</label>
         <select id="lesao_articular" name="lesao_articular" onchange="toggleLesaoInput(this)" >
-        <option  value="<?php echo $aluno->getLesaoArticular()?>"  disabled selected><?php echo $aluno->getLesaoArticular()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
         <div id="lesao_detalhes" style="display: none; margin-top: 10px;">
   <label for="lesao_detalhes_input">Descreva:</label>
-  <input type="text" id="lesao_detalhes_input" name="lesao_detalhes"  value="<?php echo $aluno->getLesaoArticular()?>" placeholder="Descreva a lesão">
+  <input type="text" id="lesao_detalhes_input" name="lesao_detalhes" placeholder="Descreva a lesão">
 </div>
     </div>
     <div class="form-group">
         <label for="problema_coluna">Problema de coluna?</label>
         <select id="problema_coluna" name="problema_coluna" onchange="togglecolunaInput(this)">
-        <option  value="<?php echo $aluno->getProblemaColuna()?>"><?php echo $aluno->getProblemaColuna()?></option>
+        <option value="">Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
         <div id="coluna_detalhes" style="display: none; margin-top: 10px;">
   <label for="coluna_detalhes_input">Descreva:</label>
-  <input type="text" id="coluna_detalhes_input" name="coluna_detalhes"   value="<?php echo $aluno->getProblemaColuna()?>" placeholder="Descreva o problema">
+  <input type="text" id="coluna_detalhes_input" name="coluna_detalhes" placeholder="Descreva o problema">
 </div>
     </div>
     <div class="form-group">
         <label for="tempo_sem_medico">Quanto tempo faz que não vai ao médico?</label>
-        <input type="text" id="tempo_sem_medico"  value="<?php echo $aluno->getTempoMedico()?>" name="tempo_sem_medico" placeholder="Ex: 6 meses, 1 ano" >
+        <input type="text" id="tempo_sem_medico" name="tempo_sem_medico" placeholder="Ex: 6 meses, 1 ano" >
     </div>
     <div class="form-group">
         <label for="uso_medicamento">Usa algum medicamento? Qual?</label>
-        <input type="text" id="uso_medicamento" name="uso_medicamento"  value="<?php echo $aluno->getMedicamento()?>" placeholder="Medicamento usado">
+        <input type="text" id="uso_medicamento" name="uso_medicamento" placeholder="Medicamento usado">
     </div>
     <div class="form-group">
         <label for="problema_saude">Tem algum problema de saúde? Qual?</label>
-        <input type="text" id="problema_saude" name="problema_saude"  value="<?php echo $aluno->getProblemaSaude()?>" placeholder="Descreva o problema de saúde" >
+        <input type="text" id="problema_saude" name="problema_saude" placeholder="Descreva o problema de saúde" >
     </div>
     <div class="form-group" id="infartoS">
         <label for="varizes">Tem varizes?</label>
         <select id="varizes" name="varizes" >
-        <option  value="<?php echo $aluno->getTemVarizes()?>" disabled selected><?php echo $aluno->getTemVarizes()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -402,7 +320,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group" >
         <label for="infarto">Infarto?</label>
         <select id="infarto" name="infarto" >
-        <option value="<?php echo $aluno->getInfarto()?>" disabled selected><?php echo $aluno->getInfarto()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -410,19 +328,19 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="doenca_cardiaca">Doença cardíaca?</label>
         <select id="doenca_cardiaca" name="doenca_cardiaca" onchange="toggledoencaInput(this)">
-        <option value="<?php echo $aluno->getDoencaCardiaca()?>" disabled selected><?php echo $aluno->getDoencaCardiaca()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>>
         </select>
         <div id="doenca_detalhes" style="display: none; margin-top: 10px;">
   <label for="doenca_detalhes_input">Descreva:</label>
-  <input type="text" id="doenca_detalhes_input" value="<?php echo $aluno->getDoencaCardiaca()?>" name="doenca_detalhes" placeholder="Descreva a doença">
+  <input type="text" id="doenca_detalhes_input" name="doenca_detalhes" placeholder="Descreva a doença">
 </div>
     </div>
     <div class="form-group">
         <label for="derrame">Derrame?</label>
         <select id="derrame" name="derrame" >
-        <option value="<?php echo $aluno->getDerrame()?>" disabled selected><?php echo $aluno->getDerrame()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -430,7 +348,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="diabetes">Diabetes?</label>
         <select id="diabetes" name="diabetes" >
-        <option value="<?php echo $aluno->getDiabetes()?>" disabled selected><?php echo $aluno->getDiabetes()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -438,7 +356,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="obesidade">Obesidade?</label>
         <select id="obesidade" name="obesidade" >
-        <option value="<?php echo $aluno->getObesidade()?>" disabled selected><?php echo $aluno->getObesidade()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -446,7 +364,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="colesterol_elevado">Colesterol elevado?</label>
         <select id="colesterol_elevado" name="colesterol_elevado" >
-        <option value="<?php echo $aluno->getColesterolElevado()?>" disabled selected><?php echo $aluno->getColesterolElevado()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         </select>
@@ -455,7 +373,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
         <h1 id="h1estilo">Estilo de vida</h1>
         <label for="fumar">Fuma?</label>
         <select id="fumar" name="fumar" >
-        <option value="<?php echo $aluno->getFuma()?>" disabled selected><?php echo $aluno->getFuma()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         <option value="As Vezes">As Vezes</option>
@@ -464,7 +382,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="faz_dieta">Faz dieta?</label>
         <select id="faz_dieta" name="faz_dieta" >
-        <option value="<?php echo $aluno->getFazDieta()?>" disabled selected><?php echo $aluno->getFazDieta()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         <option value="As Vezes">As Vezes</option>
@@ -473,7 +391,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="bebida_alcoolica">Você consome bebidas alcoólicas?</label>
         <select id="bebida_alcoolica" name="bebida_alcoolica" >
-        <option value="<?php echo $aluno->getUsaBebidaAlcoolica()?>" disabled selected><?php echo $aluno->getUsaBebidaAlcoolica()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         <option value="As Vezes">As Vezes</option>
@@ -482,7 +400,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <label for="sedentario">Você é sedentário?</label>
         <select id="sedentario" name="sedentario" >
-        <option value="<?php echo $aluno->getSedentario()?>" disabled selected><?php echo $aluno->getSedentario()?></option>
+        <option value="" disabled selected>Selecione</option>
         <option value="Sim">Sim</option>
         <option value="Não">Não</option>
         <option value="As Vezes">As Vezes</option>
@@ -491,19 +409,19 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <div class="form-group">
         <h1 id="h1objetivo">Histórico e Objetivo <br> <span id="naacademia">na Academia</span></h1>
         <label for="jaFez_modalidade">Que modalidade faz ou já fez?</label>
-        <input type="text" id="jaFez_modalidade" value="<?php echo $aluno->getModalidadeAnterior()?>" name="jaFez_modalidade" placeholder="Descreva quais modalidades já realizou" >
+        <input type="text" id="jaFez_modalidade" name="jaFez_modalidade" placeholder="Descreva quais modalidades já realizou" >
     </div>
     <div class="form-group">
         <label for="modalidade_atual">Que modalidade pratica atualmente?</label>
-        <input type="text" id="modalidade_atual" value="<?php echo $aluno->getModalidade()?>" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
+        <input type="text" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
     </div>
     <div class="form-group">
         <label for="objetivo_atividade_fisica">Qual seu objetivo?</label>
-        <input type="text" id="objetivo_atividade_fisica" value="<?php echo $aluno->getObjetivo()?>" name="objetivo_atividade_fisica" placeholder="Descreva qual seu objetivo com a atividade física" >
+        <input type="text" id="objetivo_atividade_fisica" name="objetivo_atividade_fisica" placeholder="Descreva qual seu objetivo com a atividade física" >
     </div>
     <div class="form-group">
         <label for="soubeDa_academia">Como soube da academia?</label>
-        <input type="text" id="soubeDa_academia" value="<?php echo $aluno->getComoSoubeAcademia()?>" name="soubeDa_academia" placeholder="Como conheceu nossa academia?" >
+        <input type="text" id="soubeDa_academia" name="soubeDa_academia" placeholder="Como conheceu nossa academia?" >
     </div>
     
     
@@ -519,38 +437,38 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             <th id="questao-header">QUESTÕES</th>
         </tr>
         <tr id="linha-1">
-            <td class="sim" id="sim1"><label id="label-sim1"><input type="radio" value="Sim" name="par_q1" id="input-sim1" <?= $aluno->getParqProblemaCoracao() === 'Sim' ? 'checked' : '' ?> ></label></td>
-            <td class="nao" id="nao1"><label id="label-nao1"><input type="radio" value="Não" name="par_q1" id="input-nao1" <?= $aluno->getParqProblemaCoracao() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim1"><label id="label-sim1"><input type="radio" value="Sim" name="par_q1" id="input-sim1"></label></td>
+            <td class="nao" id="nao1"><label id="label-nao1"><input type="radio" value="Não" name="par_q1" id="input-nao1"></label></td>
             <td class="questao" id="questao1">1- Seu médico alguma vez disse que você tem problema no coração e que deve apenas praticar atividades físicas recomendadas por médico?</td>
         </tr>
         <tr id="linha-2">
-            <td class="sim" id="sim2"><label id="label-sim2"><input type="radio" value="Sim" name="par_q2" id="input-sim2" <?= $aluno->getParqDorPeitoComAtividade() === 'Sim' ? 'checked' : '' ?>></label></td>
-            <td class="nao" id="nao2"><label id="label-nao2"><input type="radio" value="Não" name="par_q2" id="input-nao2" <?= $aluno->getParqDorPeitoComAtividade() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim2"><label id="label-sim2"><input type="radio" value="Sim" name="par_q2" id="input-sim2"></label></td>
+            <td class="nao" id="nao2"><label id="label-nao2"><input type="radio" value="Não" name="par_q2" id="input-nao2"></label></td>
             <td class="questao" id="questao2">2- Você sente dor no peito quanto pratica atividade física?</td>
         </tr>
         <tr id="linha-3">
-            <td class="sim" id="sim3"><label id="label-sim3"><input type="radio" value="Sim" name="par_q3" id="input-sim3"<?= $aluno->getParqDorPeitoSemAtividade() === 'Sim' ? 'checked' : '' ?> ></label></td>
-            <td class="nao" id="nao3"><label id="label-nao3"><input type="radio" value="Não" name="par_q3" id="input-nao3" <?= $aluno->getParqDorPeitoSemAtividade() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim3"><label id="label-sim3"><input type="radio" value="Sim" name="par_q3" id="input-sim3"></label></td>
+            <td class="nao" id="nao3"><label id="label-nao3"><input type="radio" value="Não" name="par_q3" id="input-nao3"></label></td>
             <td class="questao" id="questao3">3- No mês passado, você teve dor no peito quanto não estava praticando atividade física?</td>
         </tr>
         <tr id="linha-4">
-            <td class="sim" id="sim4"><label id="label-sim4"><input type="radio" value="Sim" name="par_q4" id="input-sim4"<?= $aluno->getParqEquilibrio() === 'Sim' ? 'checked' : '' ?>></label></td>
-            <td class="nao" id="nao4"><label id="label-nao4"><input type="radio" value="Não" name="par_q4" id="input-nao4"<?= $aluno->getParqEquilibrio() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim4"><label id="label-sim4"><input type="radio" value="Sim" name="par_q4" id="input-sim4"></label></td>
+            <td class="nao" id="nao4"><label id="label-nao4"><input type="radio" value="Não" name="par_q4" id="input-nao4"></label></td>
             <td class="questao" id="questao4">4- Você perde o equilíbrio devido a tonturas ou alguma vez perdeu a consciência?</td>
         </tr>
         <tr id="linha-5">
-            <td class="sim" id="sim5"><label id="label-sim5"><input type="radio" value="Sim" name="par_q5" id="input-sim5" <?= $aluno->getParqProblemaOsseo() === 'Sim' ? 'checked' : '' ?>></label></td>
-            <td class="nao" id="nao5"><label id="label-nao5"><input type="radio" value="Não" name="par_q5" id="input-nao5" <?= $aluno->getParqProblemaOsseo() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim5"><label id="label-sim5"><input type="radio" value="Sim" name="par_q5" id="input-sim5"></label></td>
+            <td class="nao" id="nao5"><label id="label-nao5"><input type="radio" value="Não" name="par_q5" id="input-nao5"></label></td>
             <td class="questao" id="questao5">5- Você tem problema ósseo ou articular que poderia ficar pior por alguma mudança em sua atividade física?</td>
         </tr>
         <tr id="linha-6">
-            <td class="sim" id="sim6"><label id="label-sim6"><input type="radio" value="Sim" name="par_q6" id="input-sim6" <?= $aluno->getParqReceitaMedica() === 'Sim' ? 'checked' : '' ?>></label></td>
-            <td class="nao" id="nao6"><label id="label-nao6"><input type="radio" value="Não" name="par_q6" id="input-nao6" <?= $aluno->getParqReceitaMedica() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim6"><label id="label-sim6"><input type="radio" value="Sim" name="par_q6" id="input-sim6"></label></td>
+            <td class="nao" id="nao6"><label id="label-nao6"><input type="radio" value="Não" name="par_q6" id="input-nao6"></label></td>
             <td class="questao" id="questao6">6- Seu médico está atualmente receitando algum remédio (por exemplo, diuréticos) para pressão arterial ou problema cardíaco?</td>
         </tr>
         <tr id="linha-7">
-            <td class="sim" id="sim7"><label id="label-sim7"><input type="radio" value="Sim" name="par_q7" id="input-sim7"  <?= $aluno->getParqRazao() === 'Sim' ? 'checked' : '' ?>></label></td>
-            <td class="nao" id="nao7"><label id="label-nao7"><input type="radio" value="Não" name="par_q7" id="input-nao7"  <?= $aluno->getParqRazao() === 'Não' ? 'checked' : '' ?>></label></td>
+            <td class="sim" id="sim7"><label id="label-sim7"><input type="radio" value="Sim" name="par_q7" id="input-sim7"></label></td>
+            <td class="nao" id="nao7"><label id="label-nao7"><input type="radio" value="Não" name="par_q7" id="input-nao7"></label></td>
             <td class="questao" id="questao7">7- Você sabe de qualquer outra razão pela qual não deva praticar atividade física?</td>
         </tr>
     </table>
@@ -559,42 +477,57 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
     <table id="tabela-medidas">
         <tr id="linha-torax">
             <th id="th-torax">TÓRAX:</th>
-            <td class="input-coluna" id="td-torax"><input id="input-torax" type="text" name="torax" value="<?php echo $aluno->getMedidaTorax()?>" placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-torax"><input id="input-torax" type="text" name="torax" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-cintura">
             <th id="th-cintura">CINTURA:</th>
-            <td class="input-coluna" id="td-cintura"><input id="input-cintura" type="text" name="cintura" value="<?php echo $aluno->getMedidaCintura()?>"  placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-cintura"><input id="input-cintura" type="text" name="cintura" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-abdome">
             <th id="th-abdome">ABDOME:</th>
-            <td class="input-coluna" id="td-abdome"><input id="input-abdome" type="text" name="abdome"  value="<?php echo $aluno->getMedidaAbdome()?>"  placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-abdome"><input id="input-abdome" type="text" name="abdome" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-quadril">
             <th id="th-quadril">QUADRIL:</th>
-            <td class="input-coluna" id="td-quadril"><input id="input-quadril" type="text" name="quadril" value="<?php echo $aluno->getMedidaQuadril()?>"  placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-quadril"><input id="input-quadril" type="text" name="quadril" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-bracos">
             <th id="th-bracos">BRAÇOS (direito e esquerdo):</th>
-            <td class="input-coluna" id="td-bracos"><input id="input-bracos" type="text" name="bracos" value="<?php echo $aluno->getMedidaBracos()?>"  placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-bracos"><input id="input-bracos" type="text" name="bracos" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-antebracos">
             <th id="th-antebracos">ANTEBRAÇOS (direito e esquerdo):</th>
-            <td class="input-coluna" id="td-antebracos"><input id="input-antebracos" type="text"  value="<?php echo $aluno->getMedidaAntebracos()?>"  name="antebracos" placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-antebracos"><input id="input-antebracos" type="text" name="antebracos" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-pernas">
             <th id="th-pernas">PERNA (direita e esquerda):</th>
-            <td class="input-coluna" id="td-pernas"><input id="input-pernas" type="text" value="<?php echo $aluno->getMedidaPernas()?>"  name="pernas" placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-pernas"><input id="input-pernas" type="text" name="pernas" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-panturrilha">
             <th id="th-panturrilha">PANTURRILHA (direita e esquerda):</th>
-            <td class="input-coluna" id="td-panturrilha"><input id="input-panturrilha" type="text" value="<?php echo $aluno->getMedidaPanturrilha()?>"  name="panturrilha" placeholder="Centímetros"></td>
+            <td class="input-coluna" id="td-panturrilha"><input id="input-panturrilha" type="text" name="panturrilha" placeholder="Centímetros"></td>
         </tr>
         <tr id="linha-observacoes">
             <th id="th-observacoes">OBSERVAÇÕES:</th>
-            <td class="input-coluna" id="td-observacoes"><input id="input-observacoes" type="text" value="<?php echo $aluno->getObservacoes()?>"  name="obsmedida" placeholder="Observações"></td>
+            <td class="input-coluna" id="td-observacoes"><input id="input-observacoes" type="text" name="obsmedida" placeholder="Observações"></td>
         </tr>
     </table>
     <br>
+    <h3 class="paga_titulo"><strong>PAGAMENTO</strong></h3>
+    <table id="tabela-pagamento">
+        <thead>
+            <tr>
+                <th id="th-valor">Valor</th>
+                <th id="th-data-assinatura">Data de Assinatura</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input id="input-valor" name="valor" type="text" placeholder="R$0,00" required></td>
+                <td><input id="input-data-assinatura" name="data_pagamento" type="date" required></td>
+            </tr>
+        </tbody>
+    </table>
     <div class="boxbtn">
     <button id="cadastraluno" type="submit"><svg id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                                     stroke="#ffffff">
@@ -608,7 +541,7 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
                                             d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z"
                                             fill="#ffffff"></path>
                                     </g>
-                                </svg><p id="btntxt">Editar</p></button>  <a id="cadastralunovoltar"><svg  id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                </svg><p id="btntxt">Cadastrar</p></button>  <a id="cadastralunovoltar"><svg  id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                                     <g id="SVGRepo_iconCarrier">
@@ -618,9 +551,11 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
                                     </g>
                                 </svg><p id="btntxt">Voltar</p></a>
                                 </div> </div>
+                                <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div> 
                                 </form>
         </div>
         <!--fim do dasboard-->
+       
     </div>
     <!--FIM DO PAINEL-->
     <div id="popup" class="popup" style='top: 50%; left:60%;'>
@@ -636,6 +571,27 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
 
 
 
+const inputValor = document.getElementById('input-valor');
+
+inputValor.addEventListener('input', function (event) {
+  let value = inputValor.value;
+
+  // Remove caracteres não numéricos
+  value = value.replace(/\D/g, '');
+
+  // Adiciona os centavos
+  value = (value / 100).toFixed(2);
+
+  // Formata para o padrão "R$"
+  value = value.replace('.', ',');
+
+  inputValor.value = `R$ ${value}`;
+});
+
+// Remove o "R$" ao submeter o formulário (opcional)
+inputValor.addEventListener('focusout', function () {
+  inputValor.value = inputValor.value.replace('R$ ', '').trim();
+});
 
 function toggleLesaoInput(select) {
     const lesaoDetalhesDiv = document.getElementById('lesao_detalhes');
@@ -770,16 +726,16 @@ document.getElementById('cep').addEventListener('input', function() {
     });
     //funções de clique
     optHome.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/painel.php';
+        window.location.href = '../dashboard/dashboard.php';
     });
     optAlunos.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/alunos.php';
+        window.location.href = 'index.php';
     });
     optPagamento.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/pagamentos.php';
+        window.location.href = '../pagamentos/index.php';
     });
     optUsuario.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/usuarios.php';
+        window.location.href = '../usuarios/index.php';
     });
     optConfig.addEventListener('click', function() {
         menuConfig.style.display = "block";
@@ -788,6 +744,7 @@ document.getElementById('cep').addEventListener('input', function() {
         window.history.back();
     });
     
+   
     </script>
     <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -944,29 +901,7 @@ document.getElementById('peso').addEventListener('input', function (event) {
 });
 
 
-document.getElementById('altura').addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value.replace(/[^0-9]/g, ''); // Remove caracteres que não sejam números
 
-    if (valor.length > 1) {
-        // Insere o ponto após o primeiro dígito
-        valor = valor.slice(0, 1) + '.' + valor.slice(1);
-    }
-
-    // Atualiza o campo
-    if (valor) {
-        input.value = `${valor}M`; // Adiciona "M" somente se houver número
-    } else {
-        input.value = ''; // Permite que o campo fique vazio
-    }
-
-    // Permite apagar completamente, sem interferir no comportamento do cursor
-    if (event.inputType === 'deleteContentBackward' && !valor) {
-        input.value = ''; // Remove o "M" ao apagar completamente
-    }
-    const posicaoCursor = valor.length; // +3 para considerar os 3 caracteres de " Kg"
-    input.setSelectionRange(posicaoCursor, posicaoCursor);
-});
 const ids = [
     'input-torax',
     'input-cintura',

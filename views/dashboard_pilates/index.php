@@ -16,13 +16,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../public/css/style.css" rel="stylesheet">
-    <title><?php print_r("$appname");?> - Painel</title>
+    <title><?php print_r("$appname");?> - Pilates</title>
     <!--GOOGLE FONTS-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="menulateral">
-        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -41,7 +41,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </div><!--FIM DO BOX DO USUARIO-->
         </div><!--FIM DO USUÁRIO-->
         <div class="box">
-            <div class="options" id="optHome">
+            <div class="options" id="optHomePilates">
                 <div class="img">
                 <svg fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 495.398 495.398" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g><g><g><path d="M487.083,225.514l-75.08-75.08V63.704c0-15.682-12.708-28.391-28.413-28.391c-15.669,0-28.377,12.709-28.377,28.391v29.941L299.31,37.74c-27.639-27.624-75.694-27.575-103.27,0.05L8.312,225.514c-11.082,11.104-11.082,29.071,0,40.158c11.087,11.101,29.089,11.101,40.172,0l187.71-187.729c6.115-6.083,16.893-6.083,22.976-0.018l187.742,187.747c5.567,5.551,12.825,8.312,20.081,8.312c7.271,0,14.541-2.764,20.091-8.312C498.17,254.586,498.17,236.619,487.083,225.514z"></path><path d="M257.561,131.836c-5.454-5.451-14.285-5.451-19.723,0L72.712,296.913c-2.607,2.606-4.085,6.164-4.085,9.877v120.401c0,28.253,22.908,51.16,51.16,51.16h81.754v-126.61h92.299v126.61h81.755c28.251,0,51.159-22.907,51.159-51.159V306.79c0-3.713-1.465-7.271-4.085-9.877L257.561,131.836z"></path></g></g></g></g></svg>
                 </div><!--fim da imagem da opção-->
@@ -80,7 +80,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--FIM DO BOX DAS OPÇÕES-->
 </div><!-- FIM DO MENU LATERAL-->
     <div class="menulateral" id="menuConfig">
-    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -106,9 +106,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <label class="config-label" for="appname">Nome do sistema:</label><br>
                 <input type="text" name="appname" value="<?php echo $appname?>">
                 <label class="config-label" for="corlinhasuperior">Cor da linha superior:</label><br>
-                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperior?>">
+                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperiorpilates?>">
                 <label class="config-label" for="corlinhasuperiormenu">Cor da linha superior do menu:</label><br>
-                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenu?>">
+                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenupilates?>">
                 <label class="config-label" for="foto">Mudar foto de Perfil:</label><br>
                 <input class="config-input" type="file" name="foto" id="foto" accept="image/*">
                 <div class="button-box"><button class="save-btn" id="save-btn" type="submit">Salvar</button>
@@ -118,8 +118,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--BACK BTN-->
         </div><!--CONFIG FORM-->
 </div><!-- FIM DO MENU DE CONFIGURAÇÕES-->
-    <div class="linhasuperior" style='background-color:<?php echo("$corlinhasuperior");?>'>
-        <p id="mode">Modo: Administrador</p>
+    <div class="linhasuperior" style='background-color:<?php echo("$corlinhasuperiorpilates");?>'>
+        <p id="mode">Modo: <?php echo $modopilates;?></p>
     </div><!--fim da linha superior-->
     <div class="painel">
         <div class="titulo" id=titulopainel>
@@ -134,7 +134,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                      </div><!--BOX SITU-->
                 </div><!--ALINHAR BTN-->
             </div><!--linhasuperiorcadastro-->
-    <table border="1" style="margin-bottom:10px;">
+    <table  id="tabelanotificacaopilates" border="1" style="margin-bottom:10px;">
         <thead>
             <tr>
             <th>Cód.</th>
@@ -159,14 +159,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 <div class="overlaydash" id="overlaydash"></div><!--overlaydash-->
 
     <script>
-    var optHome = document.getElementById("optHome");
+    var optHome = document.getElementById("optHomePilates");
     var optAlunos = document.getElementById("optAlunos");
     var optPagamento = document.getElementById("optPagamento");
     var optUsuario = document.getElementById("optUsuario");
     var optConfig = document.getElementById("optConfig");
     var menuConfig = document.getElementById("menuConfig");
     var backBtn = document.getElementById("back-btn");
-    var optPilates = document.getElementById("optPilates");
     optAlunos.addEventListener("mouseover", function() {
         optHome.style.backgroundColor = "rgba(34,45,51,255)"
         optHome.style.border = "none"
@@ -185,25 +184,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     });
     optAlunos.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optPagamento.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optUsuario.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optConfig.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optHome.addEventListener('click', function() {
         window.location.href = 'dashboard.php';
-    });
-    optPilates.addEventListener('click', function() {
-        alert("Seção em Desenvolvimento");
     });
     optAlunos.addEventListener('click', function() {
         window.location.href = '../alunos/index.php';
@@ -295,12 +291,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     button.addEventListener('click', function() {
     const alunoId = linha.getAttribute('data-id');
     const vencimento = linha.getAttribute('data-vencimento');
-    function formatarData(data) {
-    const [dia, mes, ano] = data.split('/');
-    return `${ano}-${mes}-${dia}`;
-}
-
-const vencimentoFormatado = formatarData(vencimento);
     if (!alunoId) {
         console.error("Atributo data-id não encontrado no elemento .linha-aluno");
         return;
@@ -323,11 +313,11 @@ const vencimentoFormatado = formatarData(vencimento);
                     value="${data.data.id}"><input style="display:none ;" type: text name="datavencimentonotificada"
                     value="${vencimento}"></p>
             <table border="1"
-                style="width: 200px; border-collapse: collapse; text-align: left; margin: 0 auto; font-size: 14px;">
+                style="width: 750px; border-collapse: collapse; text-align: left; margin: 0 auto; font-size: 14px;">
                 <thead>
                     <tr>
                         <th style="padding: 5px;width:250px;">Valor</th>
-                        <th style="padding:   5px; display: none;width:250px;">Data de Pagamento</th>
+                        <th style="padding: 5px;width:250px;">Data de Pagamento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -336,8 +326,8 @@ const vencimentoFormatado = formatarData(vencimento);
                         <td style="padding: 5px;"><input required name="valornotificado" required
                                 style="padding:5px; transform: translate(0px, 0px);height:25px;" id="input-valor"
                                 placeholder="R$0,00" type="text"></td>
-                        <td style="padding: 5px; display: none;"><input required value='${vencimentoFormatado}' name="data_pagamentonotificada"
-                                style="padding:5px; display:none; transform: translate(0px, 0px);height:25px;" placeholder=""
+                        <td style="padding: 5px;"><input required name="data_pagamentonotificada"
+                                style="padding:5px; transform: translate(0px, 0px);height:25px;" placeholder=""
                                 type="date"></td>
                     </tr>
                 </tbody>
@@ -348,12 +338,16 @@ const vencimentoFormatado = formatarData(vencimento);
          flex-direction: row;">
                 <button style:"width: 30%; border: none; transition: 0.6s ease; cursor: pointer; background-color:
                     #00aeff; "type=" submit" id="btnpagar" class="cadastro">
-                   
+                    <div class="icon">
+                        <svg fill="#ffffff" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g id="a"></g><g id="b"><path d="M26.5,51c1.3789,0,2.5-1.1211,2.5-2.5s-1.1211-2.5-2.5-2.5-2.5,1.1211-2.5,2.5,1.1211,2.5,2.5,2.5Zm0-4c.8271,0,1.5,.6729,1.5,1.5s-.6729,1.5-1.5,1.5-1.5-.6729-1.5-1.5,.6729-1.5,1.5-1.5Zm1.0254-18.9443c-.6943-.46-1.0898-.7627-1.1455-.8086-.0186-.127,.0234-.2441,.0703-.2969,.0156-.0186,.0303-.0352,.1006-.04,.1572-.002,.2617,.1045,.2676,.1113,.4609,.6377,1.3604,.8164,2.0488,.4062,.6826-.4043,.8916-1.25,.4854-1.9678-.3096-.5462-1.1729-1.2924-2.4286-1.4048-.0156-.0726-.0285-.1354-.0327-.1725-.0724-.444-.7509-.436-.8206,0l-.0422,.2158c-.7497,.1201-1.421,.4658-1.9034,1.0188-.6045,.6904-.874,1.6113-.7402,2.5264,.1904,1.292,1.4189,2.1074,2.4072,2.7637,.3105,.2061,.9561,.6348,1.0645,.8047,.0928,.1523,.1816,.3721,.0762,.5537-.085,.1455-.2637,.2373-.4971,.2539-.1924,.0078-.5342-.291-.6699-.498-.4258-.6729-1.3262-.8975-2.0449-.5068-.6699,.3633-.9062,1.1299-.5869,1.9072,.3528,.8613,1.5208,1.7751,2.8857,1.934l.0511,.2616c.0697,.436,.7482,.4439,.8206,0,.0062-.0555,.0311-.1678,.0576-.29,1.1255-.1612,2.1003-.7606,2.6313-1.6771,.6045-1.043,.5654-2.2734-.1074-3.376-.4355-.7168-1.2041-1.2256-1.9473-1.7188Zm1.1895,4.5928c-.4102,.71-1.2041,1.1709-2.1182,1.2344l-.1699,.0059c-1.125,0-2.1377-.7842-2.3672-1.3467-.0586-.1406-.1611-.4863,.1367-.6475,.085-.0459,.1787-.0684,.2715-.0684,.1826,0,.3613,.085,.458,.2373,.0059,.0098,.6982,1.0029,1.584,.9531,.5635-.0391,1.0322-.3115,1.2871-.748,.2715-.4688,.2393-1.0439-.0869-1.5781-.2012-.3291-.6924-.6699-1.3662-1.1172-.8643-.5742-1.8447-1.2246-1.9688-2.0742-.0928-.626,.0908-1.2539,.5029-1.7236,.3721-.4268,.9131-.6855,1.5215-.7285,1.1299-.0791,1.8955,.5742,2.083,.9053,.1055,.1875,.1367,.46-.126,.6152-.2393,.1416-.5723,.084-.7383-.1465-.1016-.1289-.4688-.5527-1.1348-.5088-.3203,.0234-.585,.1504-.7861,.3789-.251,.2881-.3662,.6992-.3076,1.1006,.0557,.3809,.4258,.7314,1.583,1.498,.6523,.4316,1.3262,.8789,1.6465,1.4053,.4766,.7803,.5107,1.6377,.0957,2.3535Zm26.0879-12.5459c-.123-.0938-.2822-.124-.4355-.085-.0156,.0059-1.6318,.4346-3.3975-.3428-.5264-.2314-1.127-.5078-1.7568-.7969-1.9437-.8945-3.9327-1.8059-5.2129-2.1177v-2.2603c0-2.4814-2.0186-4.5-4.5-4.5H13.5c-2.4814,0-4.5,2.0186-4.5,4.5V49.5c0,2.4814,2.0186,4.5,4.5,4.5h26c2.4814,0,4.5-2.0186,4.5-4.5v-15.8103c.3678,.1519,.7612,.3335,1.1855,.533,1.6982,.7969,3.8115,1.7891,6.4727,1.7891,2.1777,0,3.1797-1.1377,3.2207-1.1855,.0781-.0908,.1211-.207,.1211-.3262v-14c0-.1562-.0732-.3027-.1973-.3975Zm-.8027,14.1836c-.2754,.2324-1.0186,.7256-2.3418,.7256-2.4375,0-4.4395-.9395-6.0479-1.6943-1.0498-.4932-1.957-.9189-2.7715-.9893-.5498-.0479-1.1416-.0752-1.7471-.1025-2.2402-.1035-4.7783-.2217-5.752-1.4678-.3682-.4717-.4424-1.1826-.1895-1.8135,.3125-.7754,1.0566-1.3018,2.043-1.4434,.7441-.1074,1.6709-.1426,2.6533-.1807,2.3857-.0908,5.0898-.1943,6.9961-1.3281,.2373-.1406,.3154-.4482,.1738-.6855-.1426-.2373-.4492-.3145-.6855-.1738-1.6865,1.0039-4.2559,1.1016-6.5225,1.1885-.4174,.0157-.8212,.0326-1.2123,.0535-1.4095-5.455-6.4222-9.3748-12.0963-9.3748-6.8926,0-12.5,5.6074-12.5,12.5s5.6074,12.5,12.5,12.5c5.582,0,10.4257-3.6604,11.9813-8.9614,.8444,.1016,1.7225,.1468,2.5646,.186,.5918,.0273,1.1699,.0537,1.707,.0996,.0767,.0066,.1649,.0322,.2471,.048v16.1277c0,1.9297-1.5703,3.5-3.5,3.5h-26c-1.9297,0-3.5-1.5703-3.5-3.5V12.5c0-1.9297,1.5703-3.5,3.5-3.5h24.5c1.9297,0,3.5,1.5703,3.5,3.5v2.7881c-1.1094-.3066-2.2022-.6133-3.0654-.9336-1.7402-.6406-2.8896-.7881-2.9688-.7988-.2539-.0371-.4922,.1592-.5234,.417-.0371,.2539,.1592,.4922,.417,.5234,.0186,.002,.8398,.1152,2.4414,.7441,3.9189,1.4375,8.7236,3.209,10.8496,4.166,1.6074,.7392,3.0107,.9882,3.7344,1.1074v12.7637Zm-34.5-4.5c-2.7578,0-5,2.2422-5,5s2.2422,5,5,5,5-2.2422,5-5-2.2422-5-5-5Zm0,9c-2.2061,0-4-1.7939-4-4s1.7939-4,4-4,4,1.7939,4,4-1.7939,4-4,4Zm0-14c4.1357,0,7.5,3.3643,7.5,7.5s-3.3643,7.5-7.5,7.5-7.5-3.3643-7.5-7.5,3.3643-7.5,7.5-7.5Zm-7.5,7.5c0-4.1367,3.3643-7.5,7.5-7.5s7.5,3.3633,7.5,7.5-3.3643,7.5-7.5,7.5-7.5-3.3633-7.5-7.5Z"></path></g></g></svg>
+                    </div>
                     <!--fim do icone-->
                     <p style="color: #fff; margin-top: 20px;">Enviar Pagamento</p>
                 </button>
                 <button type="button" id="btnfechar" class="cadastro" onclick="closemsg()">
-                  
+                    <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM8.96963 8.96965C9.26252 8.67676 9.73739 8.67676 10.0303 8.96965L12 10.9393L13.9696 8.96967C14.2625 8.67678 14.7374 8.67678 15.0303 8.96967C15.3232 9.26256 15.3232 9.73744 15.0303 10.0303L13.0606 12L15.0303 13.9696C15.3232 14.2625 15.3232 14.7374 15.0303 15.0303C14.7374 15.3232 14.2625 15.3232 13.9696 15.0303L12 13.0607L10.0303 15.0303C9.73742 15.3232 9.26254 15.3232 8.96965 15.0303C8.67676 14.7374 8.67676 14.2625 8.96965 13.9697L10.9393 12L8.96963 10.0303C8.67673 9.73742 8.67673 9.26254 8.96963 8.96965Z" fill="#ffffff"></path></g></svg>
+                    </div>
                     <!--fim do icone-->
                     <p style="color: #fff; margin-top: 20px;">Fechar</p>
                 </button>
@@ -369,7 +363,9 @@ inputValor.addEventListener('input', function (event) {
   value = value.replace('.', ',');
   inputValor.value = `R$ ${value}`;
 });
-
+inputValor.addEventListener('focusout', function () {
+  inputValor.value = inputValor.value.replace('R$ ', '').trim();
+});
     document.getElementById('formpagamentos').addEventListener('submit', function(event) {
     event.preventDefault();
     const valorNotificado = event.target.valornotificado.value;
@@ -402,14 +398,14 @@ inputValor.addEventListener('input', function (event) {
     .then((textResponse) => {
         console.log("Resposta do servidor:", textResponse);
         if (textResponse.includes("sucesso")) {
-            console.log(textResponse);
+            console.log("Dados enviados com sucesso.");
             document.getElementById("msg-message").innerHTML = `<p>Pagamento atualizado com sucesso!</p>`;
         } else if (textResponse.includes("erro")) {
             console.log("Erro ao enviar os dados.");
             document.getElementById("msg-message").innerHTML = `<p>Erro ao atualizar o pagamento.</p>`;
         } else {
             console.log("Resposta inesperada:", textResponse);
-            document.getElementById("msg-message").innerHTML = textResponse;
+            document.getElementById("msg-message").innerHTML = `<p>Algo deu errado. Tente novamente.</p>`;
         }
         setTimeout(function() {
             closemsg();

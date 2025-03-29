@@ -537,7 +537,7 @@ WHERE pagamentos.situacao = 'pendente';
                 $stmt_update->bindParam(':data_vencimento', $data_vencimento, PDO::PARAM_STR);
                 $stmt_update->execute();
     
-                echo "Pagamento atualizado com sucesso!";
+                echo $valor;
             } else {
                 echo "Não há pagamento pendente com a data de vencimento informada.";
             }

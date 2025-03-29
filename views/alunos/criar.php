@@ -523,7 +523,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </thead>
         <tbody>
             <tr>
-                <td><input id="input-valor" name="valor" type="text" placeholder="R$0,00" required></td>
+                <td><input id="input-valor" name="valor"  maxlength="12"  type="text" placeholder="R$0,00" required></td>
                 <td><input id="input-data-assinatura" name="data_pagamento" type="date" required></td>
             </tr>
         </tbody>
@@ -589,9 +589,7 @@ inputValor.addEventListener('input', function (event) {
 });
 
 // Remove o "R$" ao submeter o formulário (opcional)
-inputValor.addEventListener('focusout', function () {
-  inputValor.value = inputValor.value.replace('R$ ', '').trim();
-});
+
 
 function toggleLesaoInput(select) {
     const lesaoDetalhesDiv = document.getElementById('lesao_detalhes');

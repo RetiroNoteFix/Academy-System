@@ -10,9 +10,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     header("Location: /Academy-System/");
     exit();
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="PT-BR">
@@ -21,7 +18,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../public/css/style.css" rel="stylesheet">
-    <title><?php print_r("$appname");?> - Usuários</title>
+    <title><?php print_r("$appname");?> - Criar Usuário</title>
     <!--GOOGLE FONTS-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
@@ -41,8 +38,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="status">
                      <div class="">
                      <a id="logout" href="?action=logout"><button class="sairbtn"><u>Sair</u></button></a>
-
-                          
                      </div><!--BTN SAIR-->
                 </div><!--STATUS-->
             </div><!--FIM DO BOX DO USUARIO-->
@@ -54,23 +49,23 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 </div><!--fim da imagem da opção-->
                 <a href="../dashboard/dashboard.php">Início</a>
             </div><!--FIM DA OPÇÃO HOME-->
-            <div class="options" id="optAlunos">
+            <div class="options" id="optAlunosA">
                 <div class="img">
                 <svg fill="#fff" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="924 578 200 200" enable-background="new 924 578 200 200" xml:space="preserve" stroke="#fff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g><g><path d="M984.585,638.942c0,13.999-9.609,25.348-21.462,25.348c-11.852,0-21.459-11.349-21.459-25.348c0-13.998,9.607-25.346,21.459-25.346C974.976,613.596,984.585,624.944,984.585,638.942z"></path><path d="M987.585,683.641c1.55-0.945,3.265-1.561,5.041-1.855c-3.606-5.088-6.161-10.546-7.637-17.078c-0.404-2.387-3.672-2.667-6.102-0.687c-4.546,3.706-9.849,6.186-15.765,6.186c-6.03,0-11.577-2.399-16.024-6.414c-1.419-1.282-3.51-1.476-5.143-0.479c-8.443,5.158-14.834,13.344-17.622,23.067c-0.749,2.605-0.223,5.42,1.411,7.588c1.636,2.166,4.192,3.443,6.906,3.443h38.668C975.947,692.072,981.41,687.41,987.585,683.641z"></path></g><g><path d="M1063.416,638.942c0,13.999,9.608,25.348,21.461,25.348c11.854,0,21.46-11.349,21.46-25.348c0-13.998-9.606-25.346-21.46-25.346C1073.024,613.596,1063.416,624.944,1063.416,638.942z"></path><path d="M1060.415,683.641c-1.55-0.945-3.266-1.561-5.041-1.855c3.606-5.088,6.161-10.546,7.637-17.078c0.405-2.387,3.673-2.667,6.103-0.687c4.546,3.706,9.848,6.186,15.764,6.186c6.029,0,11.577-2.399,16.025-6.414c1.419-1.282,3.509-1.476,5.142-0.479c8.444,5.158,14.836,13.344,17.622,23.067c0.748,2.605,0.223,5.42-1.41,7.588c-1.637,2.166-4.192,3.443-6.905,3.443h-38.67C1072.053,692.072,1066.591,687.41,1060.415,683.641z"></path></g><g><path d="M1082.475,725.451c-4.198-14.654-13.72-27.045-26.326-34.992c-2.487-1.566-5.715-1.313-7.921,0.631c-6.766,5.959-15.138,9.506-24.228,9.506c-9.269,0-17.791-3.686-24.626-9.855c-2.182-1.971-5.393-2.268-7.902-0.734c-12.977,7.924-22.799,20.504-27.082,35.445c-1.151,4.008-0.344,8.328,2.166,11.662c2.516,3.33,6.443,5.291,10.615,5.291h92.523c4.173,0,8.103-1.955,10.618-5.291C1082.823,733.779,1083.626,729.463,1082.475,725.451z"></path><path d="M1056.981,652.547c0,21.513-14.766,38.955-32.981,38.955c-18.214,0-32.979-17.442-32.979-38.955c0-21.515,14.765-38.951,32.979-38.951C1042.216,613.596,1056.981,631.033,1056.981,652.547z"></path></g></g></g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../alunos/index.php">Alunos</a>
+                <a href="index.php">Alunos</a>
             </div><!--FIM DA OPÇÃO ALUNOS-->
             <div class="options" id="optPagamento">
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM10.5 9L9.75 9.75V12L10.5 12.75H12.75V13.5H9.75V15H11.25V15.75H12.75V15H13.5L14.25 14.25V12L13.5 11.25H11.25V10.5H14.25V9H12.75V8.25H11.25V9H10.5Z" fill="#ffffff"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../pagamentos/index.php">Pagamentos</a>
+                <a href="../interfaces/pagamentos.php">Pagamentos</a>
             </div><!--FIM DA OPÇÃO PAGAMENTO-->
-            <div class="options" id="optUsuarioU">
+            <div class="options" id="optUsuario">
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="index.php">Usuários</a>
+                <a href="../usuarios/usuarios.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -80,250 +75,180 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </div><!--FIM DA OPÇÃO CONFIGURAÇÕES-->
         </div><!--FIM DO BOX DAS OPÇÕES-->
 </div><!-- FIM DO MENU LATERAL-->
-    <div class="menulateral" id="menuConfig">
-    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
-            <h1><?php print_r("$appname");?></h1>
-        </div><!--LOGO-->
-        <div class="user">
-            <div class="box">
-                <div class="userimg">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.88" fill="#fff" xml:space="preserve"> <g> <path d="M61.44,0c8.32,0,16.25,1.66,23.5,4.66l0.11,0.05c7.47,3.11,14.2,7.66,19.83,13.3l0,0c5.66,5.65,10.22,12.42,13.34,19.95 c3.01,7.24,4.66,15.18,4.66,23.49c0,8.32-1.66,16.25-4.66,23.5l-0.05,0.11c-3.12,7.47-7.66,14.2-13.3,19.83l0,0 c-5.65,5.66-12.42,10.22-19.95,13.34c-7.24,3.01-15.18,4.66-23.49,4.66c-8.31,0-16.25-1.66-23.5-4.66l-0.11-0.05 c-7.47-3.11-14.2-7.66-19.83-13.29L18,104.87C12.34,99.21,7.78,92.45,4.66,84.94C1.66,77.69,0,69.76,0,61.44s1.66-16.25,4.66-23.5 l0.05-0.11c3.11-7.47,7.66-14.2,13.29-19.83L18.01,18c5.66-5.66,12.42-10.22,19.94-13.34C45.19,1.66,53.12,0,61.44,0L61.44,0z M16.99,94.47l0.24-0.14c5.9-3.29,21.26-4.38,27.64-8.83c0.47-0.7,0.97-1.72,1.46-2.83c0.73-1.67,1.4-3.5,1.82-4.74 c-1.78-2.1-3.31-4.47-4.77-6.8l-4.83-7.69c-1.76-2.64-2.68-5.04-2.74-7.02c-0.03-0.93,0.13-1.77,0.48-2.52 c0.36-0.78,0.91-1.43,1.66-1.93c0.35-0.24,0.74-0.44,1.17-0.59c-0.32-4.17-0.43-9.42-0.23-13.82c0.1-1.04,0.31-2.09,0.59-3.13 c1.24-4.41,4.33-7.96,8.16-10.4c2.11-1.35,4.43-2.36,6.84-3.04c1.54-0.44-1.31-5.34,0.28-5.51c7.67-0.79,20.08,6.22,25.44,12.01 c2.68,2.9,4.37,6.75,4.73,11.84l-0.3,12.54l0,0c1.34,0.41,2.2,1.26,2.54,2.63c0.39,1.53-0.03,3.67-1.33,6.6l0,0 c-0.02,0.05-0.05,0.11-0.08,0.16l-5.51,9.07c-2.02,3.33-4.08,6.68-6.75,9.31C73.75,80,74,80.35,74.24,80.7 c1.09,1.6,2.19,3.2,3.6,4.63c0.05,0.05,0.09,0.1,0.12,0.15c6.34,4.48,21.77,5.57,27.69,8.87l0.24,0.14 c6.87-9.22,10.93-20.65,10.93-33.03c0-15.29-6.2-29.14-16.22-39.15c-10-10.03-23.85-16.23-39.14-16.23 c-15.29,0-29.14,6.2-39.15,16.22C12.27,32.3,6.07,46.15,6.07,61.44C6.07,73.82,10.13,85.25,16.99,94.47L16.99,94.47L16.99,94.47z" /> </g></svg>
-                </div><!--USER IMG-->
-                <div class="username">
-                    <p>Olá, <?php echo ($usuario_nome);?></p>
-                </div><!--USERNAME-->
-                <div class="status">
-                     <div class="">
-                          <a href=""><button class="sairbtn"><u>Sair</u></button></a>
-                     </div><!--BTN SAIR-->
-                </div><!--STATUS-->
-            </div><!--FIM DO BOX DO USUARIO-->
-        </div><!--FIM DO USUÁRIO-->
-        <div class="config-box">
-            <div class="config-title">
-                <p>Configurações</p>
-            </div><!--FIM DO TÍTULO DAS CONFIGURAÇÕES-->
-            <form id="config-form" action="#" method="post" enctype="multipart/form-data">
-                <label class="config-label" for="appname">Nome do sistema:</label><br>
-                <input type="text" name="appname" value="<?php echo $appname?>">
-                <label class="config-label" for="corlinhasuperior">Cor da linha superior:</label><br>
-                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperior?>">
-                <label class="config-label" for="corlinhasuperiormenu">Cor da linha superior do menu:</label><br>
-                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenu?>">
-                <label class="config-label" for="foto">Mudar foto de Perfil:</label><br>
-                <input class="config-input" type="file" name="foto" id="foto" accept="image/*">
-                <div class="button-box"><button class="save-btn" id="save-btn" type="submit">Salvar</button>
-            </div><!--FIM DO BOX DO BOTÃO DE SALVAR-->
-            </form>
-            <div class="button-box"> <button class="back-btn" id="back-btn">Voltar</button>
-        </div><!--BACK BTN-->
-        </div><!--CONFIG FORM-->
-</div><!-- FIM DO MENU DE CONFIGURAÇÕES-->
-    <div class="linhasuperior" id="linhasuperiorf" style='background-color:<?php echo("$corlinhasuperior");?>'></div><!--fim da linha superior-->
+    <div class="linhasuperior" id="linhasuperiorf" style='background-color:<?php echo("$corlinhasuperior");?>'></div>
+    <!--fim da linha superior-->
     <div class="painel" id=painelf>
-        <div class="titulo" id="titulof">
-            <h1 id="h1titulof">Usuários</h1>
-        </div><!--fim do titulo-->
-        <div class="dashboardalunos" id="dashboard">
-            <div class="linhasuperiorcadastro">
-                <div class="alinharbtn">
-                    <a href="criar.php">
-                        <div class="cadastro" id="btncadastro">
-                            <div class="icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M11 8C11 7.44772 11.4477 7 12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44771 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8Z" fill="#ffffff"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z" fill="#ffffff"></path></g></svg>
-                            </div><!--fim do icone-->
-                            <div class="texto">
-                                <p>Usuário</p>
-                            </div><!--texto-->
-                        </div><!--FIM DO CADASTRO-->
-                    </a>
-                    <a id="btnvoltar" class="cadastro">
-                        <div class="icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M4 10L3.29289 10.7071L2.58579 10L3.29289 9.29289L4 10ZM21 18C21 18.5523 20.5523 19 20 19C19.4477 19 19 18.5523 19 18L21 18ZM8.29289 15.7071L3.29289 10.7071L4.70711 9.29289L9.70711 14.2929L8.29289 15.7071ZM3.29289 9.29289L8.29289 4.29289L9.70711 5.70711L4.70711 10.7071L3.29289 9.29289ZM4 9L14 9L14 11L4 11L4 9ZM21 16L21 18L19 18L19 16L21 16ZM14 9C17.866 9 21 12.134 21 16L19 16C19 13.2386 16.7614 11 14 11L14 9Z" fill="#ffffff"></path></g></svg>
-                        </div><!--fim do icone-->
-                        <div class="texto">
-                            <p>Voltar</p>
-                        </div><!--texto-->
-                    </a>
-                </div><!--alinhar btn-->
-            </div><!--linha superior cadastro-->
-            <div id="resultado"class="listafornecedores"></div><!--resultado-->
-            <div id="resultado2"class="listafornecedores"></div><!--resultado-->
-        </div><!--fim do dasboard-->
-        <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div> 
-    </div><!--painel-->
-    <div id="popupalunos" class="popup">
-        <div class="closepop"></div>
+
+        <div class="titulo" >
+
+            <h1 id="h1titulof">Adicionar Usuário</h1>
+        </div>
+        <!--fim do titulo-->
+        <div class="dashboard" id="dashboardcriarusuario">
+        <div class="container">
+            <div class="ladoesquerdoform">
+            <form action="#" method="POST"  id="btncadastrar" autocomplete="off">
+            <div class="form-titulo">
+                <h1>Informações Pessoais</h1>
+            </div>
+            <div class="form-group">
+                <label for="nomeusuarionovo">Nome completo:</label>
+                <input  type="text" id="nome" name="nomeusuarionovo" required maxlenght="255" placeholder="Nome completo">
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="data_nascimento" name="senhausuario" minlenght="4">
+            </div>
+            <div class="form-group">
+                <label for="tipousuario">Tipo de Usuário:</label>
+                <select name="tipousuario">
+                    <option value="nenhum">Selecione...</option>
+                    <option value="admin">Admin</option>
+                    <option value="funcionario">Funcionário</option>
+</select>
+               
+            </div>
+            <div class="form-group">
+            <label for="fotoperfil">Foto de Perfil:</label>
+  <input type="file" id="arquivo" name="fotoperfil" accept=".jpg, .jpeg, .png">
+            </div>
+           
+    <div class="boxbtn">
+    <button id="cadastraluno" type="submit"><svg id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                    stroke="#ffffff">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M11 8C11 7.44772 11.4477 7 12 7C12.5523 7 13 7.44772 13 8V11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H13V16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16V13H8C7.44771 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11H11V8Z"
+                                            fill="#ffffff"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z"
+                                            fill="#ffffff"></path>
+                                    </g>
+                                </svg><p id="btntxt">Cadastrar</p></button>  <a id="cadastralunovoltar"><svg  id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M4 10L3.29289 10.7071L2.58579 10L3.29289 9.29289L4 10ZM21 18C21 18.5523 20.5523 19 20 19C19.4477 19 19 18.5523 19 18L21 18ZM8.29289 15.7071L3.29289 10.7071L4.70711 9.29289L9.70711 14.2929L8.29289 15.7071ZM3.29289 9.29289L8.29289 4.29289L9.70711 5.70711L4.70711 10.7071L3.29289 9.29289ZM4 9L14 9L14 11L4 11L4 9ZM21 16L21 18L19 18L19 16L21 16ZM14 9C17.866 9 21 12.134 21 16L19 16C19 13.2386 16.7614 11 14 11L14 9Z"
+                                            fill="#ffffff"></path>
+                                    </g>
+                                </svg><p id="btntxt">Voltar</p></a>
+                                </div> </div>
+                                </form>
+        </div>
+      <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
+    </div>
+    <!--FIM DO PAINEL-->
+    <div id="popup" class="popup" style='top: 50%; left:60%;'>
+
+        <div class="closepop">
+
+            <a id="closepop" onclick="closePopup()"></a>
+        </div>
         <p id="popup-message"></p>
-        <div id="dadosaluno"></div>
-    </div><!--popupalunos-->
-    <div class="overlay" id="overlay"></div><!--overlay-->
-    <div id="resultados">
-    <!-- Resultados aparecerão aqui -->
-</div>
-<script>
-function atualizaAtivados() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/UsuarioController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <script>
 
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'usuario';
+    document.getElementById('btncadastrar').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
-            document.getElementById('resultado').innerHTML = xhr.responseText;
+       var form = document.getElementById('btncadastrar');
+       var formData = new FormData(form);
+        fetch('../../controllers/FormController.php', {
+                method: 'POST',
+                body: formData
+         })
+            .then(response => response.text())
+            .then(data => {
+                setTimeout(function() {
+                    closePopup();
+                }, 1600);
+                document.getElementById('popup-message').innerHTML = data;
+                document.getElementById('popup').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            })
+            .catch(error => console.error('Erro:', error));
+    });
 
-            // Reaplica os eventos aos botões, caso necessário
-            if (typeof adicionarEventosBotoes === 'function') {
-                adicionarEventosBotoes();
-            }
-        } else {
-            console.log('Erro na requisição AJAX: ' + xhr.statusText);
-        }
-    };
-
-    xhr.onerror = function () {
-        console.log('Erro de conexão ou requisição AJAX.');
-    };
-
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
-}
-
-// Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaAtivados, 5000);
-
-// Chama a função uma vez ao carregar a página
-atualizaAtivados();
-
-
-// Atualiza a tabela a cada 5 segundos
-
-
-
-</script>
-<script>
-    var optHome = document.getElementById("optHomeA");
-    var optAlunos = document.getElementById("optAlunos");
+    function closePopup() {
+        window.location.reload();
+        document.getElementById('popup').classList.remove('show');
+        document.getElementById('overlay').classList.remove('show');
+    }
+    </script>
+    <script>
+     var optHome = document.getElementById("optHomeA");
+    var optAlunos = document.getElementById("optAlunosA");
     var optPagamento = document.getElementById("optPagamento");
-    var optUsuario = document.getElementById("optUsuarioU");
+    var optUsuario = document.getElementById("optUsuario");
     var optConfig = document.getElementById("optConfig");
     var menuConfig = document.getElementById("menuConfig");
-    var btnVoltar = document.getElementById("btnvoltar");
-   
-</script>
-<script>
-    btnVoltar.addEventListener("click", function() {
-        window.history.back();
-    });
-    optHome.addEventListener("click", function() {
-        window.location.href = "../dashboard/dashboard.php";
-    });
-    optPagamento.addEventListener("click", function() {
-        window.location.href = "../pagamentos/index.php";
-    });
-    optAlunos.addEventListener("click", function() {
-        window.location.href = "../alunos/index.php";
-    });
+    var btn = document.getElementById("cadastralunovoltar");
+
+    //adição de eventos (transição ao passar o mouse sobre as opções do menu lateral)
     optHome.addEventListener("mouseover", function() {
-        optUsuario.style.backgroundColor = "rgba(34,45,51,255)"
-        optUsuario.style.border = "none"
+        optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
+        optAlunos.style.border = "none"
     });
     optPagamento.addEventListener("mouseover", function() {
-        optUsuario.style.backgroundColor = "rgba(34,45,51,255)"
-        optUsuario.style.border = "none"
+        optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
+        optAlunos.style.border = "none"
     });
-    optAlunos.addEventListener("mouseover", function() {
-        optUsuario.style.backgroundColor = "rgba(34,45,51,255)"
-        optUsuario.style.border = "none"
+    optUsuario.addEventListener("mouseover", function() {
+        optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
+        optAlunos.style.border = "none"
     });
     optConfig.addEventListener("mouseover", function() {
-        optUsuario.style.backgroundColor = "rgba(34,45,51,255)"
-        optUsuario.style.border = "none"
+        optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
+        optAlunos.style.border = "none"
     });
+    //saída do mouse
     optAlunos.addEventListener("mouseout", function() {
-        optUsuario.style.backgroundColor = "#0e1114";
-        optUsuario.style.borderLeft = "2px solid red"
+        optAlunos.style.backgroundColor = "#0e1114";
+        optAlunos.style.borderLeft = "2px solid red"
     });
     optHome.addEventListener("mouseout", function() {
-        optUsuario.style.backgroundColor = "#0e1114";
-        optUsuario.style.borderLeft = "2px solid red"
+        optAlunos.style.backgroundColor = "#0e1114";
+        optAlunos.style.borderLeft = "2px solid red"
     });
     optPagamento.addEventListener("mouseout", function() {
-        optUsuario.style.backgroundColor = "#0e1114";
-        optUsuario.style.borderLeft = "2px solid red"
+        optAlunos.style.backgroundColor = "#0e1114";
+        optAlunos.style.borderLeft = "2px solid red"
     });
     optUsuario.addEventListener("mouseout", function() {
-        optUsuario.style.backgroundColor = "#0e1114";
-        optUsuario.style.borderLeft = "2px solid red"
+        optAlunos.style.backgroundColor = "#0e1114";
+        optAlunos.style.borderLeft = "2px solid red"
     });
     optConfig.addEventListener("mouseout", function() {
-        optUsuario.style.backgroundColor = "#0e1114";
-        optUsuario.style.borderLeft = "2px solid red"
+        optAlunos.style.backgroundColor = "#0e1114";
+        optAlunos.style.borderLeft = "2px solid red"
     });
-</script>
-<script>
-   function adicionarEventosBotoes() {
+    //funções de clique
+    optHome.addEventListener('click', function() {
+        window.location.href = '/academy/assets/php/interfaces/painel.php';
+    });
+    optAlunos.addEventListener('click', function() {
+        window.location.href = '/academy/assets/php/interfaces/alunos.php';
+    });
+    optPagamento.addEventListener('click', function() {
+        window.location.href = '/academy/assets/php/interfaces/pagamentos.php';
+    });
+    optUsuario.addEventListener('click', function() {
+        window.location.href = '/academy/assets/php/interfaces/usuarios.php';
+    });
+    optConfig.addEventListener('click', function() {
+        menuConfig.style.display = "block";
+    });
+    btn.addEventListener("click", function() {
+        window.history.back();
+    });
     
-    const linhasAlunos = document.querySelectorAll('.linha-aluno');
-    linhasAlunos.forEach(linha => {
    
-
-        linha.querySelector('.apagar').addEventListener('click', (event) => {
-    event.preventDefault(); // Previne o comportamento padrão do botão
-
-    // Obtendo os dados do elemento
-    const dados = linha.dataset;
-
-    // Criando os dados para enviar na requisição
-    const formData = new FormData();
-    formData.append('id', dados.id);
-    formData.append('nome', dados.nome);
-    // Enviando a requisição para o servidor
-    fetch('../../controllers/UsuarioController.php', {
-        method: 'POST',
-        body: formData,
-    })
-        .then((response) => response.text()) // Interpretar o retorno como texto
-        .then((data) => {
-            // Exibir a mensagem de retorno no popup
-            document.getElementById('popup-message').innerHTML = data;
-
-            // Mostrar o popup
-            document.getElementById('popupalunos').classList.add('show');
-            document.getElementById('overlay').classList.add('show');
-
-            // Fechar o popup automaticamente após 1.6 segundos
-            setTimeout(function () {
-                closePopup();
-            }, 1800);
-        })
-        .catch((error) => {
-            console.error('Erro:', error);
-            document.getElementById('popup-message').innerHTML = 'Erro na comunicação com o servidor.';
-            document.getElementById('popupalunos').classList.add('show');
-            document.getElementById('overlay').classList.add('show');
-        });
-});
-
-// Função para fechar o popup
-function closePopup() {
-    atualizaAtivados();
-    document.getElementById('popupalunos').classList.remove('show');
-    document.getElementById('overlay').classList.remove('show');
-}
-
-
-
-
-       
-    });
-   }
-</script>
-
-
-
+    </script>
+   
 </body>
+
 </html>

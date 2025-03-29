@@ -36,6 +36,6 @@ if (!empty($usuarios)) {
             </tr>";
     }
 } else {
-    echo "<tr><td colspan='7'>Nenhum pagamento pendente.</td></tr>";
+    echo "<tr><td colspan='7'>Sem notificações.</td></tr>";
 }
 ?>

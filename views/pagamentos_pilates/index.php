@@ -296,7 +296,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     var btnAtivos = document.getElementById("btnativos");
     var btnPagos = document.getElementById("btnpagos");
     var btnProximos = document.getElementById("btnproximos");
-   
+    console.log(optHome, optAlunos, optPagamento, optUsuario, optConfig, menuConfig, btnVoltar,);
 </script>
 <script>
     btnVoltar.addEventListener("click", function() {
@@ -441,7 +441,7 @@ function atualizaPagos(pagina) {
     // Garante que 'pagina' seja um número válido
     pagina = parseInt(pagina) || 1;
 
-     // Debug para verificar se o valor está dobrando antes do envio
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../../controllers/AlunoController.php?mostrarPago=true&pagina=' + pagina, true);
@@ -471,7 +471,7 @@ function atualizaProximos(pagina) {
     // Garante que 'pagina' seja um número válido
     pagina = parseInt(pagina) || 1;
 
-  
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../../controllers/AlunoController.php?mostrarProximo=true&pagina=' + pagina, true);
@@ -500,7 +500,7 @@ function atualizaIgnorados(pagina) {
     // Garante que 'pagina' seja um número válido
     pagina = parseInt(pagina) || 1;
 
-     // Debug para verificar se o valor está dobrando antes do envio
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../../controllers/AlunoController.php?mostrarIgnorado=true&pagina=' + pagina, true);
@@ -745,7 +745,8 @@ document.addEventListener('DOMContentLoaded', adicionarEventosBotoes);
 }
 
 const vencimentoFormatado = formatarData(vencimento);
-
+console.log(alunoId);
+console.log(vencimento);
                 // Verifica se o atributo data-id existe
                 if (!alunoId) {
                     console.error("Atributo data-id não encontrado no elemento .linha-aluno");
@@ -830,7 +831,9 @@ const vencimentoFormatado = formatarData(vencimento);
                                     inputValor.value = `R$ ${value}`;
                                 });
 
-                               
+                                inputValor.addEventListener('focusout', function () {
+                                    inputValor.value = inputValor.value.replace('R$ ', '').trim();
+                                });
                             }
 
                             // Submissão do formulário
@@ -869,7 +872,7 @@ const vencimentoFormatado = formatarData(vencimento);
                                             } else if (textResponse.includes("erro")) {
                                                 popupMessage.innerHTML = `<p style="color: red;">Erro ao atualizar o pagamento.</p>`;
                                             } else {
-                                                popupMessage.innerHTML =  `<p style="color: #000;">${textResponse}</p>`;
+                                                popupMessage.innerHTML = `<p style="color: #red;">Algo deu errado. Tente novamente.</p>`;
                                             }
 atualizaProximos(1);
                                             setTimeout(() => {
@@ -949,7 +952,8 @@ document.addEventListener('DOMContentLoaded', adicionarEventosBotoesFuturos);
 }
 
 const vencimentoFormatado = formatarData(vencimento);
-
+console.log(alunoId);
+console.log(vencimento);
                 // Verifica se o atributo data-id existe
                 if (!alunoId) {
                     console.error("Atributo data-id não encontrado no elemento .linha-aluno");
