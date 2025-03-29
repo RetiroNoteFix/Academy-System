@@ -565,11 +565,12 @@ atualizaDesativados();
         const termoPesquisa = inputPesquisa.value.toLowerCase();
         resultados.style.display = "none";
         resultado.style.display = "block";
+    
 
         // Cria o objeto de dados para enviar com a requisição POST
         const data = new FormData();
         data.append('pesquisa', termoPesquisa); // Passa o termo de pesquisa
-
+       
         // Requisição POST para o arquivo PHP que retorna o HTML
         fetch('../../controllers/AlunoController.php', {
             method: 'POST',
@@ -577,9 +578,9 @@ atualizaDesativados();
         })
         .then(response => response.text()) // Espera a resposta como texto (HTML)
         .then(html => {
-            // Limpa o conteúdo anterior
+            
             resultado.innerHTML = html;
-
+            adicionarEventosBotoes();
            
           
         })
@@ -626,7 +627,7 @@ atualizaDesativados();
         .then(html => {
            
             resultado2.innerHTML = html;
-
+adicionarEventosBotoes();
           
         })
         .catch(error => {

@@ -1166,7 +1166,7 @@ document.addEventListener('DOMContentLoaded', adicionarEventosBotoesIgnorados);
         resultados2.classList.remove("hidden");
         resultado2.classList.add("hidden");
         resultados2.innerHTML = ""; // Limpa o conteúdo antigo
-        return; // Sai da função
+        atualizaPagos(1);
     }
 
     // Oculta resultadospagamentos e exibe resultadospagamentos2

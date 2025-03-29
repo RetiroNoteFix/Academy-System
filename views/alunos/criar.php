@@ -196,15 +196,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </div>
           
             <div class="form-group">
-                <label for="plano">Plano:</label>
-                <select id="plano" name="plano" >
-                    <option value="Mensal" selected>Selecione</option>
-                    <option value="Mensal">Mensal</option>
-                    <option value="Semestral">Semestral</option>
-                    <option value="Anual">Anual</option>
-                </select>
-            </div>
-            <div class="form-group">
                 <label for="profissão">Profissão:</label>
                 <input type="text" id="profissao" name="profissao" placeholder="Profissão" >
             </div>
@@ -519,14 +510,25 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             <tr>
                 <th id="th-valor">Valor</th>
                 <th id="th-data-assinatura">Data de Assinatura</th>
+                <th>Plano:</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><input id="input-valor" name="valor"  maxlength="12"  type="text" placeholder="R$0,00" required></td>
+                <td><input id="input-valor" name="valor" type="text" placeholder="R$0,00" required></td>
                 <td><input id="input-data-assinatura" name="data_pagamento" type="date" required></td>
+                <td><div class="form-group">
+                <select id="plano" name="plano" required>
+                    <option value="" >Selecione</option>
+                    <option value="Mensal">Mensal</option>
+                    <option value="Semestral">Semestral</option>
+                    <option value="Anual">Anual</option>
+                </select>
+            </div></td>
             </tr>
         </tbody>
+        
+        
     </table>
     <div class="boxbtn">
     <button id="cadastraluno" type="submit"><svg id="iconbtn" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -589,7 +591,9 @@ inputValor.addEventListener('input', function (event) {
 });
 
 // Remove o "R$" ao submeter o formulário (opcional)
-
+inputValor.addEventListener('focusout', function () {
+  inputValor.value = inputValor.value.replace('R$ ', '').trim();
+});
 
 function toggleLesaoInput(select) {
     const lesaoDetalhesDiv = document.getElementById('lesao_detalhes');

@@ -123,6 +123,7 @@ class Pagamento {
             $query = "
                 SELECT 
                     a.idAluno, 
+                    a.data_pagamento,
                     p.nome, 
                     p.telefone, 
                     p.endereco, 
@@ -341,7 +342,8 @@ ORDER BY
     p.nome,
     p.telefone,
     p.endereco,
-    a.idAluno, -- Selecionando o idAluno da tabela alunos
+    a.idAluno,
+    a.data_pagamento, -- Selecionando o idAluno da tabela alunos
     SUM(pa.valor) AS total_pago,
     COUNT(pa.idPagamento) AS quantidade_pagamentos
 FROM 

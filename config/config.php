@@ -9,6 +9,6 @@ $corlinhasuperiorpilates = "#355bb5;";
 $corlinhasuperiormenu = "#e74c3c;";
 $corlinhasuperiormenupilates = "#355bb5;";
 $logotipo = "/academy/assets/img/logo.jpg";
-$versao = "v2.2.3-beta";
+$versao = "v2.2.6";
 $modopilates = "Pilates";
 ?>

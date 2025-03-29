@@ -5,7 +5,7 @@ function verificarEInserirPagamentos()
     $database = new Database();
     $conn = $database->getConnection();
     try {     
-        echo "Buscando alunos com data de pagamento registrada...\n";
+       
         $queryAlunos = "SELECT idAluno, data_pagamento, valor, plano FROM alunos WHERE data_pagamento IS NOT NULL";
         $stmtAlunos = $conn->prepare($queryAlunos);
         $stmtAlunos->execute();
@@ -14,6 +14,10 @@ function verificarEInserirPagamentos()
             foreach ($alunos as $aluno) {
                 $idAluno = $aluno['idAluno'];
                 $planoAluno = $aluno['plano'];
+                if ($planoAluno === ''){
+                    echo ("ERRO CRÍTICO!");
+                    exit;
+                }
                 $dataPagamento = $aluno['data_pagamento'];
                 $valorAluno = $aluno['valor'];
                 echo "Processando aluno ID: {$idAluno}, Data de Pagamento: {$dataPagamento}, com plano: {$planoAluno}\n";
@@ -129,6 +133,9 @@ function calcularProximaDataVencimento($dataAtual, $dataOriginal, $planoAluno)
     $ultimoDiaDoMes = cal_days_in_month(CAL_GREGORIAN, $mesAtual, $anoAtual);
     $diaVencimento = min($diaOriginal, $ultimoDiaDoMes);
     return date('Y-m-d', strtotime("{$anoAtual}-{$mesAtual}-{$diaVencimento}"));
+    } 
+    elseif  (!$planoAluno) {
+echo ("FUDEU");
     } 
 }
 verificarEInserirPagamentos();

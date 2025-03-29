@@ -71,12 +71,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 </div><!--fim da imagem da opção-->
                 <a>Configurações</a>
             </div><!--FIM DA OPÇÃO CONFIGURAÇÕES-->
-            <div class="options" id="optPilates">
-                <div class="img">
-                <svg height="200px" width="200px" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <style type="text/css"> .st0{fill:#ffffff;} </style> <g> <path class="st0" d="M188.858,102.634c26.588,10.645,56.793-2.287,67.428-28.874C266.941,47.171,254,16.966,227.411,6.33 c-26.597-10.654-56.782,2.278-67.438,28.876C149.339,61.794,162.251,91.98,188.858,102.634z"></path> <path class="st0" d="M502.664,130.434L433.106,13.819c-5.298-9.872-16.011-14.946-26.5-13.607c-0.245,0.02-0.489,0.078-0.723,0.098 c-0.773,0.127-1.555,0.294-2.326,0.479c-0.46,0.127-0.929,0.225-1.378,0.371c-1.604,0.5-3.177,1.144-4.702,1.965 c-2.835,1.526-6.031,3.618-8.045,5.905l-76.508,59.256l-55.668,42.775c-23.382,15.122-41.496,14.389-62.58,9.56L30.582,74.052 C19.918,70.836,8.647,76.877,5.441,87.551c-3.206,10.664,2.834,21.935,13.509,25.151l156.39,60.624 c6.882,2.014,18.445,18.456,26.362,27.233c11.564,12.864,55.62,78.493,159.9,80.839c6.402,0.147,7.996,1.76,8.788,6.159 l19.677,200.758c0,13.078,10.606,23.684,23.685,23.684c13.069,0,23.684-10.606,23.684-23.684c0,0,2.336-257.004,2.63-261.383 c0.352-5.386,3.734-8.445,8.524-12.707c0,0,40.244-39.609,40.947-40.068C509.81,160.736,510.768,143.748,502.664,130.434z M372.159,181.245c-4.887,3.538-22.59,6.95-29.863,6.822c-42.638-0.684-46.294-35.238-33.401-48.132l35.913-33.723l51.622-47.438 l36.188,74.955L372.159,181.245z"></path> </g> </g></svg>
-                </div><!--fim da imagem da opção-->
-                <a>Pilates</a>
-            </div><!--FIM DA OPÇÃO PILATES-->
+            
         </div><!--FIM DO BOX DAS OPÇÕES-->
 </div><!-- FIM DO MENU LATERAL-->
     <div class="menulateral" id="menuConfig">
@@ -131,9 +126,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="alinharbtn">
                     <div class="boxsitu">
                         <h1>NOTIFICAÇÕES</h1>
+                       
                      </div><!--BOX SITU-->
                 </div><!--ALINHAR BTN-->
             </div><!--linhasuperiorcadastro-->
+            <h1 id="resultadoerro"></h1>
     <table border="1" style="margin-bottom:10px;">
         <thead>
             <tr>
@@ -149,6 +146,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         <tbody id="resultado">
         </tbody>
     </table>
+    
     <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div> 
     </div><!--FIM DO PAINEL-->
     <div id="msg" class="msg" style='top: 50%; left:60%;'>
@@ -166,7 +164,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     var optConfig = document.getElementById("optConfig");
     var menuConfig = document.getElementById("menuConfig");
     var backBtn = document.getElementById("back-btn");
-    var optPilates = document.getElementById("optPilates");
     optAlunos.addEventListener("mouseover", function() {
         optHome.style.backgroundColor = "rgba(34,45,51,255)"
         optHome.style.border = "none"
@@ -201,9 +198,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     });
     optHome.addEventListener('click', function() {
         window.location.href = 'dashboard.php';
-    });
-    optPilates.addEventListener('click', function() {
-        alert("Seção em Desenvolvimento");
     });
     optAlunos.addEventListener('click', function() {
         window.location.href = '../alunos/index.php';
@@ -444,14 +438,24 @@ function closemsg() {
 }
     atualizarTabela();
     setInterval(atualizarTabela, 600);
-function recarregarArquivoPHP() {
+    function recarregarArquivoPHP() {
     setInterval(function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../../controllers/PagamentoController.php', true);
-    xhr.send();
-    }, 500); 
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '../../controllers/PagamentoController.php', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText === "ERRO CRÍTICO!") {
+                    document.getElementById('resultadoerro').innerText = xhr.responseText;
+                } else {
+                    return; // Apenas retorna, sem fazer nada
+                }
+            }
+        };
+        xhr.send();
+    }, 500);
 }
-    recarregarArquivoPHP();
+
+recarregarArquivoPHP();
 </script>
 </body>
 </html>

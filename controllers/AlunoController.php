@@ -285,12 +285,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<th>Endereço</th>";
                 echo "<th>Telefone</th>";
                 echo "<th>SITUAÇÃO</th>";
+                echo "<th>Data de Pagamento</th>";
                 echo "<th>AÇÕES</th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
                 $contador = 1;
                 foreach ($alunos as $aluno) {
+                    $dataVencimento = $aluno['data_pagamento'];
+
+                // Formatar a data para o formato dd/mm/yyyy
+                $dataFormatada = date('d/m/Y', strtotime($dataVencimento));
                     echo "<tr class='linha-aluno' data-id='" . $aluno['idAluno'] . "' data-nome='" . $aluno['telefone'] . "' data-nome='" . $aluno['telefone'] . "'>";
                     echo "<td style='display:none;'>" . $aluno['idAluno'] . "</td>";
                     echo "<td>{$contador}</td>";
@@ -298,6 +303,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo "<td>" . $aluno['endereco'] . "</td>";
                     echo "<td>" . $aluno['telefone'] . "</td>";
                     echo "<td><i><strong><span style='color: green;'>POSSUI<br> PAGAMENTOS<BR> PAGOS</span></strong></i></td>";
+                    echo "<td>" . $dataFormatada . "</td>";
                    echo " <td id='acoespainel'>
                             <div class='actionspainel'>
                                 <a id='verdetalhes' class='verdetalhes'>Detalhes</a>
@@ -546,7 +552,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
           $contador++; 
       }
       if (empty($alunos)) {
-          echo "<tr><td colspan='7'>Nenhum aluno desativado.</td></tr>";
+          echo "<tr><td colspan='7'>Nenhum aluno encontrado.</td></tr>";
       }
     } elseif (isset($_GET['mostrarDesativado'])) {
        // Chamada ao método listarTodos
@@ -705,7 +711,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $clientes = new Pagamento();
         $usuarios = $clientes->listarTodos($pagina);
         $contador = 1;
-
+       
         // Gerar a tabela antes do foreach
         echo '
         <table id="tabelaresultado" border="1" style="margin-bottom:10px;">
@@ -716,6 +722,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <th>Endereço</th>
                     <th>Telefone</th>
                     <th>SITUAÇÃO</th>
+                    <th>DATA DE PAGAMENTO</th>
                     <th>AÇÕES</th>
                 </tr>
             </thead>
@@ -723,6 +730,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         if (!empty($usuarios)) {
             foreach ($usuarios as $usuario) {
+                $dataVencimento = $usuario['data_pagamento'];
+
+                // Formatar a data para o formato dd/mm/yyyy
+                $dataFormatada = date('d/m/Y', strtotime($dataVencimento));
                 echo "
                 <tr class='linha-aluno' 
                     data-id='{$usuario['idAluno']}'
@@ -734,6 +745,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <td>{$usuario['endereco']}</td>
                     <td>{$usuario['telefone']}</td>
                     <td><i><strong><span style='color: green;'>POSSUI<br> PAGAMENTOS<BR> PAGOS</span></strong></i></td>
+                     <td>$dataFormatada</td>
                     <td id='acoespainel'>
                         <div class='actionspainel'>
                             <a id='verdetalhes' class='verdetalhes'>Detalhes</a>
@@ -744,7 +756,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             }
         } else {
             // Exibe uma mensagem caso não haja registros
-            echo "<tr><td colspan='6' style='text-align:center;'>Nenhum pagamento encontrado.</td></tr>";
+            echo "<tr><td colspan='7' style='text-align:center;'>Nenhum pagamento encontrado.</td></tr>";
         }
 
         // Fechar a tabela após o foreach
@@ -771,7 +783,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <th>Endereço</th>
                     <th>Telefone</th>
                     <th>Vencimento</th>
-                    <th>Situação</th>
+                    <th>SITUAÇÃO</th>
                     <th>AÇÕES</th>
                 </tr>
             </thead>
@@ -780,8 +792,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!empty($usuarios)) {
             foreach ($usuarios as $usuario) {
                 $dataVencimento = $usuario['dataVencimento'];
-
-                // Formatar a data para o formato dd/mm/yyyy
                 $dataFormatada = date('d/m/Y', strtotime($dataVencimento));
                 echo "<tr class='linha-aluno' 
                         data-id='{$usuario['idAluno']}'
@@ -827,7 +837,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     <th>Endereço</th>
                     <th>Telefone</th>
                     <th>Vencimento</th>
-                    <th>Situação</th>
+                    <th>SITUAÇÃO</th>
                     <th>AÇÕES</th>
                 </tr>
             </thead>
@@ -865,6 +875,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             // Exibe uma mensagem caso não haja registros
             echo "<td colspan='7'>Nenhum pagamento encontrado.</td>";
         }
+     }
+     elseif (isset($_GET[$impressao])) {
+        $database = new Database();
+        $conexao = $database->getConnection();
+echo $impressao;
      }
     } catch (PDOException $e) {
         echo "Erro de conexão: " . $e->getMessage();
