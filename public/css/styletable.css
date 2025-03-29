@@ -1,0 +1,8 @@
+ .ficha { font-family: Arial, sans-serif; width: 350px; margin: 20px auto; }
+        .ano-container { display: flex; align-items: center; justify-content: center; }
+        .seta { font-size: 20px; cursor: pointer; margin: 0 10px; }
+        table { width: 100%; border: 1px solid #ddd; border-collapse: collapse; }
+        th, td { padding: 5px; text-align: center; font-size: 12px; }
+        th { background: #f4f4f4; }
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+        h3 { text-align: center; }
