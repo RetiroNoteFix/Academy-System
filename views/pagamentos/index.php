@@ -67,7 +67,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../usuarios/usuarios.php">Usuários</a>
+                <a href="../usuarios/index.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -169,6 +169,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 </div>
                     </form>
                 </div><!--alinhar btn-->
+                <div class="paginas"> <p>Pág:</p><button class='btnDiminuir' id='btnDiminuir'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button> <input type='name' class='quantidade' id='quantidade' value='1' >
+<button  class='btnAumentar' id='btnAumentar'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button></div>
             </div><!--linha superior cadastro--> 
             <table id="tabelaresultado" border="1" style="margin-bottom:10px;">
         <thead>
@@ -177,8 +179,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         
         <tbody id="resultadopagamentos"></tbody>
         <tbody id="resultadopagamentos2"></tbody>
-    </table>   
+    </table>  
+    <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
     </div><!--fim do dasboard-->
+    
     </div><!--painel-->
     <div class="painel" id="painelproximos">
         <div class="titulo" id="titulof">
@@ -206,6 +210,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </div><!--button-->
             </div><!--box pesquisa-->
         </div><!--alinharbtn-->
+        <div class="paginas"> <p>Pág:</p><button class='btnDiminuir' id='btnDiminuir2'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button> <input type='name' class='quantidade' id='quantidade2' value='1' >
+<button  class='btnAumentar' id='btnAumentar2'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button></div>
     </div><!--linha superior cadastro-->
     <table id="tabelaresultado" border="1" style="margin-bottom:10px;">
         <thead>
@@ -214,8 +220,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         <tbody id="resultadopagamentosproximos">
         <tbody id="resultadopagamentosproximos2">
         </tbody>
-    </table>   
+    </table>  
+    <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
     </div><!--fim do dasboard-->
+
     </div><!--FIM DO PAINEL-->
     <div class="painel" id="paineldesativado">
         <div class="titulo" id="titulof">
@@ -243,6 +251,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </div><!--button-->
             </div><!--box pesquisa-->
         </div><!--alinharbtn-->
+        <div class="paginas"> <p>Pág:</p><button class='btnDiminuir' id='btnDiminuir3'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button> <input type='name' class='quantidade' id='quantidade3' value='1' >
+<button  class='btnAumentar' id='btnAumentar3'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button></div>
     </div><!--linha superior cadastro-->
     <table border="1" style="margin-bottom:10px;">
         <thead>
@@ -251,8 +261,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         <tbody id="resultadopagamentosignorados">
         <tbody id="resultadopagamentosignorados2">
         </tbody>
-    </table>   
+    </table>  
+    <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
     </div><!--fim do dasboard-->
+    
     </div><!--FIM DO PAINEL-->
 
 
@@ -295,6 +307,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     });
     optAlunos.addEventListener("click", function() {
         window.location.href = "../alunos/index.php";
+    });
+    optUsuario.addEventListener("click", function() {
+        window.location.href = "../usuarios/index.php";
     });
     optPagamento.addEventListener("click", function() {
         window.location.reload ();
@@ -367,23 +382,79 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 <script>
 
-function atualizaAtivados() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/AlunoController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+document.addEventListener("DOMContentLoaded", function () {
+    var inputPagina = document.getElementById('quantidade');
+    var btnAumentar = document.getElementById('btnAumentar');
+    var btnDiminuir = document.getElementById('btnDiminuir');
+    var inputPagina2 = document.getElementById('quantidade2');
+    var btnAumentar2 = document.getElementById('btnAumentar2');
+    var btnDiminuir2 = document.getElementById('btnDiminuir2');
+    var inputPagina3 = document.getElementById('quantidade3');
+    var btnAumentar3 = document.getElementById('btnAumentar3');
+    var btnDiminuir3 = document.getElementById('btnDiminuir3');
 
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'pagamento';
+    inputPagina.value = parseInt(inputPagina.value) || 1;
+    inputPagina2.value = parseInt(inputPagina2.value) || 1;
+    inputPagina3.value = parseInt(inputPagina3.value) || 1;
+   
+    btnAumentar.addEventListener('click', function () {
+        var paginaAtual = parseInt(inputPagina.value) || 1;
+        inputPagina.value = paginaAtual + 1;
+        atualizaPagos(inputPagina.value);
+    });
+    btnAumentar2.addEventListener('click', function () {
+        var paginaAtual2 = parseInt(inputPagina2.value) || 1;
+        inputPagina2.value = paginaAtual2 + 1;
+        atualizaProximos(inputPagina2.value);
+    });
+    btnAumentar3.addEventListener('click', function () {
+        var paginaAtual3 = parseInt(inputPagina3.value) || 1;
+        inputPagina3.value = paginaAtual3 + 1;
+        atualizaIgnorados(inputPagina3.value);
+    });
+
+    // Evento para diminuir a página (evita valores negativos ou zero)
+    btnDiminuir.addEventListener('click', function () {
+        var paginaAtual = parseInt(inputPagina.value) || 1;
+        if (paginaAtual > 1) {
+            inputPagina.value = paginaAtual - 1;
+            atualizaPagos(inputPagina.value);
+        }
+    });
+    btnDiminuir2.addEventListener('click', function () {
+        var paginaAtual2 = parseInt(inputPagina2.value) || 1;
+        if (paginaAtual2 > 1) {
+            inputPagina2.value = paginaAtual2 - 1;
+            atualizaProximos(inputPagina2.value);
+        }
+    });
+    btnDiminuir3.addEventListener('click', function () {
+        var paginaAtual3 = parseInt(inputPagina3.value) || 1;
+        if (paginaAtual3 > 1) {
+            inputPagina3.value = paginaAtual3 - 1;
+            atualizaIgnorados(inputPagina3.value);
+        }
+    });
+});
+
+function atualizaPagos(pagina) {
+    // Garante que 'pagina' seja um número válido
+    pagina = parseInt(pagina) || 1;
+
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarPago=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
             document.getElementById('resultadopagamentos').innerHTML = xhr.responseText;
-adicionarEventosBotoes();
-            // Reaplica os eventos aos botões, caso necessário
+
             if (typeof adicionarEventosBotoes === 'function') {
-                
+                adicionarEventosBotoes();
             }
+
+            history.pushState({ pagina: pagina }, "Página " + pagina, "?pagina=" + pagina);
         } else {
             console.log('Erro na requisição AJAX: ' + xhr.statusText);
         }
@@ -393,34 +464,27 @@ adicionarEventosBotoes();
         console.log('Erro de conexão ou requisição AJAX.');
     };
 
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
+    xhr.send();
 }
 
-// Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaAtivados, 1000);
+function atualizaProximos(pagina) {
+    // Garante que 'pagina' seja um número válido
+    pagina = parseInt(pagina) || 1;
 
-// Chama a função uma vez ao carregar a página
-atualizaAtivados();
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
-
-function atualizaFuturos() {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/AlunoController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'pagamentofuturo';
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarProximo=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
             document.getElementById('resultadopagamentosproximos').innerHTML = xhr.responseText;
-adicionarEventosBotoesFuturos();
-            // Reaplica os eventos aos botões, caso necessário
+
             if (typeof adicionarEventosBotoes === 'function') {
-                
+                adicionarEventosBotoesFuturos();
             }
+
+            history.pushState({ pagina: pagina }, "Página " + pagina, "?pagina=" + pagina);
         } else {
             console.log('Erro na requisição AJAX: ' + xhr.statusText);
         }
@@ -430,33 +494,26 @@ adicionarEventosBotoesFuturos();
         console.log('Erro de conexão ou requisição AJAX.');
     };
 
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
+    xhr.send();
 }
+function atualizaIgnorados(pagina) {
+    // Garante que 'pagina' seja um número válido
+    pagina = parseInt(pagina) || 1;
 
-// Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaAtivados, 1000);
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
 
-// Chama a função uma vez ao carregar a página
-atualizaFuturos();
-
-function atualizaIgnorados() {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/AlunoController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'pagamentoignorado';
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarIgnorado=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
             document.getElementById('resultadopagamentosignorados').innerHTML = xhr.responseText;
-adicionarEventosBotoesIgnorados();
-            // Reaplica os eventos aos botões, caso necessário
+
             if (typeof adicionarEventosBotoes === 'function') {
-                
+                adicionarEventosBotoesIgnorados();
             }
+
+            history.pushState({ pagina: pagina }, "Página " + pagina, "?pagina=" + pagina);
         } else {
             console.log('Erro na requisição AJAX: ' + xhr.statusText);
         }
@@ -466,32 +523,8 @@ adicionarEventosBotoesIgnorados();
         console.log('Erro de conexão ou requisição AJAX.');
     };
 
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
+    xhr.send();
 }
-
-// Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaAtivados, 1000);
-
-// Chama a função uma vez ao carregar a página
-atualizaIgnorados();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -841,7 +874,7 @@ console.log(vencimento);
                                             } else {
                                                 popupMessage.innerHTML = `<p style="color: #red;">Algo deu errado. Tente novamente.</p>`;
                                             }
-
+atualizaProximos(1);
                                             setTimeout(() => {
                                                 closepopuppagamentos();
                                             }, 1800);
@@ -890,7 +923,9 @@ function closepopup() {
     if (popupPagamentos && overlay) {
         popupPagamentos.classList.remove("show");
         overlay.classList.remove("show");
-        window.location.reload ();
+        atualizaIgnorados(1);
+        atualizaPagos(1);
+        atualizaProximos(1);
     }
 }
 
@@ -1040,6 +1075,7 @@ console.log(vencimento);
                                         })
                                         .then((textResponse) => {
                                             if (textResponse.includes("sucesso")) {
+                                            atualizaIgnorados(1);
                                                 popupMessage.innerHTML = `<p style="color: #000;">Pagamento atualizado com sucesso!</p>`;
                                             } else if (textResponse.includes("erro")) {
                                                 popupMessage.innerHTML = `<p style="color: red;">Erro ao atualizar o pagamento.</p>`;
@@ -1095,7 +1131,9 @@ function closepopup() {
     if (popupPagamentos && overlay) {
         popupPagamentos.classList.remove("show");
         overlay.classList.remove("show");
-        window.location.reload ();
+        atualizaIgnorados(1);
+        atualizaPagos(1);
+        atualizaProximos(1);
     }
 }
 
@@ -1150,7 +1188,8 @@ document.addEventListener('DOMContentLoaded', adicionarEventosBotoesIgnorados);
     })
     .then(response => response.text()) // Espera a resposta como texto (HTML)
     .then(html => {
-        resultado2.innerHTML = html; // Atualiza o conteúdo de resultadospagamentos2
+        resultado2.innerHTML = html;
+        adicionarEventosBotoes(); // Atualiza o conteúdo de resultadospagamentos2
     })
     .catch(error => {
         resultado2.innerHTML = "<p>Ocorreu um erro ao carregar os dados.</p>";
@@ -1242,6 +1281,10 @@ document.addEventListener('DOMContentLoaded', adicionarEventosBotoesIgnorados);
             resultado4.innerHTML = "<p>Ocorreu um erro ao carregar os dados.</p>"; // Exibe uma mensagem de erro, se necessário
         });
     });
+
+    atualizaPagos(1);
+    atualizaProximos(1);
+    atualizaIgnorados(1);
 </script>
 
 

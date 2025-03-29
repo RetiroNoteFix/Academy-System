@@ -12,6 +12,16 @@ function recebeDadosLogin() {
         Usuario::fazerLogin($nomeusuario, $senhausuario);
     }
 }
+// RECEBE O FORUMLÁRIO DO CADASTRO DE USUÁRIO
+function recebeDadosUsuario() {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nomeusuario = $_POST['nomeusuarionovo'];
+        $nomeMaiusculo = strtoupper($nomeusuario);
+        $senhausuario = $_POST['senhausuario'];
+        $tipousuario = $_POST['tipousuario'];
+        Usuario::criarNovo($nomeMaiusculo, $senhausuario, $tipousuario);
+    }
+}
 // RECEBE O FORMULÁRIO DE PAGAMENTO NOTIFICADO
 function recebedadospagamentonotificado() {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -92,9 +102,9 @@ function cadastrarAluno() {
         }
         
         
-    
-        
+       
 $nome = obterValorCampo('nome');
+$nomeAlunoMaiusculo = strtoupper($nome);
 $data_nascimento = obterValorCampo('data_nascimento');
 $idade = obterValorCampo('idade');
 $estado_civil = obterValorCampo('estado_civil');
@@ -196,7 +206,7 @@ $endereco = criarEndereco($cep, $rua, $estado, $bairro, $cidade, $numero, $compl
             $pessoa = new Pessoa(
                 $conn,
                 null, 
-                $nome,
+                $nomeAlunoMaiusculo,
                 $cpf,
                 $rg,
                 $email,
@@ -286,7 +296,7 @@ VALUES (:idPessoa, :profissao, :escolaridade, :estadoCivil, :tipoSanguineo, :mod
             // Executar a query para inserir o aluno
             $stmt->execute();
 
-            echo "Aluno <span id='alert'>" . $nome  . "</span> Cadastrado com sucesso!";
+            echo "Aluno <span id='alert'>" . $nomeAlunoMaiusculo  . "</span> Cadastrado com sucesso!";
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }
@@ -306,6 +316,7 @@ function editarAluno() {
     
         $idAlunoEditado = $_POST['idAlunoEditado'];
 $nome = obterValorCampo('nomeEditado');
+$nomeAlunoMaiusculo = strtoupper($nome);
 $data_nascimento = obterValorCampo('data_nascimento');
 $idade = obterValorCampo('idade');
 $estado_civil = obterValorCampo('estado_civil');
@@ -321,7 +332,7 @@ $cidade = obterValorCampo('cidade');
 $numero = obterValorCampo('numero');
 $complemento = obterValorCampo('complemento');
 $sexo = obterValorCampo('sexo');
-$plano = obterValorCampo('plano');
+$plano = $_POST['planoAlunoEditado'];
 $profissao = obterValorCampo('profissao');
 $escolaridade = obterValorCampo('escolaridade');
 $peso = obterValorCampo('peso');
@@ -471,7 +482,7 @@ COMMIT;";
 
             // Preparar a execução da query
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(':nome', $nome);
+            $stmt->bindParam(':nome', $nomeAlunoMaiusculo);
             $stmt->bindParam(':cpf', $cpf);
             $stmt->bindParam(':rg', $rg);
             $stmt->bindParam(':email', $email);
@@ -531,7 +542,7 @@ COMMIT;";
             // Executar a query para inserir o aluno
             $stmt->execute();
 
-            echo "Aluno <span id='alert'>" . $nome  . "</span> Editado com sucesso!";
+            echo "Aluno <span id='alert'>" . $nomeAlunoMaiusculo  . "</span> Editado com sucesso!";
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }
@@ -652,6 +663,10 @@ elseif (isset($_POST['idativar'])) {
 
 elseif (isset($_POST['idpagarnotificado'])) {
     recebedadospagamentonotificado();
+    
+}
+elseif (isset($_POST['nomeusuarionovo'])) {
+    recebeDadosUsuario();
     
 } 
 elseif (isset($_POST['alunoId_ignorados'])) {

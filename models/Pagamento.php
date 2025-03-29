@@ -114,9 +114,12 @@ class Pagamento {
                "Data de Vencimento: {$this->dataVencimento}\n" .
                "Situação: {$this->situacao}";
     }
-    public function listarTodos() {
+    public function listarTodos(int $pagina = 1, int $limite = 100) {
         try {
-            // Query para buscar o último pagamento de cada aluno
+            // Calcula o deslocamento (OFFSET)
+            $offset = ($pagina - 1) * $limite;
+    
+            // Query para buscar o último pagamento de cada aluno, com paginação
             $query = "
                 SELECT 
                     a.idAluno, 
@@ -133,17 +136,70 @@ class Pagamento {
                     FROM pagamentos pag2 
                     WHERE pag2.idAluno = pag.idAluno
                 )
-                ORDER BY p.nome ASC;
+                ORDER BY p.nome ASC
+                LIMIT :limite OFFSET :offset;
             ";
     
             // Prepara e executa a consulta
             $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
     
             // Recupera todos os resultados
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Se não encontrar nenhum pagamento, retorna um array vazio
+            // Retorna os resultados ou um array vazio
+            return $resultados ?: [];
+    
+        } catch (PDOException $e) {
+            // Log do erro (opcional)
+            error_log($e->getMessage());
+    
+            // Retorna um array vazio em caso de erro
+            return [];
+        }
+    }
+    
+    public function listarTodosFuturos(int $pagina = 1, int $limite = 100) {
+        try {
+            // Calcula o deslocamento (OFFSET)
+            $offset = ($pagina - 1) * $limite;
+    
+            // Query para buscar o último pagamento de cada aluno, com paginação
+            $query = "
+                SELECT 
+    a.idAluno, 
+    p.nome, 
+    p.telefone, 
+    p.endereco, 
+    pag.valor, 
+    pag.situacao, 
+    pag.dataVencimento
+FROM pagamentos pag
+INNER JOIN alunos a ON pag.idAluno = a.idAluno
+INNER JOIN pessoas p ON a.idPessoa = p.idPessoa
+WHERE pag.idPagamento = (
+    SELECT MAX(pag2.idPagamento) 
+    FROM pagamentos pag2 
+    WHERE pag2.idAluno = pag.idAluno
+    AND pag2.situacao = 'pendente' -- Apenas pagamentos pendentes mais recentes
+)
+ORDER BY p.nome ASC, pag.dataVencimento ASC
+LIMIT :limite OFFSET :offset;
+
+            ";
+    
+            // Prepara e executa a consulta
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            // Recupera todos os resultados
+            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Retorna os resultados ou um array vazio
             return $resultados ?: [];
     
         } catch (PDOException $e) {
@@ -155,71 +211,47 @@ class Pagamento {
         }
     }
 
-    public function listarTodosFuturos() {
-        try {
-            // Query para buscar o último pagamento de cada aluno
-            $query = "
-              SELECT 
-    a.idAluno, 
-    p.nome, 
-    p.telefone, 
-    p.endereco, 
-    pag.valor, 
-    pag.situacao,
-    pag.dataVencimento
-FROM pagamentos pag
-INNER JOIN alunos a ON pag.idAluno = a.idAluno
-INNER JOIN pessoas p ON a.idPessoa = p.idPessoa
-WHERE pag.situacao = 'pendente'
-ORDER BY p.nome ASC, pag.dataVencimento ASC;
-            ";
     
-            // Prepara e executa a consulta
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute();
-    
-            // Recupera todos os resultados
-            $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-            // Se não encontrar nenhum pagamento, retorna um array vazio
-            return $resultados ?: [];
-    
-        } catch (PDOException $e) {
-            // Log do erro (opcional)
-            error_log($e->getMessage());
-    
-            // Retorna um array vazio em caso de erro
-            return [];
-        }
-    }
 
-    public function listarTodosIgnorados() {
+    public function listarTodosIgnorados(int $pagina = 1, int $limite = 100) {
         try {
-            // Query para buscar o último pagamento de cada aluno
+            // Calcula o deslocamento (OFFSET)
+            $offset = ($pagina - 1) * $limite;
+    
+            // Query para buscar o último pagamento de cada aluno, com paginação
             $query = "
-              SELECT 
+                SELECT 
     a.idAluno, 
     p.nome, 
     p.telefone, 
     p.endereco, 
     pag.valor, 
-    pag.situacao,
+    pag.situacao, 
     pag.dataVencimento
 FROM pagamentos pag
 INNER JOIN alunos a ON pag.idAluno = a.idAluno
 INNER JOIN pessoas p ON a.idPessoa = p.idPessoa
-WHERE pag.situacao = 'ignorado'
-ORDER BY p.nome ASC, pag.dataVencimento ASC;
+WHERE pag.idPagamento = (
+    SELECT MAX(pag2.idPagamento) 
+    FROM pagamentos pag2 
+    WHERE pag2.idAluno = pag.idAluno
+    AND pag2.situacao = 'ignorado' -- Apenas pagamentos pendentes mais recentes
+)
+ORDER BY p.nome ASC, pag.dataVencimento ASC
+LIMIT :limite OFFSET :offset;
+
             ";
     
             // Prepara e executa a consulta
             $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
     
             // Recupera todos os resultados
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Se não encontrar nenhum pagamento, retorna um array vazio
+            // Retorna os resultados ou um array vazio
             return $resultados ?: [];
     
         } catch (PDOException $e) {

@@ -273,9 +273,9 @@ $dataBrasileira = converterData($aluno->getDataNascimento(), 'br');
             </div>
             
             <div class="form-group">
-                <label for="plano">Plano:</label>
-                <select id="plano" name="plano" >
-                    <option  value="<?php echo $aluno->getPlano()?>"  disabled selected><?php echo $aluno->getPlano()?> </option>
+                <label for="planoAlunoEditado">Plano:</label>
+                <select id="plano" name="planoAlunoEditado" >
+                    <option  value="<?php echo $aluno->getPlano()?>"selected><?php echo $aluno->getPlano()?> </option>
                     <option value="Diario">Diário</option>
                     <option value="Mensal">Mensal</option>
                     <option value="Semestral">Semestral</option>

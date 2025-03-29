@@ -175,6 +175,9 @@ body {
     color: #000;
     font-size: 20px;
 }
+.centro{
+    margin-left: 37%;
+}
     .msg.show {
         display: flex;
         justify-content: center;
@@ -360,7 +363,6 @@ body {
     background-color: #13181b;
     border-left: 2px solid red;
 }
-
 #optHome {
     background-color: #13181b;
     border-left: 2px solid red;
@@ -369,6 +371,15 @@ body {
     background-color: #13181b;
     border-left: 2px solid red;
 }
+#optAlunosA{
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+#optUsuarioU{
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+
 /*ESTILO DO PAINEL*/
 .painel {
     margin-top: 2%;
@@ -442,6 +453,13 @@ table {
 #dashboardcriaraluno{
     gap: 40px;
     height: 3350px;
+    display: flex;
+    flex-direction: column;
+    background-color: #222d33;
+}
+#dashboardcriarusuario{
+    gap: 40px;
+    height: 90dvh;
     display: flex;
     flex-direction: column;
     background-color: #222d33;
@@ -817,6 +835,7 @@ span {
         transition: 0.6s ease;
         cursor: pointer;
     }
+    
     #btncadastro2{
         width: 150px;
         border: none;
@@ -1334,10 +1353,7 @@ background-color: #5c5b5b;
 #painelproximos{
     display: none;
 }
-#optAlunosA{
-    background-color: #13181b;
-    border-left: 2px solid red;
-}
+
 #good{
     color:#16b002;
 }
@@ -1884,4 +1900,94 @@ h1{
 }
 #th-valor{
 width: 50%;
+}
+.quantidade{
+    width: 20px;
+   display: block;
+    color: #fff;
+    background: none;
+    border: none;
+    margin-left: 10px;
+}
+
+.paginas{
+    margin-left: 85%;
+    justify-content: center;
+    display: flex;
+    width: 115px;
+    height: 28px;
+    color: #fff;
+    background: none;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.paginas p{
+    margin-top: 6px;
+    font-size: 10px;
+}
+.btnAumentar{
+    width: 25px;
+    border: none;
+    transition: 0.6s ease;
+    cursor: pointer;
+    background: none;
+}
+.btnDiminuir{
+    width: 25px;
+    border: none;
+    transition: 0.6s ease;
+    cursor: pointer;
+    background: none;
+}
+
+/* PILATES */
+
+#tabelanotificacaopilates{
+        border-collapse: collapse;
+        width: 100%;
+}
+#tabelanotificacaopilates th, #tabelanotificacaopilates td {
+    border: 1px solid #3c56e7;
+    padding: 10px;
+    text-align: left;
+  }
+
+  #tabelanotificacaopilates th {
+    background-color: #3c56e7; 
+    color: white;
+  }
+
+  #tabelanotificacaopilates tr:nth-child(even) {
+    background-color: #e6e6ff;
+  }
+
+  #tabelanotificacaopilates tr:nth-child(odd) {
+    background-color: #fff; 
+  }
+
+  #tabelanotificacaopilates tr:hover {
+    background-color: #cce6ff; 
+  }
+
+  #optHomePilates {
+    background-color: #13181b;
+    border-left: 2px solid #355bb5;
+}
+#optHomePilates, #optPagamentoPilates, #optAlunosAPilates:hover {
+    background-color: #13181b;
+    border-left: 2px solid #355bb5;
+}
+#optPagamentoPilates {
+    background-color: #13181b;
+    border-left: 2px solid #355bb5;
+}
+#optAlunosAPilates{
+    background-color: #13181b;
+    border-left: 2px solid #355bb5;
+}
+
+#optUsuarioUPilates{
+    background-color: #13181b;
+    border-left: 2px solid #355bb5;
 }

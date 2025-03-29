@@ -10,9 +10,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     header("Location: /Academy-System/");
     exit();
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="PT-BR">
@@ -70,7 +67,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../usuarios/usuarios.php">Usuários</a>
+                <a href="../usuarios/index.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -154,6 +151,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                             <p>Voltar</p>
                         </div><!--texto-->
                     </a>
+                   
+
                     <form id="formBusca" action="../core/pesquisaaluno.php" method="post">
                     <div class="boxpesquisa">
     <input id="inputpesquisa" placeholder="Digite o nome do aluno" type="text" name="search" required>
@@ -169,13 +168,21 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </svg>
         </button>
     </div>
+    <!-- Botões para navegação entre páginas -->
+
 </div>
                     </form>
                 </div><!--alinhar btn-->
+               <div class="paginas"> <p>Pág:</p><button class='btnDiminuir' id='btnDiminuir'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button> <input type='name' class='quantidade' id='quantidade' value='1' >
+<button  class='btnAumentar' id='btnAumentar'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button></div>
             </div><!--linha superior cadastro-->
+            
             <div id="resultado"class="listafornecedores"></div><!--resultado-->
+       
             <div id="resultado2"class="listafornecedores"></div><!--resultado-->
         </div><!--fim do dasboard-->
+        
+        <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
     </div><!--painel-->
     <div class="painel" id="paineldesativado">
         <div class="titulo" id="titulof">
@@ -211,10 +218,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                         </div><!--button-->
             </div><!--box pesquisa-->
         </div><!--alinharbtn-->
+        <div class="paginas"><button class='btnDiminuir' id='btnDiminuirDesativado'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button> <input type='name' class='quantidade' id='quantidadedesativado' value='1' >
+        <button class='btnAumentar' id='btnAumentarDesativado'><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg></button></div>
     </div><!--linha superior cadastro-->
     <div id="resultadodesativado" class="listafornecedores"></div><!--resultado-->
     <div id="resultadodesativado2" class="listafornecedores"></div><!--resultado-->
     </div><!--fim do dasboard-->
+    <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div>  
     </div><!--FIM DO PAINEL-->
     <div id="popupalunos" class="popup">
         <div class="closepop"></div>
@@ -226,63 +236,29 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <!-- Resultados aparecerão aqui -->
 </div>
 <script>
-function atualizaAtivados() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/AlunoController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  
 
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'mostrarAtivado';
+
+
+
+  function atualizaDesativados(pagina) {
+    // Garante que 'pagina' seja um número válido
+    pagina = parseInt(pagina) || 1;
+
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarDesativado=true&pagina=' + pagina, true);
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
-            document.getElementById('resultado').innerHTML = xhr.responseText;
-
-            // Reaplica os eventos aos botões, caso necessário
-            if (typeof adicionarEventosBotoes === 'function') {
-                adicionarEventosBotoes();
-            }
-        } else {
-            console.log('Erro na requisição AJAX: ' + xhr.statusText);
-        }
-    };
-
-    xhr.onerror = function () {
-        console.log('Erro de conexão ou requisição AJAX.');
-    };
-
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
-}
-
-// Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaAtivados, 1000);
-
-// Chama a função uma vez ao carregar a página
-atualizaAtivados();
-
-
-// Atualiza a tabela a cada 5 segundos
-
-function atualizaDesativados() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '../../controllers/AlunoController.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    // Enviando o parâmetro "mostrardesativado"
-    var params = 'mostrarDesativado';
-
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Atualiza o conteúdo da tabela com a resposta do servidor
             document.getElementById('resultadodesativado').innerHTML = xhr.responseText;
 
-            // Reaplica os eventos aos botões, caso necessário
             if (typeof adicionarEventosBotoes === 'function') {
                 adicionarEventosBotoes();
-                
             }
+
+            history.pushState({ pagina: pagina }, "Página " + pagina, "?pagina=" + pagina);
         } else {
             console.log('Erro na requisição AJAX: ' + xhr.statusText);
         }
@@ -292,15 +268,14 @@ function atualizaDesativados() {
         console.log('Erro de conexão ou requisição AJAX.');
     };
 
-    // Envia a requisição com o parâmetro "mostrardesativado"
-    xhr.send(params);
+    xhr.send();
 }
 
 // Atualiza a tabela automaticamente a cada 5 segundos
-setInterval(atualizaDesativados, 1000);
+
 
 // Chama a função uma vez ao carregar a página
-atualizaDesativados();
+
 
 
 </script>
@@ -329,7 +304,9 @@ atualizaDesativados();
     optPagamento.addEventListener("click", function() {
         window.location.href = "../pagamentos/index.php";
     });
-    
+    optUsuario.addEventListener("click", function() {
+        window.location.href = "../usuarios/index.php";
+    });
     optHome.addEventListener("mouseover", function() {
         optAlunos.style.backgroundColor = "rgba(34,45,51,255)"
         optAlunos.style.border = "none"
@@ -376,8 +353,78 @@ atualizaDesativados();
     });
 </script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var inputPagina = document.getElementById('quantidade');
+    var btnAumentar = document.getElementById('btnAumentar');
+    var btnDiminuir = document.getElementById('btnDiminuir');
+    var inputPagina2 = document.getElementById('quantidadedesativado');
+    var btnAumentar2 = document.getElementById('btnAumentarDesativado');
+    var btnDiminuir2 = document.getElementById('btnDiminuirDesativado');
+
+    // Definir um valor inicial seguro (evita valores inválidos)
+    inputPagina.value = parseInt(inputPagina.value) || 1;
+    inputPagina2.value = parseInt(inputPagina2.value) || 1;
+    // Evento para aumentar a página
+    btnAumentar.addEventListener('click', function () {
+        var paginaAtual = parseInt(inputPagina.value) || 1;
+        inputPagina.value = paginaAtual + 1;
+        atualizaAtivados(inputPagina.value);
+    });
+    btnAumentar2.addEventListener('click', function () {
+        var paginaAtual2 = parseInt(inputPagina2.value) || 1;
+        inputPagina2.value = paginaAtual2 + 1;
+        atualizaDesativados(inputPagina2.value);
+    });
+
+    // Evento para diminuir a página (evita valores negativos ou zero)
+    btnDiminuir.addEventListener('click', function () {
+        var paginaAtual = parseInt(inputPagina.value) || 1;
+        if (paginaAtual > 1) {
+            inputPagina.value = paginaAtual - 1;
+            atualizaAtivados(inputPagina.value);
+        }
+    });
+    btnDiminuir2.addEventListener('click', function () {
+        var paginaAtual2 = parseInt(inputPagina2.value) || 1;
+        if (paginaAtual2 > 1) {
+            inputPagina2.value = paginaAtual2 - 1;
+            atualizaDesativados(inputPagina2.value);
+        }
+    });
+});
+
+function atualizaAtivados(pagina) {
+    // Garante que 'pagina' seja um número válido
+    pagina = parseInt(pagina) || 1;
+
+    console.log("Valor enviado para a função:", pagina); // Debug para verificar se o valor está dobrando antes do envio
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../../controllers/AlunoController.php?mostrarAtivado=true&pagina=' + pagina, true);
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            document.getElementById('resultado').innerHTML = xhr.responseText;
+
+            if (typeof adicionarEventosBotoes === 'function') {
+                adicionarEventosBotoes();
+            }
+
+            history.pushState({ pagina: pagina }, "Página " + pagina, "?pagina=" + pagina);
+        } else {
+            console.log('Erro na requisição AJAX: ' + xhr.statusText);
+        }
+    };
+
+    xhr.onerror = function () {
+        console.log('Erro de conexão ou requisição AJAX.');
+    };
+
+    xhr.send();
+}
+
    function adicionarEventosBotoes() {
-    
+  
     const linhasAlunos = document.querySelectorAll('.linha-aluno');
     linhasAlunos.forEach(linha => {
     linha.querySelector('.ver-detalhes').addEventListener('click', () => {
@@ -399,8 +446,8 @@ atualizaDesativados();
                 id: dados.id,
             });
 
-            atualizaAtivados();
-atualizaDesativados();
+           
+
             window.location.href = `../../libs/DomPDF/assets/fichamedidas.php?${queryParams.toString()}`;
         });
         linha.querySelector('.editar').addEventListener('click', () => {
@@ -411,8 +458,8 @@ atualizaDesativados();
                 id: dados.id,
             });
 
-            atualizaAtivados();
-atualizaDesativados();
+           
+
             window.location.href = `editar.php?${queryParams.toString()}`;
         });
 
@@ -439,8 +486,7 @@ atualizaDesativados();
             // Mostrar o popup
             document.getElementById('popupalunos').classList.add('show');
             document.getElementById('overlay').classList.add('show');
-
-            // Fechar o popup automaticamente após 1.6 segundos
+atualizaAtivados();
             setTimeout(function () {
                 closePopup();
             }, 1800);
@@ -455,8 +501,7 @@ atualizaDesativados();
 
 // Função para fechar o popup
 function closePopup() {
-    atualizaAtivados();
-    atualizaDesativados();
+   
     document.getElementById('popupalunos').classList.remove('show');
     document.getElementById('overlay').classList.remove('show');
 }
@@ -485,7 +530,7 @@ linha.querySelector('.ativar').addEventListener('click', (event) => {
             // Mostrar o popup
             document.getElementById('popupalunos').classList.add('show');
             document.getElementById('overlay').classList.add('show');
-
+atualizaDesativados();
             // Fechar o popup automaticamente após 1.6 segundos
             setTimeout(function () {
                 closePopup();
@@ -537,7 +582,7 @@ linha.querySelector('.ativar').addEventListener('click', (event) => {
             // Limpa o conteúdo anterior
             resultado.innerHTML = html;
 
-            atualizaAtivados();
+           
           
         })
         .catch(error => {
@@ -546,16 +591,7 @@ linha.querySelector('.ativar').addEventListener('click', (event) => {
     });
 
     // Função para recarregar o CSS
-    function recarregarCSS() {
-        // Seleciona todos os links de estilos
-        const links = document.querySelectorAll('link[rel="stylesheet"]');
-
-        links.forEach(link => {
-            // Adiciona um timestamp como parâmetro para evitar cache
-            const href = link.getAttribute('href').split('?')[0]; // Remove parâmetros anteriores
-            link.setAttribute('href', `${href}?v=${Date.now()}`);
-        });
-    }
+   
 </script>
 
 
@@ -613,15 +649,9 @@ linha.querySelector('.ativar').addEventListener('click', (event) => {
     }
 
 
-    setInterval(atualizaAtivados, 1000);
 
 // Chama a função uma vez ao carregar a página
-atualizaAtivados();
 
-setInterval(atualizaDesativados, 1000);
-
-// Chama a função uma vez ao carregar a página
-atualizaDesativados();
 
 
 resultado.addEventListener('click', (event) => {
@@ -649,7 +679,7 @@ resultado.addEventListener('click', (event) => {
                     closePopup();
                 }, 1800);
 
-                atualizaAtivados(); // Atualiza a lista após ativar o item
+              
             })
             .catch((error) => {
                 console.error('Erro:', error);
@@ -659,7 +689,8 @@ resultado.addEventListener('click', (event) => {
             });
     }
 });
-
+atualizaAtivados(1);
+atualizaDesativados(1);
 </script>
 
 

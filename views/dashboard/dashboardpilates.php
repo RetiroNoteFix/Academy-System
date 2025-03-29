@@ -16,13 +16,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../public/css/style.css" rel="stylesheet">
-    <title><?php print_r("$appname");?> - Painel</title>
+    <title><?php print_r("$appname");?> - Pilates</title>
     <!--GOOGLE FONTS-->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="menulateral">
-        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+        <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -41,7 +41,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
             </div><!--FIM DO BOX DO USUARIO-->
         </div><!--FIM DO USUÁRIO-->
         <div class="box">
-            <div class="options" id="optHome">
+            <div class="options" id="optHomePilates">
                 <div class="img">
                 <svg fill="#fff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 495.398 495.398" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g><g><g><path d="M487.083,225.514l-75.08-75.08V63.704c0-15.682-12.708-28.391-28.413-28.391c-15.669,0-28.377,12.709-28.377,28.391v29.941L299.31,37.74c-27.639-27.624-75.694-27.575-103.27,0.05L8.312,225.514c-11.082,11.104-11.082,29.071,0,40.158c11.087,11.101,29.089,11.101,40.172,0l187.71-187.729c6.115-6.083,16.893-6.083,22.976-0.018l187.742,187.747c5.567,5.551,12.825,8.312,20.081,8.312c7.271,0,14.541-2.764,20.091-8.312C498.17,254.586,498.17,236.619,487.083,225.514z"></path><path d="M257.561,131.836c-5.454-5.451-14.285-5.451-19.723,0L72.712,296.913c-2.607,2.606-4.085,6.164-4.085,9.877v120.401c0,28.253,22.908,51.16,51.16,51.16h81.754v-126.61h92.299v126.61h81.755c28.251,0,51.159-22.907,51.159-51.159V306.79c0-3.713-1.465-7.271-4.085-9.877L257.561,131.836z"></path></g></g></g></g></svg>
                 </div><!--fim da imagem da opção-->
@@ -80,7 +80,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--FIM DO BOX DAS OPÇÕES-->
 </div><!-- FIM DO MENU LATERAL-->
     <div class="menulateral" id="menuConfig">
-    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenu");?>">
+    <div class="logo" style="background-color:<?php echo ("$corlinhasuperiormenupilates");?>">
             <h1><?php print_r("$appname");?></h1>
         </div><!--LOGO-->
         <div class="user">
@@ -106,9 +106,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <label class="config-label" for="appname">Nome do sistema:</label><br>
                 <input type="text" name="appname" value="<?php echo $appname?>">
                 <label class="config-label" for="corlinhasuperior">Cor da linha superior:</label><br>
-                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperior?>">
+                <input type="text" name="corlinhasuperior" value="<?php echo $corlinhasuperiorpilates?>">
                 <label class="config-label" for="corlinhasuperiormenu">Cor da linha superior do menu:</label><br>
-                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenu?>">
+                <input type="text" name="corlinhasuperiormenu" value="<?php echo $corlinhasuperiormenupilates?>">
                 <label class="config-label" for="foto">Mudar foto de Perfil:</label><br>
                 <input class="config-input" type="file" name="foto" id="foto" accept="image/*">
                 <div class="button-box"><button class="save-btn" id="save-btn" type="submit">Salvar</button>
@@ -118,8 +118,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
         </div><!--BACK BTN-->
         </div><!--CONFIG FORM-->
 </div><!-- FIM DO MENU DE CONFIGURAÇÕES-->
-    <div class="linhasuperior" style='background-color:<?php echo("$corlinhasuperior");?>'>
-        <p id="mode">Modo: Administrador</p>
+    <div class="linhasuperior" style='background-color:<?php echo("$corlinhasuperiorpilates");?>'>
+        <p id="mode">Modo: <?php echo $modopilates;?></p>
     </div><!--fim da linha superior-->
     <div class="painel">
         <div class="titulo" id=titulopainel>
@@ -134,7 +134,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                      </div><!--BOX SITU-->
                 </div><!--ALINHAR BTN-->
             </div><!--linhasuperiorcadastro-->
-    <table border="1" style="margin-bottom:10px;">
+    <table  id="tabelanotificacaopilates" border="1" style="margin-bottom:10px;">
         <thead>
             <tr>
             <th>Cód.</th>
@@ -159,14 +159,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
 <div class="overlaydash" id="overlaydash"></div><!--overlaydash-->
 
     <script>
-    var optHome = document.getElementById("optHome");
+    var optHome = document.getElementById("optHomePilates");
     var optAlunos = document.getElementById("optAlunos");
     var optPagamento = document.getElementById("optPagamento");
     var optUsuario = document.getElementById("optUsuario");
     var optConfig = document.getElementById("optConfig");
     var menuConfig = document.getElementById("menuConfig");
     var backBtn = document.getElementById("back-btn");
-    var optPilates = document.getElementById("optPilates");
     optAlunos.addEventListener("mouseover", function() {
         optHome.style.backgroundColor = "rgba(34,45,51,255)"
         optHome.style.border = "none"
@@ -185,25 +184,22 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
     });
     optAlunos.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optPagamento.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optUsuario.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optConfig.addEventListener("mouseout", function() {
         optHome.style.backgroundColor = "#0e1114";
-        optHome.style.borderLeft = "2px solid red"
+        optHome.style.borderLeft = "2px solid #355bb5"
     });
     optHome.addEventListener('click', function() {
         window.location.href = 'dashboard.php';
-    });
-    optPilates.addEventListener('click', function() {
-        alert("Seção em Desenvolvimento");
     });
     optAlunos.addEventListener('click', function() {
         window.location.href = '../alunos/index.php';

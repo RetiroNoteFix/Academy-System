@@ -74,6 +74,56 @@ WHERE p.nome = :nomeusuario;
     }
 }
 
+
+public static function criarNovo($nomeusuario, $senhausuario, $tipousuario) {
+    $database = new Database();
+    $conn = $database->getConnection();
+
+    try {
+        // Criando uma nova pessoa e inserindo no banco
+        $pessoa = new Pessoa(
+            $conn,
+            null, 
+            $nomeusuario,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        $idPessoa = $pessoa->inserirPessoa();
+
+        // Hash da senha antes de salvar no banco
+        $senhaHash = password_hash($senhausuario, PASSWORD_DEFAULT);
+
+        // Inserindo o usuário na tabela `usuarios`
+        $query = "INSERT INTO usuarios (idPessoa, senha, tipo_usuario) VALUES (:idPessoa, :senha, :tipo_usuario)";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':idPessoa', $idPessoa, PDO::PARAM_INT);
+        $stmt->bindParam(':senha', $senhaHash, PDO::PARAM_STR);
+        $stmt->bindParam(':tipo_usuario', $tipousuario, PDO::PARAM_STR);
+        $stmt->execute();
+
+        // Verifica se a inserção foi bem-sucedida
+        if ($stmt->rowCount() > 0) {
+            echo "Usuário(a) $nomeusuario cadastrado(a) com sucesso!";
+        } else {
+            echo "ERRO: Não foi possível cadastrar o(a) usuário(a), chame o suporte.";
+        }
+
+    } catch (PDOException $e) {
+        echo "Erro ao conectar com o banco de dados: " . $e->getMessage();
+    } finally {
+        $conn = null; // Fecha a conexão
+    }
+}
+
+
+
+
 public static function auth() {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -98,6 +148,40 @@ public static function auth() {
         exit();
     }
 }
+
+
+public static function listarTodos() {
+    try {
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $query = "
+            SELECT 
+                p.nome, 
+                p.telefone, 
+                p.endereco, 
+                u.tipo_usuario,
+                u.idPessoa
+            FROM pessoas p
+            INNER JOIN usuarios u ON p.idPessoa = u.idPessoa
+            ORDER BY p.nome ASC;
+        ";
+
+        // Prepara e executa a consulta
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+
+        // Recupera todos os resultados
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultados ?: [];
+    } catch (PDOException $e) {
+        error_log($e->getMessage());
+        return [];
+    }
+}
+
+
 }
 
 ?>

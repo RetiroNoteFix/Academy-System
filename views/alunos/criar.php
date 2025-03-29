@@ -59,13 +59,13 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 12C19.5 16.1421 16.1421 19.5 12 19.5C7.85786 19.5 4.5 16.1421 4.5 12C4.5 7.85786 7.85786 4.5 12 4.5C16.1421 4.5 19.5 7.85786 19.5 12ZM21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12ZM10.5 9L9.75 9.75V12L10.5 12.75H12.75V13.5H9.75V15H11.25V15.75H12.75V15H13.5L14.25 14.25V12L13.5 11.25H11.25V10.5H14.25V9H12.75V8.25H11.25V9H10.5Z" fill="#ffffff"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../interfaces/pagamentos.php">Pagamentos</a>
+                <a href="../pagamentos/index.php">Pagamentos</a>
             </div><!--FIM DA OPÇÃO PAGAMENTO-->
             <div class="options" id="optUsuario">
                 <div class="img">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 20V18C13 15.2386 10.7614 13 8 13C5.23858 13 3 15.2386 3 18V20H13ZM13 20H21V19C21 16.0545 18.7614 14 16 14C14.5867 14 13.3103 14.6255 12.4009 15.6311M11 7C11 8.65685 9.65685 10 8 10C6.34315 10 5 8.65685 5 7C5 5.34315 6.34315 4 8 4C9.65685 4 11 5.34315 11 7ZM18 9C18 10.1046 17.1046 11 16 11C14.8954 11 14 10.1046 14 9C14 7.89543 14.8954 7 16 7C17.1046 7 18 7.89543 18 9Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 </div><!--fim da imagem da opção-->
-                <a href="../usuarios/usuarios.php">Usuários</a>
+                <a href="../usuarios/index.php">Usuários</a>
             </div><!--FIM DA OPÇÃO USUÁRIOS-->
             <div class="options" id="optConfig">
                 <div class="img">
@@ -551,9 +551,11 @@ if (isset($_GET['action']) && $_GET['action'] === 'logout') {
                                     </g>
                                 </svg><p id="btntxt">Voltar</p></a>
                                 </div> </div>
+                                <div class="centro"><a href="https://www.instagram.com/retironotefix/" id="copy">&copy; 2025 Carlos Eduardo, Academy-System <?php echo $versao?></a></div> 
                                 </form>
         </div>
         <!--fim do dasboard-->
+       
     </div>
     <!--FIM DO PAINEL-->
     <div id="popup" class="popup" style='top: 50%; left:60%;'>
@@ -724,16 +726,16 @@ document.getElementById('cep').addEventListener('input', function() {
     });
     //funções de clique
     optHome.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/painel.php';
+        window.location.href = '../dashboard/dashboard.php';
     });
     optAlunos.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/alunos.php';
+        window.location.href = 'index.php';
     });
     optPagamento.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/pagamentos.php';
+        window.location.href = '../pagamentos/index.php';
     });
     optUsuario.addEventListener('click', function() {
-        window.location.href = '/academy/assets/php/interfaces/usuarios.php';
+        window.location.href = '../usuarios/index.php';
     });
     optConfig.addEventListener('click', function() {
         menuConfig.style.display = "block";

@@ -176,19 +176,27 @@ class Aluno extends Pessoa {
     
 
 
-    public static function listarTodos(PDO $conexao): array {
-        // Query SQL corrigida
+    public static function listarTodos(PDO $conexao, int $pagina = 1, int $limite = 100): array {
+        // Calcula o deslocamento (OFFSET)
+        $offset = ($pagina - 1) * $limite;
+    
+        // Query SQL com paginação
         $sql = "
-    SELECT *
-FROM pessoas p
-JOIN alunos a ON p.idPessoa = a.idPessoa
-WHERE a.situacao = 'Ativo'
-ORDER BY p.nome ASC;
-
-";
-        
+            SELECT 
+                p.idPessoa, p.nome, p.cpf, p.rg, p.email, p.telefone, p.telefone_familiar, 
+                p.dataNascimento, p.dataCadastro, p.endereco,
+                a.*
+            FROM pessoas p
+            JOIN alunos a ON p.idPessoa = a.idPessoa
+            WHERE a.situacao = 'Ativo'
+            ORDER BY p.nome ASC
+            LIMIT :limite OFFSET :offset;
+        ";
+    
         // Preparação e execução da query
         $stmt = $conexao->prepare($sql);
+        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
     
         // Obtenção dos resultados
@@ -198,74 +206,73 @@ ORDER BY p.nome ASC;
         // Iteração para transformar resultados em objetos Aluno
         foreach ($resultados as $resultado) {
             $alunos[] = new Aluno(
-            $resultado['idPessoa'],
-            $resultado['nome'],
-            $resultado['cpf'],
-            $resultado['rg'],
-            $resultado['email'],
-            $resultado['telefone'],
-            $resultado['telefone_familiar'],
-            $resultado['dataNascimento'],
-            $resultado['dataCadastro'],
-            $resultado['endereco'],
-            $resultado['profissao'],
-            $resultado['escolaridade'],
-            $resultado['estadoCivil'],
-$resultado['tipoSanguineo'],
-$resultado['modalidade'],
-$resultado['comoSoubeAcademia'],
-$resultado['objetivo'],
-$resultado['idade'],
-$resultado['peso'],
-$resultado['altura'],
-$resultado['fuma'],
-$resultado['fazDieta'],
-$resultado['usaBebidaAlcoolica'],
-$resultado['sedentario'],
-$resultado['modalidadeAnterior'],
-$resultado['temVarizes'],
-$resultado['pressaoArterial'],
-$resultado['cirurgia'],
-$resultado['dormeBem'],
-$resultado['lesaoArticular'],
-$resultado['problemaColuna'],
-$resultado['tempoMedico'],
-$resultado['medicamento'],
-$resultado['problemaSaude'],
-$resultado['parqProblemaCoracao'],
-$resultado['parqDorPeitoComAtividade'],
-$resultado['parqDorPeitoSemAtividade'],
-$resultado['parqEquilibrio'],
-$resultado['parqProblemaOsseo'],
-$resultado['parqreceitaMedica'],
-$resultado['parqRazao'],
-$resultado['obesidade'],
-$resultado['diabetes'],
-$resultado['colesterolElevado'],
-$resultado['infarto'],
-$resultado['doencaCardiaca'],
-$resultado['derrame'],
-$resultado['pressaoAlta'],
-$resultado['medidaTorax'],
-$resultado['medidaCintura'],
-$resultado['medidaAbdome'],
-$resultado['medidaQuadril'],
-$resultado['medidaBracos'],
-$resultado['medidaAntebracos'],
-$resultado['medidaPanturrilha'],
-$resultado['medidaPernas'],
-$resultado['observacoes'],
-$resultado['percentualGordura'],
-$resultado['imc'],
-$resultado['situacao'],
-$resultado['plano']
-            
-        );
+                $resultado['idPessoa'],
+                $resultado['nome'],
+                $resultado['cpf'],
+                $resultado['rg'],
+                $resultado['email'],
+                $resultado['telefone'],
+                $resultado['telefone_familiar'],
+                $resultado['dataNascimento'],
+                $resultado['dataCadastro'],
+                $resultado['endereco'],
+                $resultado['profissao'],
+                $resultado['escolaridade'],
+                $resultado['estadoCivil'],
+                $resultado['tipoSanguineo'],
+                $resultado['modalidade'],
+                $resultado['comoSoubeAcademia'],
+                $resultado['objetivo'],
+                $resultado['idade'],
+                $resultado['peso'],
+                $resultado['altura'],
+                $resultado['fuma'],
+                $resultado['fazDieta'],
+                $resultado['usaBebidaAlcoolica'],
+                $resultado['sedentario'],
+                $resultado['modalidadeAnterior'],
+                $resultado['temVarizes'],
+                $resultado['pressaoArterial'],
+                $resultado['cirurgia'],
+                $resultado['dormeBem'],
+                $resultado['lesaoArticular'],
+                $resultado['problemaColuna'],
+                $resultado['tempoMedico'],
+                $resultado['medicamento'],
+                $resultado['problemaSaude'],
+                $resultado['parqProblemaCoracao'],
+                $resultado['parqDorPeitoComAtividade'],
+                $resultado['parqDorPeitoSemAtividade'],
+                $resultado['parqEquilibrio'],
+                $resultado['parqProblemaOsseo'],
+                $resultado['parqreceitaMedica'],
+                $resultado['parqRazao'],
+                $resultado['obesidade'],
+                $resultado['diabetes'],
+                $resultado['colesterolElevado'],
+                $resultado['infarto'],
+                $resultado['doencaCardiaca'],
+                $resultado['derrame'],
+                $resultado['pressaoAlta'],
+                $resultado['medidaTorax'],
+                $resultado['medidaCintura'],
+                $resultado['medidaAbdome'],
+                $resultado['medidaQuadril'],
+                $resultado['medidaBracos'],
+                $resultado['medidaAntebracos'],
+                $resultado['medidaPanturrilha'],
+                $resultado['medidaPernas'],
+                $resultado['observacoes'],
+                $resultado['percentualGordura'],
+                $resultado['imc'],
+                $resultado['situacao'],
+                $resultado['plano']
+            );
+        }
+    
+        return $alunos;
     }
-
-    return $alunos;
-   
-}
+    
 public function getId() {
     return $this->id;
 }
@@ -511,19 +518,28 @@ public function getPlano() {
 
 
 
-public static function listarTodosDesativados(PDO $conexao): array {
-    // Query SQL corrigida
+public static function listarTodosDesativados(PDO $conexao, int $pagina = 1, int $limite = 100): array {
+    // Calcula o deslocamento (OFFSET)
+    $offset = ($pagina - 1) * $limite;
+
+    // Query SQL com paginação
     $sql = "
-SELECT *
+       SELECT 
+    p.idPessoa, p.nome, p.cpf, p.rg, p.email, p.telefone, p.telefone_familiar, 
+    p.dataNascimento, p.dataCadastro, p.endereco,
+    a.*
 FROM pessoas p
 JOIN alunos a ON p.idPessoa = a.idPessoa
 WHERE a.situacao = 'Inativo'
-ORDER BY p.nome ASC;
+ORDER BY p.nome ASC
+LIMIT :limite OFFSET :offset;
 
-";
-    
+    ";
+
     // Preparação e execução da query
     $stmt = $conexao->prepare($sql);
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     // Obtenção dos resultados

@@ -5,7 +5,10 @@ $username = 'root';
  $password = '';
  $appname = "Academia Ritmo Fitness";
 $corlinhasuperior = "#e74c3c;";
+$corlinhasuperiorpilates = "#355bb5;";
 $corlinhasuperiormenu = "#e74c3c;";
+$corlinhasuperiormenupilates = "#355bb5;";
 $logotipo = "/academy/assets/img/logo.jpg";
-$versao = "V2.0.0 Beta"
+$versao = "v2.2.2-beta";
+$modopilates = "Pilates";
 ?>
