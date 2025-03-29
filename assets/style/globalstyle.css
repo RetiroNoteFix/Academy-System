@@ -1,0 +1,1324 @@
+/*ESTILOS GERAIS*/
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+
+}
+
+body {
+    background-color: #222d33;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ESTILO DO MENU LATERAL*/
+body .menulateral {
+    display: flex;
+    flex-direction: column;
+    width: 20.3%;
+    height: 100%;
+    position: fixed;
+    background-color: #222d33;
+    border-right: 2px solid rgb(121, 121, 121);
+    ;
+}
+
+body .menulateral .logo {
+    width: 100%;
+    height: 4%;
+}
+
+body .menulateral .logo h1 {
+    margin-left: 10px;
+    font-size: 15px;
+    color: #fff
+}
+
+body .menulateral .user {
+    width: 100%;
+    height: 18%;
+    border-bottom: 2px solid rgb(121, 121, 121);
+}
+
+body .menulateral .box {
+    margin-top: 10px;
+
+    width: 100%;
+    height: 80%;
+}
+
+body .menulateral .box .options {
+    transition: 0.6s ease;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    cursor: pointer;
+}
+
+body .menulateral .box .options:hover {
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+
+body .menulateral .box .options .img {
+    margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 19%;
+    height: 100%;
+
+}
+
+body .menulateral .box .options .img svg {
+    width: 60%;
+    height: 60%;
+}
+
+body .menulateral .box .options a {
+    font-size: 14px;
+    font-weight: 300;
+    text-decoration: none;
+    color: #fff;
+    margin-left: 10px;
+}
+
+body .menulateral .user {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    height: 18%;
+}
+
+body .menulateral .user .userimg {
+    margin-left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+body .menulateral .user .box {
+    margin-top: -2px;
+    display: flex;
+    width: 100%;
+    height: 55%;
+    align-items: center;
+}
+
+body .menulateral .user .box .status .statuscolor {
+    width: 15px;
+    height: 15px;
+}
+
+body .menulateral .user .box .status {
+    margin-left: -64px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body .menulateral .user .box .status p {
+    font-weight: 400;
+    color: #fff;
+    margin-left: 20px;
+    transform: translate(0px, -3px);
+}
+
+body .menulateral .user .box .username {
+
+    margin-bottom: 30px;
+    margin-left: 10px;
+}
+
+body .menulateral .user .box .username p {
+    color: #fff;
+}
+
+/*ESTILO MENULATERAL OPÇÕES SELECIONADAS*/
+
+#fornecedores {
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+
+#optHome {
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+#optPagamentoP {
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+
+/*ESTILO DO PAINEL*/
+.painel {
+    margin-top: 2%;
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: AUTO;
+}
+.painelvenda{
+    margin-top: 2%;
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 10%;
+    overflow-y: hidden;
+}
+
+body .linhasuperior {
+    position: fixed;
+    margin-left: 20.3%;
+    width: 80%;
+    height: 3.9%;
+}
+
+body .painel .titulo {
+    display: flex;
+    width: 100%;
+    height: 70px;
+}
+.painelvenda .titulo {
+    display: flex;
+    width: 100%;
+    height: 70px;
+}
+
+body .painel .titulo h1 {
+    margin-left: 20px;
+    color: #fff;
+    font-weight: 400;
+}
+body .painelvenda .titulo h1 {
+    margin-left: 20px;
+    color: #fff;
+    font-weight: 400;
+}
+
+body .painel .titulo p {
+    color: #fff;
+    font-weight: 400;
+    margin-left: 10px;
+}
+
+body .painel .statusbox {
+    
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100px;
+
+}
+
+body .painel .statusbox .status {
+    border: 1px solid #fff;
+    display: flex;
+    flex-direction: column;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 225px;
+    height: 100%;
+    transition: 0.6s ease;
+    cursor: pointer;
+}
+
+body .painel .statusbox .status:hover {
+    transform: scale(1.02);
+
+}
+
+body .painel .statusbox .status .img {
+    width: 26%;
+    height: 100%;
+}
+
+body .painel .statusbox .status .img svg {
+    width: 100%;
+    height: 100%;
+
+}
+
+body .painel .statusbox .status p {
+    color: #fff;
+    margin-top: 11px;
+    margin-left: 16px;
+    width: auto;
+    height: 24px;
+}
+
+body .painel .statusbox .status .qtdbox {
+    display: flex;
+    border-radius: 12px;
+    width: 100%;
+    height: 50%;
+
+}
+
+body .painel .statusbox .alinhar {
+    display: flex;
+    width: 100%;
+    height: 50%;
+}
+
+body .painel .statusbox .qtdbox .alinhar {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+body .painel .statusbox .qtdbox .alinhar p {
+    font-family: "Roboto", sans-serif;
+    color: #ffffff;
+    font-weight: 100;
+    font-style: normal;
+    margin-bottom: 11px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+body .painel .statusbox .qtdbox .alinhar .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 40px;
+    height: 100%;
+}
+
+body .painel .statusbox .status h1 {
+    margin-top: 5px;
+    margin-left: 9px;
+    letter-spacing: 1px;
+    color: #fff;
+    font-family: "Roboto", sans-serif;
+    color: #ffffff;
+    font-weight: 200;
+    font-style: normal;
+}
+
+#qtd {
+    font-weight: 700;
+    color: #fff;
+    margin-right: 20px;
+}
+
+#fornecedorpainel {
+    border-radius: 20px;
+background-color: #EF0107;
+}
+#dashboardf{
+    height: 2090px;
+}
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+  margin-top: 10px;
+    margin-left: 5px;
+    width: 99%;
+    height: auto;
+    background-color: #fff;
+}
+.dashboardalunos {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+  margin-top: 10px;
+    margin-left: 5px;
+    width: 99%;
+    height: auto;
+    background-color: #fff;
+}
+body .painel .dashboard .editaraluno .icon {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-radius: 10px;
+}
+#listaprodutos{
+    max-height: 90%; /* Defina a altura máxima que faz sentido para sua página */
+    overflow-y: auto; /* Permite a rolagem vertical */
+    padding: 10px; /* Para dar espaço interno */
+    background-color: #f9f9f9; /* Fundo para melhor visibilidade */
+}
+body .painel .dashboard .editaraluno .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboard .editaraluno .icon svg {
+    width: 80%;
+    height: 80%;
+}
+
+body .painel .dashboard .editaraluno .texto {
+    margin-left: 5px;
+}
+
+body .painel .dashboard .editaraluno .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboardalunos .editaraluno .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboardalunos .editaraluno .icon svg {
+    width: 80%;
+    height: 80%;
+}
+
+body .painel .dashboardalunos .editaraluno .texto {
+    margin-left: 5px;
+}
+
+body .painel .dashboardalunos .editaraluno .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+.cadastro {
+    align-items: center;
+    display: flex;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 15%;
+    height: 40px;
+    background-color: #ff0000;
+    border-radius: 10px;
+}
+.editaraluno:hover{
+background-color: #16b002;
+}
+.editaraluno {
+    align-items: center;
+    display: flex;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 15%;
+    height: 40px;
+    background-color: #00ff2a;
+    border-radius: 10px;
+}
+.btnvender {
+    align-items: center;
+    display: flex;
+    margin-top: 40px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+    width: 20px;
+    height: 40px;
+    background-color: #0099ff;
+    border-radius: 10px;
+}
+ .btnvender .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-radius: 10px;
+}
+.icon {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-radius: 10px;
+}
+body .painel .dashboard .cadastro .icon {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-radius: 10px;
+}
+body .painel .dashboardalunos .cadastro .icon {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+    border-radius: 10px;
+}
+#listaprodutos{
+    max-height: 90%; /* Defina a altura máxima que faz sentido para sua página */
+    overflow-y: auto; /* Permite a rolagem vertical */
+    padding: 10px; /* Para dar espaço interno */
+    background-color: #f9f9f9; /* Fundo para melhor visibilidade */
+}
+.texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboard .cadastro .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+.btnvender .icon svg{
+    width: 80%;
+    height: 80%;  
+}
+body .painel .dashboard .cadastro .icon svg {
+    width: 80%;
+    height: 80%;
+}
+.icon svg {
+    width: 80%;
+    height: 80%;
+}
+body .painel .dashboard .cadastro .texto {
+    margin-left: 5px;
+}
+
+body .painel .dashboard .cadastro .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboard .cadastro .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+body .painel .dashboardalunos .cadastro .icon svg {
+    width: 80%;
+    height: 80%;
+}
+
+body .painel .dashboardalunos .cadastro .texto {
+    margin-left: 5px;
+}
+
+body .painel .dashboardalunos .cadastro .texto p {
+    color: #fff;
+    font-weight: 500;
+}
+.texto p {
+    color: #fff;
+    font-weight: 500;
+}
+
+body .painel .dashboard .linhasuperiorcadastro {
+    margin-left: 10px;
+    width: 98%;
+    height: 80px;
+    border-bottom: 2px solid #c7c7c7;
+}
+
+body .painel .dashboard .listafornecedores {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid #c7c7c7;
+    border-left: 2px solid #c7c7c7;
+    border-bottom: 2px solid #c7c7c7;
+    margin-left: 10px;
+    width: 98%;
+    height: 91%;
+}
+
+body .painel .dashboard .listafornecedores th {
+    font-size: 12px;
+    width: 600px;
+}
+
+body .painel .dashboard .listafornecedores td {
+    font-size: 12px;
+    width: 100px;
+}
+
+#painelf {
+    flex-direction: column;
+    height: AUTO;
+}
+#painelvenda {
+    flex-direction: column;
+}
+
+#linhasuperiorf {
+    position: fixed;
+    width: 100%;
+    height: 3.84%;
+    background-color: #4191bd;
+}
+
+#titulof {
+    flex-direction: column;
+}
+
+#h1titulof {
+    margin-top: 1%;
+}
+
+#titulopainel {
+    align-items: center;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 86vh;
+}
+
+fieldset {
+    width: 50%;
+    border: none;
+    margin-left: 20px;
+    height: auto;
+}
+#ladodireito{
+    width: 70%;
+}
+#ladodireito input[type="text"]{
+    margin-left: 280px;
+}
+
+.fieldsetcontainer {
+    margin-top: 10px;
+    height: auto;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+}
+#search{
+    padding: 2px;
+    height: 30px;
+    margin-bottom:20px;
+}
+.boxpesquisa{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+
+}
+#nomealuno{
+    max-width: 200px;
+}
+button[type="submit"]:hover{
+    transform: scale(1.1);
+}
+#svgiconssearch{
+    width: 20px;
+    height: 20px;
+}
+
+
+span {
+    color: red;
+}
+
+
+.alinharinput{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    gap:0px;
+
+}
+#buscarcnpj{
+    border-radius: 20px;
+    border: 2px solid #000;
+background: none;
+    margin-left: 5px;
+    margin-top: -40px;
+    width: 21%;
+    transition: 0.6s ease;
+    background-color: #000000;
+    color:#fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+#buscarcnpj:hover{
+
+color:#acacac;
+    }
+    #btncadastro{
+        width: 150px;
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+    }
+    #btncadastro2{
+        width: 150px;
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+    }
+    #btneditar{
+        width: 150px;
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+    }
+    #btnvoltar{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #ffae00;
+    }
+    #btnvoltar2{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #ffae00;
+    }
+    #btnfechar{
+        
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #ff0000;
+    }
+    #txtbotao{
+        color:white;
+    }
+    .boxbotoes{
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        height: 100%;
+   
+    }
+    #btnpagar{
+        width: 30%;
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #00aeff;
+    }
+    #btnrefresh{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #2afc00;
+    }
+    #btnrefresh2{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #2afc00;
+    }
+    #btnvoltarf{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+        background-color: #ffae00;
+    }
+    #btn{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+    }
+    #btnproduto{
+        border: none;
+        transition: 0.6s ease;
+        cursor: pointer;
+    }
+    #btnproduto:hover{
+        background-color:#026cb3;
+        }
+    #btncadastro:hover{
+    background-color:#b30202;
+    }
+    #btnvoltar:hover{
+        background-color:#c58701;
+        }
+        #btnfechar:hover{
+            background-color:#c50101;
+            }
+            #btnpagar:hover{
+                background-color:#0187c5;
+                }
+        #btnrefresh:hover{
+            background-color:#1fb800;
+            }
+        #btnvoltarf:hover{
+            background-color:#c58701;
+            }
+    a{
+        text-decoration: none;
+    }
+    #corrigirmargem{
+        margin-bottom: 15px;
+    }
+    .popup {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0s 0.5s;
+        transition: 0.6s ease;
+        position: fixed;
+        top: 50%; /* Posiciona o topo do popup no meio da tela */
+        left: 63%; /* Posiciona o lado esquerdo do popup no meio da tela */
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border: 1px solid black;
+        border-radius: 5px;
+        z-index: 1000;
+        transition: opacity 0.3s ease;
+        color:black;
+        background-color: #fff;
+        box-shadow: 8px 8px 10px 0px rgba(0, 0, 0, 0.651);
+    }
+    /* Animação de entrada */
+    .popup.show {
+        opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0s 0s;
+
+        display: block;
+        animation: fadeIn 0.3s ease forwards;
+    }
+    .overlay.show {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.5s ease, visibility 0s 0s;
+        display: block;
+        animation: fadeIn 0.6s ease forwards;
+    }
+    
+    
+    /* Animação de saída */
+    .popup.hide {
+        transition: 0.6s ease;
+        animation: fadeOut 0.6s ease ;
+    }
+    
+    /* Estilo do botão */
+    .popup.button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .msg{
+        position: relative;
+        width: auto;
+        height: auto; /* Usa a altura total da viewport */
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .closepop{
+        display: flex;
+        justify-content: right;
+    }
+    .overlay {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.5s ease, visibility 0s 0.5s;
+        transition: 0.6s ease;
+        position: fixed;
+        width: 10000px;
+        height: 10000px;
+        background: rgba(0, 0, 0, 0.5); /* Fundo escuro com transparência */
+        z-index: 10; /* Atrás do popup */
+    }
+    .overlay.active, .popup.active {
+        
+        transition: 0.6s ease;
+        display: block;
+    }
+    #popup-messages{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #gif{
+        margin-top: 10px;
+        margin-left: 40%;
+        margin-right: 40%;
+    }
+    #spanerro{
+        margin-left: 17%;
+    
+        color:red;  
+    }
+    .alinharbtn{
+        display: flex;
+        gap:10px;
+    
+        height: auto;
+    }
+    #desc{
+        height: 90px;
+    }
+    #cidadef{
+        margin-bottom: 0px;
+    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #000;
+    border-left: none;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #f2f2f2;
+}
+#par_q{
+    width: 900px;
+    margin-left: 80px;
+}
+#h1parq{
+    font-size: 15px;
+    margin-left: 260px;
+}
+#h1medidas{
+    font-size: 15px;
+    margin-left: 420px;
+}
+#acoespainel{
+    width: 120px;
+}
+.actions{
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    width: 100%;
+    height: 70%;
+}
+.actionspainel{
+    display: flex;
+    gap: 0px;
+    justify-content: space-around;
+    width: 100%;
+    height: 70%;
+}
+.ver-detalhes, .editar, .apagar, .ativar, .medidas, .finalizarpagamento, #atualizar, #fecharpagamento{
+    all: unset; /* Remove todos os estilos padrão */
+  cursor: pointer; /* Adiciona um cursor de ponteiro */
+}
+.boxopcficha{
+display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+#atualizar{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    transition: 0.6s ease;
+    width: 85px;
+    background-color: #16b002;
+    color: #fff;
+border-radius: 15px;
+}
+#atualizar:hover{
+    transform: scale(1.05);
+}
+#atualizar p{
+    margin-left: 5px;
+}
+#fecharpagamento{
+    transition: 0.6s ease;
+    width: 70px;
+    background-color: #b00202;
+    color: #fff;
+border-radius: 15px;
+}
+#fecharpagamento:hover{
+    transform: scale(1.05);
+}
+#fecharpagamento p{
+    margin-left: 5px;
+}
+#acticons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: blue;
+    transition: 0.6s ease;
+}
+#acticonsfinalizar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+background-color: #FFF;
+    transition: 0.6s ease;
+}
+#acticons:hover{
+    background-color: rgb(0, 0, 124);
+}
+
+#acticonsedit:hover{
+    background-color: rgb(230, 200, 33);
+}
+#acticonsapagar:hover{
+    background-color: rgb(185, 1, 1);
+}
+#acticonsedit{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(255, 217, 0);
+}
+#acticonsignorar{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+
+}
+#acticonsapagar{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(255, 0, 0);
+}
+#acticonsativar:hover{
+    background-color: rgb(0, 170, 0);;
+}
+#acticonsativar{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(0, 255, 13);
+}
+#acticonsmedir{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: rgb(0, 255, 64);
+}
+#acticonszap{
+    transition: 0.6s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    margin-top: 2px;
+    border-radius: 20px;
+    background-color: rgb(255, 217, 0);
+}
+#acticonsmedir:hover{
+    background-color: rgb(0, 190, 48);
+}
+#svgiconsact{
+    width: 85%;
+    height:  85%;
+}
+
+#ladodireitoinput{
+    width: 100px;
+}
+#th{
+    width: 300px;
+}
+.boxpagamento{
+    display: flex;
+width: 100%;
+align-items: center;
+}
+.boxsitu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    
+}
+
+/*ESTILO DAS CONFIGURAÇÕES*/
+#menuConfig{
+    display: flex;
+    display: none;
+}
+.config-box{
+    width: 100%;
+    height: 80%;
+}
+.config-title{
+    width: 100%;
+    height: 25px;
+
+    border-bottom: 2px solid rgb(121, 121, 121);
+}
+.config-title p{
+    margin-left: 5px;
+    color: #fff;
+}
+.config-label{
+    color: #fff;
+}
+.config-input{
+    color: #fff;
+    width: 98%;
+}
+#config-form input[type="text"]{
+    width: 98%;
+}
+.button-box{
+    margin-bottom: 10px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.button-box .save-btn{
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    background: none;
+    background-color: #ff0000;
+}
+.button-box .back-btn{
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    background: none;
+    background-color: #ffae00;
+}
+#config-menu{
+    display: none;
+}
+.sairbtn{
+    background: none;
+    border: none;
+    color: #fff;
+    transition: 0.6s ease;
+    cursor: pointer;
+}
+
+/*ESTILO DOS ALUNOS*/
+#labelaluno{
+    font-size: 12px;
+}
+/*ESTILO DA TELA DE LOGIN*/
+#body-login-page{
+    background-image: url(/academy/assets/img/login-background.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+}
+body .login-container{
+    display: flex;
+border: 2px solid #000;
+   max-width: 300px;
+   padding: 50px;
+   border-radius: 20px;
+   background-color: #131212;
+   max-height: 400px;
+}
+body .login-container .title{
+    margin-bottom: 10px;
+   color: #fff;
+}
+body .login-container .buttonbox{
+    margin-top: 10px;
+    background-color: rgb(255, 2, 2);
+    width: 203px;
+    height: 40px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    transition: 0.4s ease;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+body .login-container .buttonbox:hover{
+transform: scale(1.05);
+background-color: rgb(218, 2, 2);
+}
+body .login-container span{
+    color:  red;
+}
+body .login-container #loginbutton{
+    border: none;
+    background: none;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+}
+body .login-container label{
+    color: #fff;
+}
+body .login-container input{
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+body .login-container .appname{
+    margin-bottom: 10px;
+}
+body .login-container .appname h1{
+    color: #fff;
+    font-size:30px;
+}
+/*ESTILO DO POPUP DO LOGIN*/
+#popup{
+    left: 50%;
+    top: 13%;
+}
+#popupalunos{
+    left: 60%;
+}
+#mode{
+    color:#fff;
+    font-size: 12px;
+    margin-top: 2px;
+}
+#btndesativados{
+    background-color: #000000;
+    transition: 0.6s ease;
+}
+#btndesativados:hover{
+background-color: #303030;
+}
+#btnignorados{
+    background-color: #000000;
+    transition: 0.6s ease;
+}
+#btnignorados:hover{
+background-color: #5c5b5b;
+}
+#btnativos{
+    background-color: #0044ff;
+    transition: 0.6s ease;
+}
+#btnativos:hover{
+    background-color: #012fad;
+}
+#paineldesativado{
+    display: none;
+}
+#optAlunosA{
+    background-color: #13181b;
+    border-left: 2px solid red;
+}
+#good{
+    color:#16b002;
+}
+
+.ficha {
+
+    width: 400px;
+    height: 400px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.ficha h3 {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.ficha p {
+    margin: 2px 0;
+}
+.tabelaPagamento {
+    width: 100%;
+    height: 400px;
+    border-collapse: collapse;
+}
+
+.tabelaPagamento th, .tabelaPagamento td {
+    text-align: left;
+    padding: 2px;
+    border: 1px solid #ddd;
+}
+
+.tabelaPagamento th {
+    background-color: #f1f1f1;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.status.pago {
+    color: green;
+}
+
+.status.pendente {
+    color: red;
+}
+
+.total {
+    font-weight: bold;
+    text-align: right;
+}
+
+.ano-seletor {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.ano-seletor select {
+    padding: 3px;
+    font-size: 12px;
+}
+.ajustainput{
+    width: 50%;
+    transform: translate(-280px, 0px);
+}
