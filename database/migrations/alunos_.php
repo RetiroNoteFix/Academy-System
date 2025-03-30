@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('alunos', function (Blueprint $table) {
             $table->id('idAluno');
             $table->unsignedBigInteger('idPessoa')->nullable(); // Usando unsignedBigInteger para referência
-            $table->string('profissao', 100)->nullable();
-            $table->string('escolaridade', 100)->nullable();
-            $table->string('estadoCivil', 50)->nullable();
             $table->string('tipoSanguineo', 15)->nullable();
             $table->string('modalidade', 100)->nullable();
             $table->string('comoSoubeAcademia', 255)->nullable();
@@ -51,7 +48,6 @@ return new class extends Migration
             $table->string('infarto', 15)->nullable();
             $table->string('doencaCardiaca', 15)->nullable();
             $table->string('derrame', 15)->nullable();
-            $table->string('pressaoAlta', 15)->nullable();
             $table->string('medidaTorax', 15)->nullable();
             $table->string('medidaCintura', 15)->nullable();
             $table->string('medidaAbdome', 15)->nullable();
@@ -61,12 +57,10 @@ return new class extends Migration
             $table->string('medidaPanturrilha', 15)->nullable();
             $table->string('medidaPernas', 15)->nullable();
             $table->string('observacoes', 255)->nullable();
-            $table->string('percentualGordura', 15)->nullable();
-            $table->string('imc', 15)->nullable();
             $table->decimal('valor', 10, 2)->nullable();
-            $table->string('data_pagamento', 20)->nullable();
+            $table->date('data_pagamento')->nullable();
             $table->enum('situacao', ['Ativo', 'Inativo'])->default('Ativo');
-            $table->enum('plano', ['Mensal', 'Trimestral', 'Anual'])->default('Mensal');
+            $table->enum('plano', ['Mensal', 'Semestral', 'Anual'])->default('Mensal');
             $table->foreign('idPessoa')->references('idPessoa')->on('pessoas')->onDelete('cascade');
             $table->timestamps();
         });

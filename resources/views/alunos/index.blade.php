@@ -139,7 +139,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="5">Nenhum aluno encontrado. <a href="{{ route('aluno.cadastrar') }}">Cadastrar aluno.</a></td>
+                <td colspan="5">Nenhum aluno encontrado. <a href="{{ route('alunos.criar') }}">Cadastrar aluno.</a></td>
             </tr>
         @endforelse
     </tbody>

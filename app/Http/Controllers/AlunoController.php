@@ -109,7 +109,6 @@ class AlunoController extends Controller
                 $aluno = Aluno::create([
 
                     'idPessoa' => $pessoa->idPessoa,
-                  'altura' => $request->altura,
     'fuma' => $request->fumar,
     'fazDieta' => $request->faz_dieta,
     'usaBebidaAlcoolica' => $request->bebida_alcoolica,
@@ -119,8 +118,8 @@ class AlunoController extends Controller
     'pressaoArterial' => $request->pressao_arterial,
     'cirurgia' => $request->cirurgia,
     'dormeBem' => $request->dorme_bem,
-    'lesaoArticular' => $request->lesao_articular,
-    'problemaColuna' => $request->problema_coluna,
+    'lesaoArticular' => $request->lesao_articular . ' ' . $request->lesao_detalhes,
+    'problemaColuna' => $request->problema_coluna . ' ' . $request->coluna_detalhes,
     'tempoMedico' => $request->tempo_sem_medico,
     'medicamento' => $request->uso_medicamento,
     'problemaSaude' => $request->problema_saude,
@@ -135,7 +134,7 @@ class AlunoController extends Controller
     'diabetes' => $request->diabetes,
     'colesterolElevado' => $request->colesterol_elevado,
     'infarto' => $request->infarto,
-    'doencaCardiaca' => $request->doenca_cardiaca,
+    'doencaCardiaca' => $request->doenca_cardiaca . ' ' . $request->doenca_detalhes,
     'derrame' => $request->derrame,
     'medidaTorax' => $request->torax,
     'medidaCintura' => $request->cintura,

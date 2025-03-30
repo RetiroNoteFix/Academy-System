@@ -10,6 +10,13 @@
 a{
 color: #333;
 }
+#lesao_detalhes_input,
+#coluna_detalhes_input,
+#doenca_detalhes_input{
+    border: 1px solid red;
+}
+
+
 
 body {
     line-height: 1.6;
@@ -700,6 +707,7 @@ align-items: center;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 10px;
+    height: 30px;
 }
 #addaluno, #btncadastraraluno, #close, .excluir{
     transition: 0.6s ease;
@@ -815,7 +823,10 @@ gap: 70px;
 #diabetes,
 #fumar,
 #bebida_alcoolica,
-#dataPagamento
+#dataPagamento,
+#lesao_detalhes_input,
+#coluna_detalhes_input,
+#doenca_detalhes_input
 {
     padding: 0;
     height: 30px;

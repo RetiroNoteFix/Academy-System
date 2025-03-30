@@ -594,6 +594,135 @@ function fecharAnamnese() {
     document.getElementById('overlay').style.display = 'none';
 }
 
+function toggleLesaoInput(select) {
+    const lesaoDetalhesDiv = document.getElementById('lesao_detalhes');
+    const lesaoDetalhesInput = document.getElementById('lesao_detalhes_input');
+    
+    if (select.value === "Sim - ") {
+      lesaoDetalhesDiv.style.display = "block";
+      lesaoDetalhesInput.required = true; 
+    } else {
+      lesaoDetalhesDiv.style.display = "none";
+      lesaoDetalhesInput.required = false; 
+      lesaoDetalhesInput.value = ""; 
+    }
+  }
 
+  function toggledoencaInput(select) {
+    const doencaDetalhesDiv = document.getElementById('doenca_detalhes');
+    const doencaDetalhesInput = document.getElementById('doenca_detalhes_input');
+    
+    if (select.value === "Sim - ") {
+      doencaDetalhesDiv.style.display = "block"; 
+      doencaDetalhesInput.required = true; 
+    } else {
+      doencaDetalhesDiv.style.display = "none"; 
+      doencaDetalhesInput.required = false; 
+      doencaDetalhesInput.value = ""; 
+    }
+}
+
+  function togglecolunaInput(select) {
+    const colunaDetalhesDiv = document.getElementById('coluna_detalhes');
+    const colunaDetalhesInput = document.getElementById('coluna_detalhes_input');
+    
+    if (select.value === "Sim - ") {
+      colunaDetalhesDiv.style.display = "block"; 
+      colunaDetalhesInput.required = true; 
+    } else {
+      colunaDetalhesDiv.style.display = "none"; 
+      colunaDetalhesInput.required = false; 
+      colunaDetalhesInput.value = ""; 
+    }
+  }
+
+  document.getElementById('peso').addEventListener('input', function (event) {
+    const input = event.target;
+    let valor = input.value.replace(/[^0-9,\.]/g, '');
+    valor = valor.replace(',', '.'); 
+    
+    if (valor) {
+        input.value = `${valor} Kg`;
+    } else {
+        input.value = ''; 
+    }
+
+  
+    const posicaoCursor = valor.length; 
+    input.setSelectionRange(posicaoCursor, posicaoCursor);
+});
+
+const ids = [
+    'input-torax',
+    'input-cintura',
+    'input-abdome',
+    'input-quadril',
+    'input-bracos',
+    'input-antebracos',
+    'input-panturrilha',
+    'input-pernas'
+];
+
+
+function aplicarMascara(id) {
+    document.getElementById(id).addEventListener('input', function (event) {
+    const input = event.target;
+    let valor = input.value;
+
+   
+    valor = valor.replace(',', '.');
+
+   
+    valor = valor.replace(/[^0-9\/\.]/g, '');
+
+  
+    if (valor.includes('/')) {
+        const partes = valor.split('/');
+        if (partes.length > 2) {
+            valor = partes[0] + '/' + partes[1].slice(0, 1); 
+        }
+    }
+
+  
+    if (valor) {
+        input.value = `${valor} CM`; 
+    } else {
+        input.value = ''; 
+    }
+
+  
+    if (input.selectionStart === input.value.length - 3) { 
+        input.setSelectionRange(input.value.length - 3, input.value.length - 3);
+    } else if (input.selectionStart === input.value.length) { 
+        input.setSelectionRange(input.value.length - 3, input.value.length - 3);
+    }
+});
+}
+ids.forEach(aplicarMascara);
+
+document.getElementById('input-altura').addEventListener('input', function (event) {
+    const input = event.target;
+    let valor = input.value;
+
+    valor = valor.replace(',', '.');
+    valor = valor.replace(/[^0-9.]/g, '');
+
+    const partes = valor.split('.');
+    if (partes.length > 2) {
+        valor = partes[0] + '.' + partes[1].slice(0, 2);
+    }
+
+    if (valor.length > 4) {
+        valor = valor.slice(0, 4);
+    }
+
+    input.value = valor ? `${valor} m` : '';
+
+    if (input.selectionStart === input.value.length - 2) { 
+        input.setSelectionRange(input.value.length - 2, input.value.length - 2);
+    } else if (input.selectionStart === input.value.length) { 
+        input.setSelectionRange(input.value.length - 2, input.value.length - 2);
+    }
+});
 
 loadTheme();

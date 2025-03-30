@@ -281,7 +281,7 @@
             <label for="lesao_articular">LESÃO ARTICULAR:</label>
             <select class="smallinput" id="lesao_articular" name="lesao_articular" onchange="toggleLesaoInput(this)" >
             <option value="" disabled selected>Selecione</option>
-            <option value="Sim">Sim</option>
+            <option value="Sim - ">Sim</option>
             <option value="Não">Não</option>
             </select>
             <div id="lesao_detalhes" style="display: none; margin-top: 10px;">
@@ -293,10 +293,10 @@
             <label for="problema_coluna">PROBLEMA DE COLUNA:</label>
             <select id="problema_coluna" name="problema_coluna" onchange="togglecolunaInput(this)">
             <option value="">Selecione</option>
-            <option value="Sim">Sim</option>
+            <option value="Sim - ">Sim</option>
             <option value="Não">Não</option>
             </select>
-            <div id="coluna_detalhes" style="display: none; margin-top: 10px;">
+            <div id="coluna_detalhes" style="display: none; margin-top: 8px;">
       <label for="coluna_detalhes_input">DESCREVA:</label>
       <input type="text" id="coluna_detalhes_input" name="coluna_detalhes" placeholder="Descreva o problema">
     </div>
@@ -338,7 +338,7 @@
         <label for="doenca_cardiaca">DOENÇA CARDÍACA:</label>
         <select class="smallinput" id="doenca_cardiaca" name="doenca_cardiaca" onchange="toggledoencaInput(this)">
         <option value="" disabled selected>Selecione</option>
-        <option value="Sim">Sim</option>
+        <option value="Sim - ">Sim</option>
         <option value="Não">Não</option>>
         </select>
         <div id="doenca_detalhes" style="display: none; margin-top: 10px;">
@@ -436,9 +436,9 @@
             <label for="jaFez_modalidade">QUE MODALIDADE FAZ OU JÁ FEZ:</label>
             <input type="text" id="jaFez_modalidade" name="jaFez_modalidade" placeholder="Descreva quais modalidades já realizou" >
         </div>
-        <div class="form-group">
+        <div class="form-group" style="display:none;">
             <label for="modalidade_atual">QUE MODALIDADE PRATICA ATUALMENTE:</label>
-            <input type="text" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
+            <input type="text" value="musculação" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
         </div>
         <div class="form-group">
             <label for="objetivo_atividade_fisica">QUAL O SEU OBJETIVO:</label>
@@ -531,6 +531,10 @@
         <h4 id="titilo-parq">MEDIDAS ANTROPOMÉTRICAS</h4>
     </div>
 <table id="tabela-medidas">
+<tr id="linha-altura">
+    <th id="th-torax">ALTURA:</th>
+    <td class="input-coluna" id="td-altura"><input id="input-altura" type="text" name="altura" placeholder="Metros"></td>
+</tr>
 <tr id="linha-torax">
     <th id="th-torax">TÓRAX:</th>
     <td class="input-coluna" id="td-torax"><input id="input-torax" type="text" name="torax" placeholder="Centímetros"></td>
