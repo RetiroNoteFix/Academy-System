@@ -34,13 +34,14 @@ var tdElements = document.querySelectorAll("table td");
 var trElements = document.querySelectorAll("table tr");
 var boxbuttons = document.querySelectorAll(".boxbuttons");
 var fichabtn = document.querySelectorAll(".ficha");
-var ignorarbtn = document.querySelectorAll(".desativar");
+
 var apagarbtn = document.querySelectorAll(".apagar");
 var optConfigN = document.getElementById("optConfigN");
 var alunosOff = document.getElementById("alunosoff");
 var optmenuname2 = document.getElementById("optmenutopname2");
 let header = document.getElementById("mainheader");
 let title = document.getElementById("pagetitle");
+
 var tbodyalunosoff = document.getElementById("tbodyalunosoff");
 var tbodyalunoson = document.getElementById("tbodyalunoson");
 var btnback = document.getElementById("btnback");
@@ -48,6 +49,7 @@ var btnback = document.getElementById("btnback");
 btnback.addEventListener('click', function (){
 window.history.back();
 });
+
 alunosOff.addEventListener("click", function() {
     tbodyalunosoff.classList.toggle("show");
     tbodyalunoson.classList.toggle("hidden");
@@ -421,23 +423,78 @@ pagetitle.classList.remove("expanded");
 copy.classList.remove("expanded");
 userout.classList.remove("expanded");
 });
-ignorarbtn.forEach(ignorar => {
-ignorar.addEventListener('click', () => {
-document.getElementById('popup').style.display = 'block';
-document.getElementById('overlay').style.display = 'block';
+
+let alunoId = null;
+
+document.querySelectorAll('.desativar').forEach(button => {
+    button.addEventListener('click', function() {
+        alunoId = this.getAttribute('data-id');
+        console.log(alunoId);
+
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja desativar este aluno?';  
+        document.getElementById('confirmar').style.display = 'inline-block';  
+        document.getElementById('fechar').textContent = 'Cancelar';  
+        document.getElementById('fechar').style.display = "none";
+        document.getElementById('popup').setAttribute('data-id', alunoId); 
+    });
 });
 
+document.getElementById('confirmar').addEventListener('click', () => {
+    const alunoId = document.getElementById('popup').getAttribute('data-id');  
+    if (alunoId) {
+        fetch(`/alunos/desativar/${alunoId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.error) {
+                document.getElementById('popup').querySelector('p').textContent = data.error;  
+                document.getElementById('confirmar').style.display = 'none';  
+                document.getElementById('fechar').textContent = 'Fechar';  
+                document.getElementById('fechar').style.display = "block";
+            } else {
+                document.getElementById('popup').querySelector('p').textContent = "Aluno desativado com sucesso!"; 
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+                setInterval(function() {
+                   closePopup();
+                }, 1500);
+                const row = document.querySelector(`button[data-id="${alunoId}"]`).closest('tr');
+                row.remove(); 
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desativar aluno:', error);
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao desativar o aluno."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+        });
+    }
+});
+
+function closePopup(){
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+document.getElementById('fechar').addEventListener('click', () => {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+});
+
+document.getElementById('fechar').addEventListener('click', () => {
+    document.getElementById('popup').style.display = 'none';
+});
 
 document.getElementById('fechar').addEventListener('click', () => {
 document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
-});
-
-document.getElementById('confirmar').addEventListener('click', () => {
-alert("Item ignorado com sucesso!");
-document.getElementById('popup').style.display = 'none';
-document.getElementById('overlay').style.display = 'none';
-});
 });
 apagarbtn.forEach(apagar => {
     apagar.addEventListener('click', () => {
@@ -480,4 +537,7 @@ fichabtn.forEach(ficha => {
         document.getElementById('popupficha').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
     }
+
+
+
 loadTheme();

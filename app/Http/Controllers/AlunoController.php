@@ -183,13 +183,29 @@ class AlunoController extends Controller
 
     public function listar()
     {
-        $alunos = Aluno::with('pessoa')->get();
-        return view('alunos.index', compact('alunos'));
+        $alunos = Aluno::with('pessoa')->where('situacao', 'ativo')->get();
+        $alunosoff = Aluno::with('pessoa')->where('situacao', 'inativo')->get();
+        return view('alunos.index', compact('alunos', 'alunosoff'));
 }
 
 public function pessoa()
 {
     return $this->belongsTo(Pessoa::class, 'idPessoa', 'idPessoa');
 }
+
+public function desativar($id)
+{
+    try {
+        $aluno = Aluno::findOrFail($id);
+        $aluno->situacao = "Inativo";  // Ou o campo que marca o aluno como desativado
+        $aluno->save();
+
+        return response()->json(['message' => 'Aluno desativado com sucesso.']);
+    } catch (\Exception $e) {
+        \Log::error('Erro ao desativar aluno: ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao desativar aluno.'], 500);
+    }
+}
+
 
 }

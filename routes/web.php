@@ -39,3 +39,4 @@ Route::get('/inicio', function () {
 
 Route::post('/login', [ContaController::class, 'logar'])->name('login.autenticar');
 Route::post('/alunos/criar/store', [AlunoController::class, 'cadastrar'])->name('alunos.cadastrar');
+Route::post('/alunos/desativar/{id}', [AlunoController::class, 'desativar'])->name('alunos.desativar');

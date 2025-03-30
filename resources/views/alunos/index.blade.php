@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css')}}">
-   
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,6 +118,7 @@
     <tbody id="tbodyalunoson">
         @forelse ($alunos as $aluno)
             <tr>
+       
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $aluno->pessoa->nome ?? 'Sem Nome' }}</td>
                 <td>{{ $aluno->pessoa->endereco ?? 'Sem Endereço' }}</td>
@@ -131,9 +132,9 @@
                                     <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 
-                                <button class="desativar" title="DESATIVAR ALUNO">
-                                    <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
-                                </button>
+                                <button class="desativar" title="DESATIVAR ALUNO" data-id="{{ $aluno->idAluno }}">
+    <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
+</button>
                             </div>
                 </td>
             </tr>
@@ -143,7 +144,39 @@
             </tr>
         @endforelse
     </tbody>
+
+    <tbody id="tbodyalunosoff" >
+        @forelse ($alunosoff as $alunooff)
+            <tr>
+       
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $alunooff->pessoa->nome ?? 'Sem Nome' }}</td>
+                <td>{{ $alunooff->pessoa->endereco ?? 'Sem Endereço' }}</td>
+                <td>{{ $alunooff->pessoa->telefone ?? 'Não informado' }}</td>
+                <td>
+                <div class="boxbuttons">
+                                <button class="ficha" title="VER FICHA">
+                                <i id="btnacticon" class="fa-solid fa-eye"></i>
+                                </button>
+                                <button class="editar" title="EDITAR ALUNO">
+                                    <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                
+                                <button class="desativar" title="DESATIVAR ALUNO" data-id="{{ $alunooff->idAluno }}">
+    <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
+</button>
+                            </div>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5">Nenhum aluno encontrado. <a href="{{ route('alunos.criar') }}">Cadastrar aluno.</a></td>
+            </tr>
+        @endforelse
+    </tbody>
+
 </table>
+
         </div><!--list-->
         </section>
     </main>
@@ -152,7 +185,7 @@
     </footer>
     <div id="popup" class="popup">
         <div class="popup-content">
-            <p>Tem certeza de que deseja ignorar?</p>
+            <p></p>
             <button id="confirmar">Sim</button>
             <button id="fechar">Cancelar</button>
         </div>
@@ -162,6 +195,7 @@
         </div>
     </div>
     <div id="overlay" class="overlay"></div>
+    
     <script src="{{ asset('script/alunos.js') }}"> </script>
 </body>
 </html>
