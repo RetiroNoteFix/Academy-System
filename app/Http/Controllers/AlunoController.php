@@ -200,10 +200,10 @@ public function desativar($id)
         $aluno->situacao = "Inativo"; 
         $aluno->save();
 
-        return response()->json(['message' => 'Aluno desativado com sucesso.']);
+        return response()->json(['message' => 'Aluno(a) desativado com sucesso.']);
     } catch (\Exception $e) {
-        \Log::error('Erro ao desativar aluno: ' . $e->getMessage());
-        return response()->json(['error' => 'Erro ao desativar aluno.'], 500);
+        \Log::error('Erro ao desativar Aluno(a): ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao desativar Aluno(a).'], 500);
     }
 }
 
@@ -214,12 +214,111 @@ public function ativar($id)
         $aluno->situacao = "Ativo"; 
         $aluno->save();
 
-        return response()->json(['message' => 'Aluno ativado com sucesso.']);
+        return response()->json(['message' => 'Aluno(a) ativado com sucesso.']);
     } catch (\Exception $e) {
-        \Log::error('Erro ao ativar aluno: ' . $e->getMessage());
-        return response()->json(['error' => 'Erro ao ativar aluno.'], 500);
+        \Log::error('Erro ao ativar Aluno(a): ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao ativar Aluno(a).'], 500);
     }
 }
 
+public function apagar($id)
+{
+    try {
+        $aluno = Aluno::findOrFail($id);
+        $idPessoa = $aluno->idPessoa;
+        $aluno->delete();
+        Pessoa::findOrFail($idPessoa)->delete();
+
+        return response()->json(['message' => 'Aluno e seus dados foram apagados com sucesso.']);
+    } catch (\Exception $e) {
+        \Log::error('Erro ao apagar aluno: ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao apagar aluno.'], 500);
+    }
+}
+
+
+public function visualizar(Request $request, $id)
+{
+    try {
+        // Buscar aluno pelo ID, incluindo os dados da pessoa relacionada
+        $aluno = Aluno::with('pessoa')->findOrFail($id);  // A relação 'pessoa' deve estar definida no modelo Aluno
+        
+        // Retornar os dados combinados de Aluno e Pessoa
+        return response()->json([
+            // dados pessoa
+            'nome' => $aluno->pessoa->nome,
+            'cpf' => $aluno->pessoa->cpf,
+            'rg' => $aluno->pessoa->rg,
+            'email' => $aluno->pessoa->email,
+            'telefone' => $aluno->pessoa->telefone,
+            'telefone_familia' => $aluno->pessoa->telefone_familiar,
+            'data_nascimento' => $aluno->pessoa->dataNascimento,
+            'endereco' => $aluno->pessoa->endereco,
+            'idade' => $aluno->idade,
+            'email' => $aluno->pessoa->email,
+            // dados aluno
+            'cirurgia' => $aluno->cirurgia,
+            'dorme_bem' => $aluno->dormeBem,
+            'lesao_detalhes_input' => $aluno->lesaoArticular,
+            'coluna_detalhes_input' => $aluno->problemaColuna,
+            'tempo_sem_medico' => $aluno->tempoMedico,
+            'uso_medicamento' => $aluno->medicamento,
+            'problema_saude' => $aluno->problemaSaude,
+            'varizes' => $aluno->temVarizes,
+            'infarto' => $aluno->infarto,
+            'doenca_detalhes_input' => $aluno->doencaCardiaca,
+            'derrame' => $aluno->derrame,
+            'diabetes' => $aluno->diabetes,
+            'obesidade' => $aluno->obesidade,
+            'colesterol_elevado' => $aluno->colesterolElevado,
+            'input-sim1' => $aluno->parqProblemaCoracao,
+            'input-sim2' => $aluno->parqDorPeitoComAtividade,
+            'input-sim3' => $aluno->parqdorPeitoSemAtividade,
+            'input-sim4' => $aluno->parqEquilibrio,
+            'input-sim5' => $aluno->parqProblemaOsseo,
+            'input-sim6' => $aluno->parqReceitaMedica,
+            'input-sim7' => $aluno->parqRazao,
+            'input-nao1' => $aluno->parqProblemaCoracao,
+            'input-nao2' => $aluno->parqDorPeitoComAtividade,
+            'input-nao3' => $aluno->parqdorPeitoSemAtividade,
+            'input-nao4' => $aluno->parqEquilibrio,
+            'input-nao5' => $aluno->parqProblemaOsseo,
+            'input-nao6' => $aluno->parqReceitaMedica,
+            'input-nao7' => $aluno->parqRazao,
+            'modalidade_atual' => $aluno->modalidade,
+            'objetivo_atividade_fisica' => $aluno->objetivo,
+            'soubeDa_academia' => $aluno->comoSoubeAcademia,
+            'peso' => $aluno->peso,
+            'tipo_sanguineo' => $aluno->tipoSanguineo,
+            'pressao_arterial' => $aluno->pressaoArterial,
+            'fumar' => $aluno->fuma,
+            'faz_dieta' => $aluno->fazDieta,
+            'bebida_alcoolica' => $aluno->usaBebidaAlcoolica,
+            'sedentario' => $aluno->sedentario,
+            'input-altura' => $aluno->altura,
+            'input-torax' => $aluno->torax,
+            'input-cintura' => $aluno->cintura,
+            'input-abdome' => $aluno->abdome,
+            'input-quadril' => $aluno->quadril,
+            'input-bracos' => $aluno->bracos,
+            'input-antebracos' => $aluno->antebracos,
+            'input-pernas' => $aluno->pernas,
+            'input-panturrilha' => $aluno->panturrilha,
+            'input-observacoes' => $aluno->observacoes,
+          
+            
+
+            
+
+            
+
+
+            'situacao' => $aluno->situacao,
+            
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Aluno não encontrado!'], 404);
+    }
+}
 
 }

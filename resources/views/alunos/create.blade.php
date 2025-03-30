@@ -438,7 +438,7 @@
         </div>
         <div class="form-group" style="display:none;">
             <label for="modalidade_atual">QUE MODALIDADE PRATICA ATUALMENTE:</label>
-            <input type="text" value="musculação" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
+            <input type="text" value="Musculação" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
         </div>
         <div class="form-group">
             <label for="objetivo_atividade_fisica">QUAL O SEU OBJETIVO:</label>

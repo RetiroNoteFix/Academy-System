@@ -33,8 +33,6 @@ var thElements = document.querySelectorAll("table th");
 var tdElements = document.querySelectorAll("table td");
 var trElements = document.querySelectorAll("table tr");
 var boxbuttons = document.querySelectorAll(".boxbuttons");
-var fichabtn = document.querySelectorAll(".ficha");
-
 var apagarbtn = document.querySelectorAll(".apagar");
 var optConfigN = document.getElementById("optConfigN");
 var alunosOff = document.getElementById("alunosoff");
@@ -433,13 +431,19 @@ document.querySelectorAll('.desativar').forEach(button => {
 
         document.getElementById('popup').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
-        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja desativar este aluno?';  
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja desativar?';  
         document.getElementById('confirmar').style.display = 'inline-block';  
         document.getElementById('fechar').textContent = 'Cancelar';  
         document.getElementById('fechar').style.display = "block";
         document.getElementById('popup').setAttribute('data-id', alunoId); 
     });
 });
+
+document.getElementById('refresh').addEventListener('click', () => {
+window.location.reload();
+});
+
+
 
 document.getElementById('confirmar').addEventListener('click', () => {
     document.getElementById('overlay').style.display = 'block';
@@ -463,20 +467,20 @@ document.getElementById('confirmar').addEventListener('click', () => {
                 document.getElementById('overlay').style.display = 'block';
             } else {
                 document.getElementById('overlay').style.display = 'block';
-                document.getElementById('popup').querySelector('p').textContent = "Aluno desativado com sucesso!"; 
+                document.getElementById('popup').querySelector('p').textContent = "Desativado com sucesso!"; 
                 document.getElementById('confirmar').style.display = 'none'; 
                 document.getElementById('fechar').style.display = "none";
-                
+                const row = document.querySelector(`button[data-id="${alunoId}"]`).closest('tr');
+                row.remove(); 
                 setTimeout(function() {
                    closePopup();
                 }, 1500);
-                const row = document.querySelector(`button[data-id="${alunoId}"]`).closest('tr');
-                row.remove(); 
+                
             }
         })
         .catch(error => {
             console.error('Erro ao desativar aluno:', error);
-            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao desativar o aluno."; 
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao desativar."; 
             document.getElementById('confirmar').style.display = 'none';  
             document.getElementById('fechar').textContent = 'Fechar'; 
         });
@@ -487,13 +491,12 @@ document.getElementById('confirmar').addEventListener('click', () => {
 document.querySelectorAll('.ativar').forEach(button => {
     button.addEventListener('click', function() {
         alunoIdOFF = this.getAttribute('data-id');
-        console.log(alunoId);
-
         document.getElementById('popup').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
-        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja ativar este aluno?';  
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja ativar?';  
         document.getElementById('confirmarativar').style.display = 'inline-block';  
         document.getElementById('confirmar').style.display = 'none';  
+        document.getElementById('confirmarapagar').style.display = 'none'; 
         document.getElementById('fechar').textContent = 'Cancelar';  
         document.getElementById('fechar').style.display = "block";
         document.getElementById('popup').setAttribute('data-id',  alunoIdOFF); 
@@ -502,9 +505,9 @@ document.querySelectorAll('.ativar').forEach(button => {
 
 document.getElementById('confirmarativar').addEventListener('click', () => {
     document.getElementById('overlay').style.display = 'block';
-    const  alunoIdOFF = document.getElementById('popup').getAttribute('data-id');  
-    if ( alunoIdOFF) {
-        fetch(`/alunos/ativar/${ alunoIdOFF}`, {
+    const alunoIdOFF = document.getElementById('popup').getAttribute('data-id');  
+    if (alunoIdOFF) {
+        fetch(`/alunos/ativar/${alunoIdOFF}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -522,26 +525,199 @@ document.getElementById('confirmarativar').addEventListener('click', () => {
                 document.getElementById('overlay').style.display = 'block';
             } else {
                 document.getElementById('overlay').style.display = 'block';
-                document.getElementById('popup').querySelector('p').textContent = "Aluno ativado com sucesso!"; 
+                document.getElementById('popup').querySelector('p').textContent = "Ativado com sucesso!"; 
                 document.getElementById('confirmar').style.display = 'none'; 
                 document.getElementById('confirmarativar').style.display = 'none'; 
                 document.getElementById('fechar').style.display = "none";
-                
+                const row = document.querySelector(`button[data-id="${alunoIdOFF}"]`).closest('tr');
+                row.remove(); 
                 setTimeout(function() {
                    closePopup();
                 }, 1500);
-                const row = document.querySelector(`button[data-id="${alunoIdOFF}"]`).closest('tr');
-                row.remove(); 
+                
             }
         })
         .catch(error => {
             console.error('Erro ao desativar aluno:', error);
-            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao ativar o aluno."; 
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao ativar."; 
             document.getElementById('confirmar').style.display = 'none';  
             document.getElementById('fechar').textContent = 'Fechar'; 
         });
     }
 });
+
+
+document.querySelectorAll('.apagar').forEach(button => {
+    button.addEventListener('click', function() {
+        alunoIdDelete = this.getAttribute('data-id');
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja excluir?';  
+        document.getElementById('confirmarapagar').style.display = 'inline-block';  
+        document.getElementById('confirmar').style.display = 'none';
+        document.getElementById('confirmarativar').style.display = 'none';    
+        document.getElementById('fechar').textContent = 'Cancelar';  
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('popup').setAttribute('data-id',  alunoIdDelete); 
+    });
+});
+
+document.getElementById('confirmarapagar').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'block';
+    const  alunoIdDelete = document.getElementById('popup').getAttribute('data-id');  
+    if (alunoIdDelete) {
+        fetch(`/alunos/apagar/${alunoIdDelete}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.error) {
+                document.getElementById('popup').querySelector('p').textContent = data.error;  
+                document.getElementById('confirmar').style.display = 'none';  
+                document.getElementById('fechar').textContent = 'Fechar';  
+                document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('popup').querySelector('p').textContent = "Excluído com sucesso!"; 
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('confirmarativar').style.display = 'none'; 
+                document.getElementById('confirmarapagar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+                setTimeout(function() {
+                   closePopup();
+                }, 1500);
+                const row = document.querySelector(`button[data-id="${alunoIdDelete}"]`).closest('tr');
+                row.remove(); 
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desativar aluno:', error);
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao excluir."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+        });
+    }
+});
+
+
+
+
+document.querySelectorAll('.ficha').forEach(button => {
+    button.addEventListener('click', function() {
+        const alunoIdFicha = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
+        document.getElementById('popupficha').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
+
+        // Realiza a requisição para buscar os dados do aluno
+        fetch(`/alunos/visualizar/${alunoIdFicha}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+      
+        .then(data => {
+            console.log(data);
+            if (data.error) {
+                document.getElementById('popupficha').querySelector('p').textContent = data.error;
+                document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('nomealunoficha').innerHTML = `FICHA DE: ${data.nome} `;
+                document.getElementById('nome').value = `${data.nome}`;
+                document.getElementById('data_nascimento').value = `${data.data_nascimento}`;
+                document.getElementById('idade').value = `${data.idade}`;
+                document.getElementById('cpf').value = `${data.cpf}`;
+                document.getElementById('rg').value = `${data.rg}`;
+                document.getElementById('telefone').value = `${data.telefone}`;
+                document.getElementById('telefone_familia').value = `${data.telefone_familia}`;
+                document.getElementById('email').value = `${data.email}`;
+                document.getElementById('cirurgia').value = `${data.cirurgia}`;
+                document.getElementById('dorme_bem').value = `${data.dorme_bem}`;
+                document.getElementById('lesao_detalhes_input').value = `${data.lesao_detalhes}`;
+                document.getElementById('coluna_detalhes_input').value = `${data.coluna_detalhes}`;
+                document.getElementById('tempo_sem_medico').value = `${data.tempo_sem_medico}`;
+                document.getElementById('uso_medicamento').value = `${data.uso_medicamento}`;
+                document.getElementById('problema_saude').value = `${data.problema_saude}`;
+                document.getElementById('varizes').value = `${data.varizes}`;
+                document.getElementById('infarto').value = `${data.infarto}`;
+                document.getElementById('doenca_detalhes_input').value = `${data.doenca_detalhes}`;
+                document.getElementById('derrame').value = `${data.derrame}`;
+                document.getElementById('diabetes').value = `${data.diabetes}`;
+                document.getElementById('obesidade').value = `${data.obesidade}`;
+                document.getElementById('colesterol_elevado').value = `${data.colesterol_elevado}`;
+                document.getElementById('input-sim1').value = `${data.input_sim1}`;
+                document.getElementById('input-sim2').value = `${data.input_sim2}`;
+                document.getElementById('input-sim3').value = `${data.input_sim3}`;
+                document.getElementById('input-sim4').value = `${data.input_sim4}`;
+                document.getElementById('input-sim5').value = `${data.input_sim5}`;
+                document.getElementById('input-sim6').value = `${data.input_sim6}`;
+                document.getElementById('input-sim7').value = `${data.input_sim7}`;
+                document.getElementById('input-nao1').value = `${data.input_nao1}`;
+                document.getElementById('input-nao2').value = `${data.input_nao2}`;
+                document.getElementById('input-nao3').value = `${data.input_nao3}`;
+                document.getElementById('input-nao4').value = `${data.input_nao4}`;
+                document.getElementById('input-nao5').value = `${data.input_nao5}`;
+                document.getElementById('input-nao6').value = `${data.input_nao6}`;
+                document.getElementById('input-nao7').value = `${data.input_nao7}`;
+                document.getElementById('endereco').value = `${data.endereco}`;
+                document.getElementById('modalidade_atual').value = `${data.modalidade_atual}`;
+                document.getElementById('objetivo_atividade_fisica').value = `${data.objetivo_atividade_fisica}`;
+                document.getElementById('soubeDa_academia').value = `${data.soube_da_academia}`;
+                document.getElementById('peso').value = `${data.peso}`;
+                document.getElementById('tipo_sanguineo').value = `${data.tipo_sanguineo}`;
+                document.getElementById('pressao_arterial').value = `${data.pressao_arterial}`;
+                document.getElementById('fumar').value = `${data.fumar}`;
+                document.getElementById('faz_dieta').value = `${data.faz_dieta}`;
+                document.getElementById('bebida_alcoolica').value = `${data.bebida_alcoolica}`;
+                document.getElementById('sedentario').value = `${data.sedentario}`;
+                document.getElementById('input-altura').value = `${data.altura}`;
+                document.getElementById('input-torax').value = `${data.torax}`;
+                document.getElementById('input-cintura').value = `${data.cintura}`;
+                document.getElementById('input-abdome').value = `${data.abdome}`;
+                document.getElementById('input-quadril').value = `${data.quadril}`;
+                document.getElementById('input-bracos').value = `${data.bracos}`;
+                document.getElementById('input-antebracos').value = `${data.antebracos}`;
+                document.getElementById('input-pernas').value = `${data.pernas}`;
+                document.getElementById('input-panturrilha').value = `${data.panturrilha}`;
+                document.getElementById('input-observacoes').value = `${data.observacoes}`;
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('confirmarativar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados do aluno:', error);
+            document.getElementById('popupficha').querySelector('p').textContent = "Ocorreu um erro ao visualizar os dados."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+        });
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -563,23 +739,7 @@ document.getElementById('fechar').addEventListener('click', () => {
 document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
 });
-fichabtn.forEach(ficha => {
-    ficha.addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    });
-    
-    
-    document.getElementById('fechar').addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    
-    document.getElementById('confirmar').addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    });
+
 
     function fecharAnamnese() {
         event.preventDefault();

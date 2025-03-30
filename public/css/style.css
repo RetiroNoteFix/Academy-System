@@ -439,14 +439,16 @@ table tr:hover {
 }
 .boxbtn{
     display: flex;
-    margin-left: 27%;
+    justify-content: center;
+    margin: auto;
 }
 #maincontent.hidden, 
 #mainheader2.hidden,
 #mainheader.hidden,
 #tbodyalunoson.hidden,
 #confirmarativar,
-#confirmar{
+#confirmar,
+#confirmarapagar{
     display: none;
 }
 #maincontent.show{
@@ -693,6 +695,30 @@ align-items: center;
     background: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
     z-index: 999;
 }
+#fechar{
+    background: #fc0000;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    transition: 0.6s;
+}
+#fechar:hover{
+    background: #b90202;
+}
+#confirmar,
+#confirmarativar,
+#confirmarapagar{
+    background: #00a2ff;
+    border: 1px solid #000;
+    color: #fff;
+    border-radius: 5px;
+    transition: 0.6s;
+}
+#confirmar:hover,
+#confirmarativar:hover,
+#confirmarapagar:hover{
+    background: #0084d1;
+}
 /*Menu Top de alunos*/
 .a{
     text-decoration: none;
@@ -736,6 +762,14 @@ align-items: center;
 #alunosoff{
     transition: 0.6s ease;
     background: #000000;
+}
+#refresh{
+    transition: 0.6s ease;
+    background: #32af00;
+}
+#refresh:hover{
+    transition: 0.6s ease;
+    background: #258300;
 }
 #alunosoff.alunoson, #anamnesebtn, #save, #pgtpndt{
     transition: 0.6s ease;
@@ -839,6 +873,9 @@ gap: 70px;
     padding: 0;
     height: 30px;
     width: 235px;
+}
+#endereco{
+    padding: 2px;
 }
 #rua, #bairro, #peso, #tipo_sanguineo{
     padding: 0;
@@ -1129,6 +1166,7 @@ gap: 70px;
         
     }
 /*fim login*/
+
 /* Responsividade para telas médias (tablets, entre 481px e 1024px) */
 @media (max-width: 1024px) {
     .btnadc {
