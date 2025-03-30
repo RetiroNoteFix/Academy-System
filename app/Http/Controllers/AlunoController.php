@@ -197,13 +197,27 @@ public function desativar($id)
 {
     try {
         $aluno = Aluno::findOrFail($id);
-        $aluno->situacao = "Inativo";  // Ou o campo que marca o aluno como desativado
+        $aluno->situacao = "Inativo"; 
         $aluno->save();
 
         return response()->json(['message' => 'Aluno desativado com sucesso.']);
     } catch (\Exception $e) {
         \Log::error('Erro ao desativar aluno: ' . $e->getMessage());
         return response()->json(['error' => 'Erro ao desativar aluno.'], 500);
+    }
+}
+
+public function ativar($id)
+{
+    try {
+        $aluno = Aluno::findOrFail($id);
+        $aluno->situacao = "Ativo"; 
+        $aluno->save();
+
+        return response()->json(['message' => 'Aluno ativado com sucesso.']);
+    } catch (\Exception $e) {
+        \Log::error('Erro ao ativar aluno: ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao ativar aluno.'], 500);
     }
 }
 

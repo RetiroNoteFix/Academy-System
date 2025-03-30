@@ -432,15 +432,17 @@ document.querySelectorAll('.desativar').forEach(button => {
         console.log(alunoId);
 
         document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
         document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja desativar este aluno?';  
         document.getElementById('confirmar').style.display = 'inline-block';  
         document.getElementById('fechar').textContent = 'Cancelar';  
-        document.getElementById('fechar').style.display = "none";
+        document.getElementById('fechar').style.display = "block";
         document.getElementById('popup').setAttribute('data-id', alunoId); 
     });
 });
 
 document.getElementById('confirmar').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'block';
     const alunoId = document.getElementById('popup').getAttribute('data-id');  
     if (alunoId) {
         fetch(`/alunos/desativar/${alunoId}`, {
@@ -458,12 +460,14 @@ document.getElementById('confirmar').addEventListener('click', () => {
                 document.getElementById('confirmar').style.display = 'none';  
                 document.getElementById('fechar').textContent = 'Fechar';  
                 document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
             } else {
+                document.getElementById('overlay').style.display = 'block';
                 document.getElementById('popup').querySelector('p').textContent = "Aluno desativado com sucesso!"; 
                 document.getElementById('confirmar').style.display = 'none'; 
                 document.getElementById('fechar').style.display = "none";
                 
-                setInterval(function() {
+                setTimeout(function() {
                    closePopup();
                 }, 1500);
                 const row = document.querySelector(`button[data-id="${alunoId}"]`).closest('tr');
@@ -478,6 +482,69 @@ document.getElementById('confirmar').addEventListener('click', () => {
         });
     }
 });
+
+
+document.querySelectorAll('.ativar').forEach(button => {
+    button.addEventListener('click', function() {
+        alunoIdOFF = this.getAttribute('data-id');
+        console.log(alunoId);
+
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja ativar este aluno?';  
+        document.getElementById('confirmarativar').style.display = 'inline-block';  
+        document.getElementById('confirmar').style.display = 'none';  
+        document.getElementById('fechar').textContent = 'Cancelar';  
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('popup').setAttribute('data-id',  alunoIdOFF); 
+    });
+});
+
+document.getElementById('confirmarativar').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'block';
+    const  alunoIdOFF = document.getElementById('popup').getAttribute('data-id');  
+    if ( alunoIdOFF) {
+        fetch(`/alunos/ativar/${ alunoIdOFF}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.error) {
+                document.getElementById('popup').querySelector('p').textContent = data.error;  
+                document.getElementById('confirmar').style.display = 'none';  
+                document.getElementById('fechar').textContent = 'Fechar';  
+                document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('popup').querySelector('p').textContent = "Aluno ativado com sucesso!"; 
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('confirmarativar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+                setTimeout(function() {
+                   closePopup();
+                }, 1500);
+                const row = document.querySelector(`button[data-id="${alunoIdOFF}"]`).closest('tr');
+                row.remove(); 
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desativar aluno:', error);
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao ativar o aluno."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+        });
+    }
+});
+
+
+
 
 function closePopup(){
     document.getElementById('popup').style.display = 'none';
@@ -496,24 +563,6 @@ document.getElementById('fechar').addEventListener('click', () => {
 document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
 });
-apagarbtn.forEach(apagar => {
-    apagar.addEventListener('click', () => {
-    document.getElementById('popupapagaraluno').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    });
-    
-    
-    document.getElementById('fecharapagar').addEventListener('click', () => {
-    document.getElementById('popupapagaraluno').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    
-    document.getElementById('confirmarapagar').addEventListener('click', () => {
-    alert("Item ignorado com sucesso!");
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    });
 fichabtn.forEach(ficha => {
     ficha.addEventListener('click', () => {
     document.getElementById('popupficha').style.display = 'block';

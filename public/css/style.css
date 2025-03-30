@@ -437,11 +437,16 @@ table tr:hover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
+.boxbtn{
+    display: flex;
+    margin-left: 27%;
+}
 #maincontent.hidden, 
 #mainheader2.hidden,
 #mainheader.hidden,
-#tbodyalunoson.hidden{
+#tbodyalunoson.hidden,
+#confirmarativar,
+#confirmar{
     display: none;
 }
 #maincontent.show{
@@ -668,6 +673,9 @@ align-items: center;
 }
 .popup-content, .conteudo-apagar {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .popup button {

@@ -161,10 +161,13 @@
                                 <button class="editar" title="EDITAR ALUNO">
                                     <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
                                 </button>
-                                
-                                <button class="desativar" title="DESATIVAR ALUNO" data-id="{{ $alunooff->idAluno }}">
-    <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
-</button>
+
+                                <button class="ativar" title="ATIVAR ALUNO" data-id="{{ $alunooff->idAluno }}">
+                                    <i id="btnacticon" class="fa-solid fa-user-check"></i>
+                                </button>
+                                <button class="apagar" title="EXCLUIR ALUNO" data-id="{{ $alunooff->idAluno }}">
+                                    <i id="btnacticon" class="fa-solid fa-trash"></i>
+                                </button>
                             </div>
                 </td>
             </tr>
@@ -186,8 +189,11 @@
     <div id="popup" class="popup">
         <div class="popup-content">
             <p></p>
+            <div class="boxbtn">
             <button id="confirmar">Sim</button>
+            <button id="confirmarativar">Sim</button>
             <button id="fechar">Cancelar</button>
+            </div>
         </div>
     </div>
     <div id="popupficha" class="popupficha">
