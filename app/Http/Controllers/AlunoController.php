@@ -118,8 +118,12 @@ class AlunoController extends Controller
     'pressaoArterial' => $request->pressao_arterial,
     'cirurgia' => $request->cirurgia,
     'dormeBem' => $request->dorme_bem,
-    'lesaoArticular' => $request->lesao_articular . ' ' . $request->lesao_detalhes,
-    'problemaColuna' => $request->problema_coluna . ' ' . $request->coluna_detalhes,
+    'lesaoArticular' => empty($request->lesao_articular) && empty($request->lesao_detalhes)
+    ? null
+    : trim(($request->lesao_articular ?? '') . ' ' . ($request->lesao_detalhes ?? '')),
+    'problemaColuna' => empty($request->problema_coluna) && empty($request->coluna_detalhes)
+    ? null
+    : trim(($request->problema_coluna ?? '') . ' ' . ($request->coluna_detalhes ?? '')),
     'tempoMedico' => $request->tempo_sem_medico,
     'medicamento' => $request->uso_medicamento,
     'problemaSaude' => $request->problema_saude,
@@ -134,7 +138,9 @@ class AlunoController extends Controller
     'diabetes' => $request->diabetes,
     'colesterolElevado' => $request->colesterol_elevado,
     'infarto' => $request->infarto,
-    'doencaCardiaca' => $request->doenca_cardiaca . ' ' . $request->doenca_detalhes,
+    'doencaCardiaca' => empty($request->doenca_cardiaca) && empty($request->doenca_detalhes)
+    ? null
+    : trim(($request->doenca_cardiaca ?? '') . ' ' . ($request->doenca_detalhes ?? '')),
     'derrame' => $request->derrame,
     'medidaTorax' => $request->torax,
     'medidaCintura' => $request->cintura,
@@ -246,6 +252,7 @@ public function visualizar(Request $request, $id)
         // Retornar os dados combinados de Aluno e Pessoa
         return response()->json([
             // dados pessoa
+            'idaluno' => $aluno->idAluno,
             'nome' => $aluno->pessoa->nome,
             'cpf' => $aluno->pessoa->cpf,
             'rg' => $aluno->pessoa->rg,
@@ -271,20 +278,13 @@ public function visualizar(Request $request, $id)
             'diabetes' => $aluno->diabetes,
             'obesidade' => $aluno->obesidade,
             'colesterol_elevado' => $aluno->colesterolElevado,
-            'input-sim1' => $aluno->parqProblemaCoracao,
-            'input-sim2' => $aluno->parqDorPeitoComAtividade,
-            'input-sim3' => $aluno->parqdorPeitoSemAtividade,
-            'input-sim4' => $aluno->parqEquilibrio,
-            'input-sim5' => $aluno->parqProblemaOsseo,
-            'input-sim6' => $aluno->parqReceitaMedica,
-            'input-sim7' => $aluno->parqRazao,
-            'input-nao1' => $aluno->parqProblemaCoracao,
-            'input-nao2' => $aluno->parqDorPeitoComAtividade,
-            'input-nao3' => $aluno->parqdorPeitoSemAtividade,
-            'input-nao4' => $aluno->parqEquilibrio,
-            'input-nao5' => $aluno->parqProblemaOsseo,
-            'input-nao6' => $aluno->parqReceitaMedica,
-            'input-nao7' => $aluno->parqRazao,
+            'input_sim1' => $aluno->parqProblemaCoracao,
+            'input_sim2' => $aluno->parqDorPeitoComAtividade,
+            'input_sim3' => $aluno->parqdorPeitoSemAtividade,
+            'input_sim4' => $aluno->parqEquilibrio,
+            'input_sim5' => $aluno->parqProblemaOsseo,
+            'input_sim6' => $aluno->parqReceitaMedica,
+            'input_sim7' => $aluno->parqRazao,
             'modalidade_atual' => $aluno->modalidade,
             'objetivo_atividade_fisica' => $aluno->objetivo,
             'soubeDa_academia' => $aluno->comoSoubeAcademia,
@@ -295,16 +295,16 @@ public function visualizar(Request $request, $id)
             'faz_dieta' => $aluno->fazDieta,
             'bebida_alcoolica' => $aluno->usaBebidaAlcoolica,
             'sedentario' => $aluno->sedentario,
-            'input-altura' => $aluno->altura,
-            'input-torax' => $aluno->torax,
-            'input-cintura' => $aluno->cintura,
-            'input-abdome' => $aluno->abdome,
-            'input-quadril' => $aluno->quadril,
-            'input-bracos' => $aluno->bracos,
-            'input-antebracos' => $aluno->antebracos,
-            'input-pernas' => $aluno->pernas,
-            'input-panturrilha' => $aluno->panturrilha,
-            'input-observacoes' => $aluno->observacoes,
+            'altura' => $aluno->altura,
+            'torax' => $aluno->medidaTorax,
+            'cintura' => $aluno->medidaCintura,
+            'abdome' => $aluno->medidaAbdome,
+            'quadril' => $aluno->medidaQuadril,
+            'bracos' => $aluno->medidaBracos,
+            'antebracos' => $aluno->medidaAntebracos,
+            'pernas' => $aluno->medidaPernas,
+            'panturrilha' => $aluno->medidaPanturrilha,
+            'observacoes' => $aluno->observacoes,
           
             
 

@@ -611,11 +611,17 @@ document.getElementById('confirmarapagar').addEventListener('click', () => {
 
 document.querySelectorAll('.ficha').forEach(button => {
     button.addEventListener('click', function() {
+        const el = document.getElementById('conteudoficha');
+        el.scrollTop = 0;
+            
+         
         const alunoIdFicha = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
+        document.getElementById('save').style.display = 'none';
         document.getElementById('popupficha').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('fechar').style.display = "block";
         document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
+   
 
         // Realiza a requisição para buscar os dados do aluno
         fetch(`/alunos/visualizar/${alunoIdFicha}`, {
@@ -634,65 +640,97 @@ document.querySelectorAll('.ficha').forEach(button => {
                 document.getElementById('fechar').style.display = "block";
                 document.getElementById('overlay').style.display = 'block';
             } else {
+                const el = document.getElementById('conteudoficha');
+      el.scrollTop = 0;
                 document.getElementById('overlay').style.display = 'block';
-                document.getElementById('nomealunoficha').innerHTML = `FICHA DE: ${data.nome} `;
                 document.getElementById('nome').value = `${data.nome}`;
-                document.getElementById('data_nascimento').value = `${data.data_nascimento}`;
-                document.getElementById('idade').value = `${data.idade}`;
-                document.getElementById('cpf').value = `${data.cpf}`;
-                document.getElementById('rg').value = `${data.rg}`;
-                document.getElementById('telefone').value = `${data.telefone}`;
-                document.getElementById('telefone_familia').value = `${data.telefone_familia}`;
-                document.getElementById('email').value = `${data.email}`;
-                document.getElementById('cirurgia').value = `${data.cirurgia}`;
-                document.getElementById('dorme_bem').value = `${data.dorme_bem}`;
-                document.getElementById('lesao_detalhes_input').value = `${data.lesao_detalhes}`;
-                document.getElementById('coluna_detalhes_input').value = `${data.coluna_detalhes}`;
-                document.getElementById('tempo_sem_medico').value = `${data.tempo_sem_medico}`;
-                document.getElementById('uso_medicamento').value = `${data.uso_medicamento}`;
-                document.getElementById('problema_saude').value = `${data.problema_saude}`;
-                document.getElementById('varizes').value = `${data.varizes}`;
-                document.getElementById('infarto').value = `${data.infarto}`;
-                document.getElementById('doenca_detalhes_input').value = `${data.doenca_detalhes}`;
-                document.getElementById('derrame').value = `${data.derrame}`;
-                document.getElementById('diabetes').value = `${data.diabetes}`;
-                document.getElementById('obesidade').value = `${data.obesidade}`;
-                document.getElementById('colesterol_elevado').value = `${data.colesterol_elevado}`;
-                document.getElementById('input-sim1').value = `${data.input_sim1}`;
-                document.getElementById('input-sim2').value = `${data.input_sim2}`;
-                document.getElementById('input-sim3').value = `${data.input_sim3}`;
-                document.getElementById('input-sim4').value = `${data.input_sim4}`;
-                document.getElementById('input-sim5').value = `${data.input_sim5}`;
-                document.getElementById('input-sim6').value = `${data.input_sim6}`;
-                document.getElementById('input-sim7').value = `${data.input_sim7}`;
-                document.getElementById('input-nao1').value = `${data.input_nao1}`;
-                document.getElementById('input-nao2').value = `${data.input_nao2}`;
-                document.getElementById('input-nao3').value = `${data.input_nao3}`;
-                document.getElementById('input-nao4').value = `${data.input_nao4}`;
-                document.getElementById('input-nao5').value = `${data.input_nao5}`;
-                document.getElementById('input-nao6').value = `${data.input_nao6}`;
-                document.getElementById('input-nao7').value = `${data.input_nao7}`;
-                document.getElementById('endereco').value = `${data.endereco}`;
-                document.getElementById('modalidade_atual').value = `${data.modalidade_atual}`;
-                document.getElementById('objetivo_atividade_fisica').value = `${data.objetivo_atividade_fisica}`;
-                document.getElementById('soubeDa_academia').value = `${data.soube_da_academia}`;
-                document.getElementById('peso').value = `${data.peso}`;
-                document.getElementById('tipo_sanguineo').value = `${data.tipo_sanguineo}`;
-                document.getElementById('pressao_arterial').value = `${data.pressao_arterial}`;
-                document.getElementById('fumar').value = `${data.fumar}`;
-                document.getElementById('faz_dieta').value = `${data.faz_dieta}`;
-                document.getElementById('bebida_alcoolica').value = `${data.bebida_alcoolica}`;
-                document.getElementById('sedentario').value = `${data.sedentario}`;
-                document.getElementById('input-altura').value = `${data.altura}`;
-                document.getElementById('input-torax').value = `${data.torax}`;
-                document.getElementById('input-cintura').value = `${data.cintura}`;
-                document.getElementById('input-abdome').value = `${data.abdome}`;
-                document.getElementById('input-quadril').value = `${data.quadril}`;
-                document.getElementById('input-bracos').value = `${data.bracos}`;
-                document.getElementById('input-antebracos').value = `${data.antebracos}`;
-                document.getElementById('input-pernas').value = `${data.pernas}`;
-                document.getElementById('input-panturrilha').value = `${data.panturrilha}`;
-                document.getElementById('input-observacoes').value = `${data.observacoes}`;
+                document.getElementById('data_nascimento').value = data.data_nascimento ?? "";
+                document.getElementById('idade').value = data.idade ?? "Sem dados";
+                document.getElementById('cpf').value = data.cpf ?? "Sem dados";
+                document.getElementById('rg').value = data.rg ?? "Sem dados";
+                document.getElementById('telefone').value = data.telefone ?? "Sem dados";
+                document.getElementById('telefone_familia').value = data.telefone_familia = "Sem dados";
+                document.getElementById('email').value = data.email = "Sem dados";
+                document.getElementById('cirurgia').value = data.cirurgia ?? "Sem dados";
+                document.getElementById('dorme_bem').value = data.dorme_bem ?? "Sem dados";
+                document.getElementById('lesao_detalhes_input2').value = data.lesao_detalhes_input ?? "Sem dados";
+                document.getElementById('coluna_detalhes_input2').value = data.coluna_detalhes_input ?? "Sem dados";
+                document.getElementById('tempo_sem_medico').value = data.tempo_sem_medico ?? "Sem dados";
+                document.getElementById('uso_medicamento').value = data.uso_medicamento ?? "Sem dados";
+                document.getElementById('problema_saude').value = data.problema_saude ?? "Sem dados";
+                document.getElementById('varizes').value = data.varizes ?? "Sem Dados";
+                document.getElementById('infarto').value = data.infarto ?? "Sem dados";
+                document.getElementById('doenca_detalhes_input2').value = data.doenca_detalhes_input ?? "Sem dados";
+                document.getElementById('derrame').value = data.derrame ?? "Sem dados";
+                document.getElementById('diabetes').value = data.diabetes ?? "Sem dados";
+                document.getElementById('obesidade').value = data.obesidade ?? "Sem dados";
+                document.getElementById('colesterol_elevado').value = data.colesterol_elevado ?? "Sem dados";
+
+                const dataInput1 = data.input_sim1;
+                const dataInput2 = data.input_sim2;
+                const dataInput3 = data.input_sim3;
+                const dataInput4 = data.input_sim4;
+                const dataInput5 = data.input_sim5;
+                const dataInput6 = data.input_sim6;
+                const dataInput7 = data.input_sim7;
+
+                if (dataInput1 === "Sim"){
+                    document.getElementById('input-sim1').checked = true;
+                } else {
+                    document.getElementById('input-nao1').checked = true;
+                }
+                 if (dataInput2 === "Sim"){
+                    document.getElementById('input-sim2').checked = true;
+                } else {
+                    document.getElementById('input-nao2').checked = true;
+                }
+                 if (dataInput3 === "Sim"){
+                    document.getElementById('input-sim3').checked = true;
+                } else {
+                    document.getElementById('input-nao3').checked = true;
+                }
+                 if (dataInput4 === "Sim"){
+                    document.getElementById('input-sim4').checked = true;
+                } else {
+                    document.getElementById('input-nao4').checked = true;
+                }
+                 if (dataInput5 === "Sim"){
+                    document.getElementById('input-sim5').checked = true;
+                } else {
+                    document.getElementById('input-nao5').checked = true;
+                }
+                 if (dataInput6 === "Sim"){
+                    document.getElementById('input-sim6').checked = true;
+                } else {
+                    document.getElementById('input-nao6').checked = true;
+                }
+                 if (dataInput7 === "Sim"){
+                    document.getElementById('input-sim7').checked = true;
+                } else {
+                    document.getElementById('input-nao7').checked = true;
+                }
+
+                document.getElementById('endereco').value = data.endereco ?? 'Sem dados';
+                document.getElementById('modalidade_atual').value = data.modalidade_atual ?? "Sem dados";
+                document.getElementById('objetivo_atividade_fisica').value = data.objetivo_atividade_fisica ?? "Sem dados";
+                document.getElementById('soubeDa_academia').value = data.soubeDa_academia ?? "Sem dados";
+                document.getElementById('peso').value = data.peso ?? "Sem dados";
+                document.getElementById('tipo_sanguineo').value = data.tipo_sanguineo ?? "Sem dados";
+                document.getElementById('pressao_arterial').value = data.pressao_arterial ?? "Sem dados";
+                document.getElementById('fumar').value = data.fumar ?? "Sem dados";
+                document.getElementById('faz_dieta').value = data.faz_dieta ?? "Sem dados";
+                document.getElementById('bebida_alcoolica').value = data.bebida_alcoolica ?? "Sem dados";
+                document.getElementById('sedentario').value = data.sedentario ?? "Sem dados";
+                document.getElementById('input-altura').value = data.altura ?? "Sem dados";
+                document.getElementById('input-torax').value = data.torax ?? "Sem dados";
+                document.getElementById('input-cintura').value = data.cintura ?? "Sem dados";
+                document.getElementById('input-abdome').value = data.abdome ?? "Sem dados";
+                document.getElementById('input-quadril').value = data.quadril ?? "Sem dados";
+                document.getElementById('input-bracos').value = data.bracos ?? "Sem dados";
+                document.getElementById('input-antebracos').value = data.antebracos ?? "Sem dados";
+                document.getElementById('input-pernas').value = data.pernas ?? "Sem dados";
+                document.getElementById('input-panturrilha').value = data.panturrilha ?? "Sem dados";
+                document.getElementById('input-observacoes').value = data.observacoes ?? "Sem dados";
                 document.getElementById('confirmar').style.display = 'none'; 
                 document.getElementById('confirmarativar').style.display = 'none'; 
                 document.getElementById('fechar').style.display = "none";
@@ -704,12 +742,215 @@ document.querySelectorAll('.ficha').forEach(button => {
             document.getElementById('popupficha').querySelector('p').textContent = "Ocorreu um erro ao visualizar os dados."; 
             document.getElementById('confirmar').style.display = 'none';  
             document.getElementById('fechar').textContent = 'Fechar'; 
+       
         });
+    
     });
+
 });
 
 
+document.querySelectorAll('.editar').forEach(button => {
+    button.addEventListener('click', function() {
+        const el = document.getElementById('conteudoficha2');
+        el.scrollTop = 0;
+            
+         
+        const alunoIdFicha2 = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
+        document.getElementById('save').style.display = 'none';
+        document.getElementById('popupeditar').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('popupeditar').setAttribute('data-id', alunoIdFicha2);  // Armazena o ID no popup
+   
 
+        // Realiza a requisição para buscar os dados do aluno
+        fetch(`/alunos/visualizar/${alunoIdFicha2}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+      
+        .then(data => {
+            console.log(data);
+            if (data.error) {
+                document.getElementById('popupeditar').querySelector('p').textContent = data.error;
+                document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                const el = document.getElementById('conteudoficha2');
+      el.scrollTop = 0;
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('idalunoedit').value = `${data.idaluno}`;
+                document.getElementById('nome2').value = `${data.nome}`;
+                document.getElementById('data_nascimento2').value = data.data_nascimento ?? "";
+                document.getElementById('idade2').value = data.idade ?? "Sem dados";
+                document.getElementById('cpf2').value = data.cpf ?? "Sem dados";
+                document.getElementById('rg2').value = data.rg ?? "Sem dados";
+                document.getElementById('telefone2').value = data.telefone ?? "Sem dados";
+                document.getElementById('telefone_familia2').value = data.telefone_familia = "Sem dados";
+                document.getElementById('email2').value = data.email = "Sem dados";
+                document.getElementById('cirurgia2').value = data.cirurgia ?? "Sem dados";
+                document.getElementById('dorme_bem2').value = data.dorme_bem ?? "Sem dados";
+                document.getElementById('lesao_detalhes_input22').value = data.lesao_detalhes_input ?? "Sem dados";
+                document.getElementById('coluna_detalhes_input22').value = data.coluna_detalhes_input ?? "Sem dados";
+                document.getElementById('tempo_sem_medico2').value = data.tempo_sem_medico ?? "Sem dados";
+                document.getElementById('uso_medicamento2').value = data.uso_medicamento ?? "Sem dados";
+                document.getElementById('problema_saude2').value = data.problema_saude ?? "Sem dados";
+                document.getElementById('varizes2').value = data.varizes ?? "Sem Dados";
+                document.getElementById('infarto2').value = data.infarto ?? "Sem dados";
+                document.getElementById('doenca_detalhes_input22').value = data.doenca_detalhes_input ?? "Sem dados";
+                document.getElementById('derrame2').value = data.derrame ?? "Sem dados";
+                document.getElementById('diabetes2').value = data.diabetes ?? "Sem dados";
+                document.getElementById('obesidade2').value = data.obesidade ?? "Sem dados";
+                document.getElementById('colesterol_elevado2').value = data.colesterol_elevado ?? "Sem dados";
+
+                const dataInput1 = data.input_sim1;
+                const dataInput2 = data.input_sim2;
+                const dataInput3 = data.input_sim3;
+                const dataInput4 = data.input_sim4;
+                const dataInput5 = data.input_sim5;
+                const dataInput6 = data.input_sim6;
+                const dataInput7 = data.input_sim7;
+
+                if (dataInput1 === "Sim"){
+                    document.getElementById('input-sim12').checked = true;
+                } else {
+                    document.getElementById('input-nao12').checked = true;
+                }
+                 if (dataInput2 === "Sim"){
+                    document.getElementById('input-sim22').checked = true;
+                } else {
+                    document.getElementById('input-nao22').checked = true;
+                }
+                 if (dataInput3 === "Sim"){
+                    document.getElementById('input-sim32').checked = true;
+                } else {
+                    document.getElementById('input-nao32').checked = true;
+                }
+                 if (dataInput4 === "Sim"){
+                    document.getElementById('input-sim42').checked = true;
+                } else {
+                    document.getElementById('input-nao42').checked = true;
+                }
+                 if (dataInput5 === "Sim"){
+                    document.getElementById('input-sim52').checked = true;
+                } else {
+                    document.getElementById('input-nao52').checked = true;
+                }
+                 if (dataInput6 === "Sim"){
+                    document.getElementById('input-sim62').checked = true;
+                } else {
+                    document.getElementById('input-nao62').checked = true;
+                }
+                 if (dataInput7 === "Sim"){
+                    document.getElementById('input-sim72').checked = true;
+                } else {
+                    document.getElementById('input-nao72').checked = true;
+                }
+
+                document.getElementById('endereco2').value = data.endereco ?? 'Sem dados';
+                document.getElementById('modalidade_atual2').value = data.modalidade_atual ?? "Sem dados";
+                document.getElementById('objetivo_atividade_fisica2').value = data.objetivo_atividade_fisica ?? "Sem dados";
+                document.getElementById('soubeDa_academia2').value = data.soubeDa_academia ?? "Sem dados";
+                document.getElementById('peso2').value = data.peso ?? "Sem dados";
+                document.getElementById('tipo_sanguineo2').value = data.tipo_sanguineo ?? "Sem dados";
+                document.getElementById('pressao_arterial2').value = data.pressao_arterial ?? "Sem dados";
+                document.getElementById('fumar2').value = data.fumar ?? "Sem dados";
+                document.getElementById('faz_dieta2').value = data.faz_dieta ?? "Sem dados";
+                document.getElementById('bebida_alcoolica2').value = data.bebida_alcoolica ?? "Sem dados";
+                document.getElementById('sedentario2').value = data.sedentario ?? "Sem dados";
+                document.getElementById('input-altura2').value = data.altura ?? "Sem dados";
+                document.getElementById('input-torax2').value = data.torax ?? "Sem dados";
+                document.getElementById('input-cintura2').value = data.cintura ?? "Sem dados";
+                document.getElementById('input-abdome2').value = data.abdome ?? "Sem dados";
+                document.getElementById('input-quadril2').value = data.quadril ?? "Sem dados";
+                document.getElementById('input-bracos2').value = data.bracos ?? "Sem dados";
+                document.getElementById('input-antebracos2').value = data.antebracos ?? "Sem dados";
+                document.getElementById('input-pernas2').value = data.pernas ?? "Sem dados";
+                document.getElementById('input-panturrilha2').value = data.panturrilha ?? "Sem dados";
+                document.getElementById('input-observacoes2').value = data.observacoes ?? "Sem dados";
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('confirmarativar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados do aluno:', error);
+            document.getElementById('popupeditar').querySelector('h4').textContent = "Ocorreu um erro ao visualizar os dados."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+       
+        });
+    
+    });
+
+});
+
+
+const saveedit = document.getElementById("save2");
+
+    saveedit.addEventListener('click', function() {
+     alunoIdEdit = document.getElementById('idalunoedit').value;
+        console.log(alunoIdEdit);
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja excluir?';  
+        document.getElementById('confirmareditar').style.display = 'inline-block';  
+        document.getElementById('confirmar').style.display = 'none';
+        document.getElementById('confirmarativar').style.display = 'none';    
+        document.getElementById('fechar').textContent = 'Cancelar';  
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('popup').setAttribute('data-id',  alunoIdEdit); 
+    });
+
+
+document.getElementById('confirmareditar').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'block';
+    alunoIdEdit = document.getElementById('idalunoedit').value;
+      
+    if (alunoIdEdit) {
+        fetch(`/alunos/apagar/${alunoIdEdit}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            if (data.error) {
+                document.getElementById('popup').querySelector('p').textContent = data.error;  
+                document.getElementById('confirmar').style.display = 'none';  
+                document.getElementById('fechar').textContent = 'Fechar';  
+                document.getElementById('fechar').style.display = "block";
+                document.getElementById('overlay').style.display = 'block';
+            } else {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('popup').querySelector('p').textContent = "Excluído com sucesso!"; 
+                document.getElementById('confirmar').style.display = 'none'; 
+                document.getElementById('confirmarativar').style.display = 'none'; 
+                document.getElementById('confirmarapagar').style.display = 'none'; 
+                document.getElementById('fechar').style.display = "none";
+                
+                setTimeout(function() {
+                   closePopup();
+                }, 1500);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao desativar aluno:', error);
+            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao excluir."; 
+            document.getElementById('confirmar').style.display = 'none';  
+            document.getElementById('fechar').textContent = 'Fechar'; 
+        });
+    }
+});
 
 
 
@@ -730,20 +971,10 @@ document.getElementById('fechar').addEventListener('click', () => {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
 });
-
-document.getElementById('fechar').addEventListener('click', () => {
-    document.getElementById('popup').style.display = 'none';
-});
-
-document.getElementById('fechar').addEventListener('click', () => {
-document.getElementById('popup').style.display = 'none';
-document.getElementById('overlay').style.display = 'none';
-});
-
-
     function fecharAnamnese() {
         event.preventDefault();
         document.getElementById('popupficha').style.display = 'none';
+        document.getElementById('popupeditar').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
     }
 
