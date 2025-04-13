@@ -16,7 +16,7 @@
         <h4 id="appname">{{config('app.generalname')}}</h4>
         </div><!--linha menu-->
         <div class="options">
-        <div class="user"><i id="usericon"  title="Adicionar foto de Perfil"></i><div class="userinfo"><p id="username">Olá, SUPORTE </p></i></u><p id="userjoin">Bom dia!</p>
+        <div class="user"><i id="usericon"  title="Adicionar foto de Perfil"></i><div class="userinfo"><p id="username">Olá, {{ $usuarioNome }} </p></i></u><p id="userjoin">Bom dia!</p>
         <div id="contextMenu">
     <div id="removePhoto"><h4>Remover Foto</h4></div>
   </div>

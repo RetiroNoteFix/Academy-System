@@ -30,21 +30,24 @@ Route::get('/alunos/criar', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return view('alunos/create');
+    $usuarioNome = Session::get('usuario_nome');
+    return view('alunos/create', compact('usuarioNome'));
 })->name("alunos.criar");
 
 Route::get('/usuarios/criar', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return view('usuarios/create');
+    $usuarioNome = Session::get('usuario_nome');
+    return view('usuarios/create', compact('usuarioNome'));
 })->name("usuarios.criar");
 
 Route::get('/pagamentos', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return view('pagamentos/index');
+    $usuarioNome = Session::get('usuario_nome');
+    return view('pagamentos/index', compact('usuarioNome'));
 })->name("pagamentos.index");
 
 Route::get('/usuarios', function () {
@@ -60,7 +63,8 @@ Route::get('/inicio', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return view('inicio.index');
+    $usuarioNome = Session::get('usuario_nome');
+    return view('inicio.index', compact('usuarioNome'));
 })->name('inicio.index');
 
 Route::post('/login', [ContaController::class, 'logar'])->name('login.autenticar');

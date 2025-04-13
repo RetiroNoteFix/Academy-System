@@ -7,6 +7,7 @@ use App\Models\Pessoa;
 use App\Models\Aluno;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class UsuarioController extends Controller
@@ -56,7 +57,8 @@ class UsuarioController extends Controller
     public function listar()
     {
         $usuarios = Usuario::get();
-        return view('usuarios.index', compact('usuarios'));
+        $usuarioNome = Session::get('usuario_nome');
+        return view('usuarios.index', compact('usuarios', 'usuarioNome'));
 }
 
 public function pessoa()
