@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('idPessoa')->references('idPessoa')->on('pessoas')->onDelete('cascade');
             $table->string('senha', 255);
             $table->enum('tipo_usuario', ['admin', 'funcionario'])->nullable();
-            $table->string('fotoPerfil', 255)->nullable();
     
             $table->timestamps();
         });

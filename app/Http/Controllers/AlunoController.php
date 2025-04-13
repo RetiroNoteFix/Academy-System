@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pessoa;
 use App\Models\Aluno;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 
 class AlunoController extends Controller
@@ -189,9 +190,11 @@ class AlunoController extends Controller
 
     public function listar()
     {
+        $usuarioNome = Session::get('usuario_nome');
+
         $alunos = Aluno::with('pessoa')->where('situacao', 'ativo')->get();
         $alunosoff = Aluno::with('pessoa')->where('situacao', 'inativo')->get();
-        return view('alunos.index', compact('alunos', 'alunosoff'));
+        return view('alunos.index', compact('alunos', 'alunosoff', 'usuarioNome'));
 }
 
 public function pessoa()

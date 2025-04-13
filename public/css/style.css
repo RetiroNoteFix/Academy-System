@@ -384,12 +384,13 @@ table tr:hover {
 #optAlunos:hover, 
 #optPagamentos:hover, 
 #optUsuarios:hover, 
-#optConfig:hover{
+#optConfig:hover,
+#optUsuariosON{
     transition: 0.6s ease;
     background-color: #e0dfdf;
     border-left: 2px solid #616161;
 }
-#optInicio.noite, #optAlunos.noite,  #optPagamentos.noite,  #optUsuarios.noite{
+#optInicio.noite, #optAlunos.noite,  #optPagamentos.noite,  #optUsuarios.noite, #optUsuariosON.noite{
     transition: 0.6s ease;
    display: none;
    background-color: #e0dfdf;
@@ -876,6 +877,11 @@ gap: 70px;
 }
 .boxform{
     display: flex;
+}
+#boxformusuario{
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .form-group {
     display: flex;

@@ -1,15 +1,16 @@
-@vite(['resources/js/pagamentos/index.js'])
+@vite(['resources/js/usuarios/index.js'])
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css')}}">
-   
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name') }}</title>
 </head>
+
 <body>
     <div class="menu">
         <div id="linhamenu">
@@ -22,25 +23,25 @@
   </div>
     </div><!--user info-->
         </div><!--user-->
-        <div class="opt" id="optInicioOFF">
+        <a class="nostyle" href="{{route('inicio.index')}}"><div class="opt" id="optInicioOFF">
             <i data-opticon="true" id="opticon" class="fa-solid fa-house"></i> <p id="optname">Início</p>
         </div></a><!--optInicio-->
         <a class="nostyle" href="{{route('inicio.index')}}"><div  id="optInicioNOFF">
             <i data-opticon="true" id="opticon4" class="fa-solid fa-house"></i> <p id="optname4">Início</p>
         </div></a><!--optInicioN-->
-        <a class="nostyle" href="{{route('alunos.index')}}"><div class="opt" id="optAlunosOFF">
+        <a class="nostyle" href="{{route('alunos.index')}}"><div class="opt" id="optAlunos">
             <i  data-opticon="true" id="opticon1" class="fa-solid fa-users-line"></i> <p id="optname">Alunos</p>
         </div></a><!--optAlunos-->
-        <a class="nostyle" href="{{route('alunos.index')}}"><div class="opt" id="optAlunosNON">
+        <a class="nostyle" href="{{route('alunos.index')}}"><div class="opt" id="optAlunosN">
             <i  data-opticon="true" id="opticon5" class="fa-solid fa-users-line"></i> <p id="optname4">Alunos</p>
         </div></a><!--optAlunosN-->
-        <a class="nostyle" href="{{route('pagamentos.index')}}"><div class="opt" id="optPagamentosON">
+        <a class="nostyle" href="{{route('pagamentos.index')}}"><div class="opt" id="optPagamentos">
             <i   data-opticon="true" id="opticon2"class="fa-solid fa-money-check-dollar"></i> <p id="optname">Pagamentos</p>
         </div></a><!--optPagamentos-->
         <a class="nostyle" href="{{route('pagamentos.index')}}"><div class="opt" id="optPagamentosN">
             <i   data-opticon="true" id="opticon6"class="fa-solid fa-money-check-dollar"></i> <p id="optname4">Pagamentos</p>
         </div></a><!--optPagamentos-->
-        <a class="nostyle" href="{{route('usuarios.index')}}"><div class="opt" id="optUsuarios">
+        <a class="nostyle" href="{{route('usuarios.index')}}"><div class="opt" id="optUsuariosON">
             <i   data-opticon="true" id="opticon3"class="fa-solid fa-users"></i> <p id="optname">Usuários</p>
         </div></a><!--optUsuarios-->
         <div class="opt" id="optConfig">
@@ -54,11 +55,11 @@
             <i id="opticon9" class="fa-solid fa-gear"></i> <p id="optname">Configurações</p>
         </div><!--optConfigN-->
     </div><!--options-->
-    <a href="{{route('logout')}}"><u id="useroutline"><h6 id="userout">Sair</h6></u></a>
+     <a href="{{route('logout')}}"><u id="useroutline"><h6 id="userout">Sair</h6></u></a>
        
     </div><!--menu-->
     <header id="mainheader" data-status="ativos">
-        <p id="pagetitle">Pagamentos</p> 
+        <p id="pagetitle"  >Usuários</p> 
         <i id="nighttheme" title="Tema Escuro" class="fa-solid fa-moon"></i> 
         <i title="Tema Claro" id="themeday" class="fa-solid fa-sun"></i>
     </header>
@@ -70,10 +71,18 @@
             </div><!--optInicio-->
         </section>
         <section id="maincontent">
-            <div id="linetop" class="linetop"><h1 id="h1alert">PAGAMENTOS</h1></div>
+            <div id="linetop" class="linetop"><h1 id="h1alert">USUÁRIOS</h1></div>
             <div class="list">
                 <div class="menutopcontent">
                     <section class="menutopleft">
+                    <a class="a" href="{{route('usuarios.criar')}}"><button  id="addaluno" class="addaluno">
+                        <i  id="addalunoicon" class="fa-solid fa-user-plus"></i>
+                        <h4 id="optmenutopname">Usuário</h4>
+                    </button></a><!--add aluno-->
+                    <button class="addaluno" id="refresh">
+                    <i id="addalunoicon" class="fa-solid fa-rotate-left"></i>
+                        <h4 id="optmenutopname">Atualizar</h4>
+                    </button><!--refresh-->
                     <button class="addaluno" id="btnback">
                         <i id="addalunoicon" class="fa-solid fa-rotate-left"></i>
                         <h4 id="optmenutopname">Voltar</h4>
@@ -100,77 +109,45 @@
                     </div><!--search-->
                 </section>
                 </div><!--menu top content-->
-                <table border="1" style="margin-bottom:10px;">
-                <thead>
-                    <tr>
-                    <th id="none">Nº.</th>
-                    <th id="nomealuno">Nome</th>
-                    <th>Endereço</th>
-                    <th>Telefone</th>
-                    <th id="thactions">AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyalunoson">
-                    <tr>
-                        <td>1</td>
-                        <td>Lucas Silva</td>
-                        <td>Rua das Palmeiras, 123</td>
-                        <td>(11) 98765-4321</td>
-                        <td>
-                            <div class="boxbuttons">
-                                <button class="ficha" title="VER FICHA">
-                                <i id="btnacticon" class="fa-solid fa-eye"></i>
-                                </button>
-                
-                                <button class="desativar" title="APAGAR REGISTRO">
-                                    <i id="btnacticon" class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                 
-                </tbody>
-                <tbody id="tbodyalunosoff">
-                    <tr>
-                        <td>1</td>
-                        <td>MARIA DE LOURDES MOTA DOS SANTOS SILVA</td>
-                        <td>Rua das Palmeiras, 123</td>
-                        <td>(11) 98765-4321</td>
-                        <td>
-                            <div class="boxbuttons">
-                                <button class="ficha" title="VER FICHA">
-                                <i id="btnacticon" class="fa-solid fa-eye"></i>
-                                </button>
-    
-                                <button class="desativar" title="APAGAR REGISTRO">
-                                    <i id="btnacticon" class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-                <tbody id="tbodyprxpgt">
-                    <tr>
-                        <td>1</td>
-                        <td>JEZRAEL DA SILVA OLIVEIRA</td>
-                        <td>Rua das Palmeiras, 123</td>
-                        <td>(11) 98765-4321</td>
-                        <td>
-                            <div class="boxbuttons">
-                                <button class="ficha" title="VER FICHA">
-                                <i id="btnacticon" class="fa-solid fa-eye"></i>
+                <table border="1" style="margin-bottom:10px; width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th id="none">Nº.</th>
+            <th id="nomealuno">Nome</th>
+            <th>Tipo</th>
+            <th id="thactions">AÇÕES</th>
+        </tr>
+    </thead>
+    <tbody id="tbodyalunoson">
+        @forelse ($usuarios as $usuario)
+            <tr>
+       
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $usuario->pessoa->nome ?? 'Sem Nome' }}</td>
+                <td>{{ $usuario->tipo_usuario ?? 'Sem Endereço' }}</td>
+                <td>
+                <div class="boxbuttons">
+                                <button class="editar" title="EDITAR USUARIO" data-id="{{ $usuario->idUsuario }}">
+                                    <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 
-                                <button class="desativar" title="APAGAR REGISTRO">
-                                    <i id="btnacticon" class="fa-solid fa-trash"></i>
-                                </button>
+                                <button class="desativar" title="REMOVER USUARIO" data-id="{{ $usuario->idUsuario }}">
+    <i id="btnacticon" class="fa-solid fa-trash"></i>
+</button>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div><!--list-->
-        </section>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="5">Nenhum aluno encontrado. <a href="{{ route('alunos.criar') }}">Cadastrar aluno.</a></td>
+            </tr>
+        @endforelse
+    </tbody>
+
+
+
+</table>
+
         </div><!--list-->
         </section>
     </main>
@@ -179,63 +156,76 @@
     </footer>
     <div id="popup" class="popup">
         <div class="popup-content">
-            <p>Tem certeza de que deseja desativar?</p>
+            <p></p>
+            <div class="boxbtn">
             <button id="confirmar">Sim</button>
-            <button id="fechar">Cancelar</button>
-        </div>
-    </div>
-    <div id="popuppgt" class="popupficha">
-        <div class="conteudo-ficha">
-            <div class="form-titulo" id="titulopopup">
-                <h4 id="h4titulopgt">FICHA DE PAGAMENTOS</h4>  <div class="btnamnese">
-                        <button class="addaluno" id="close"  onclick="fecharAnamnese()">
-                            <i class="fa-solid fa-xmark"></i>Fechar</button>
-                        </div>
-            </div>
-            <div class="conteudo-anamnese">
-    <div class="ladoesquerdoformpgt">
-        
-            <h5 id="h5fichapgt">NOME COMPLETO: CARLOS EDUARDO SILVA ARAÚJO</h5>
-            <div class="compact">
-            <h5 id="h5fichapgt">DATA DE NASCIMENTO: 05/08/2007</h5>
-            <h5 id="h5fichapgt">IDADE: 17 ANOS</h5>
-        </div><!--compact-->
-            <div class="compact">
-            <h5 id="h5fichapgt">CPF: 078.728.825-07</h5>  <h5 id="h5fichapgt">RG: 00.000.000-00</h5>
-        </div><!--compact-->
-        <div class="compact">
-            <h5 id="h5fichapgt">TELEFONE: (75) 98321-7393</h5>
-            <h5 id="h5fichapgt">TELEFONE FAMILIAR: (75)98140-2151</h5>    
-        </div><!--compact-->
-        <h5 id="h5fichapgt">EMAIL: realmlandi02@gmail.com</h5> 
-        <div class="boxpgt">
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>DATA</th>
-                        <th>VALOR</th>
-                        <th>SITUAÇÃO</th>
-                        <th id="thacoespgt">AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody class="tbodypagamentos">
-                    <!-- Linhas da tabela serão geradas dinamicamente via JavaScript -->
-                </tbody>
-            </table>
-        </div>
-          
-        </div><!--boxpgt-->
-        </div><!--ladoesquerdoform-->
-        </div>
-        </div>
-    </div>
-    <div id="popupapagaraluno" class="popupapagar">
-        <div class="conteudo-apagar">
-            <p>Tem certeza de que deseja excluir o aluno?</p>
+            <button id="confirmarativar">Sim</button>
             <button id="confirmarapagar">Sim</button>
-            <button id="fecharapagar">Cancelar</button>
+        
+            <button id="fechar">Cancelar</button>
+            </div>
         </div>
+    </div>
+
+    <div id="popupeditar" class="popupficha">
+        <div class="conteudo-ficha" >
+        <div class="form-titulo" id="titulopopup">
+            <form id="formedit" action="{{ route('alunos.editar')}}" method="post">
+                @csrf
+                <div class="topinfoedit">
+                <div class="ladoesquerdoinfo">
+                <h4 id="nomealunoficha">EDITAR USUÁRIO:</h4>
+                <input type="text" name="idalunoedit" id="idalunoedit" style="opacity: 0;">
+                </div><!--ladoesquerdoinfo-->
+                <div class="btnamnese">
+                
+                    <button  class="addaluno" id="save2">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                         Salvar
+                        </button>
+                        <button class="addaluno" id="close2"  onclick="closePopup()">
+                            <i class="fa-solid fa-xmark"></i>Fechar</button>
+                           
+                            <h4 class="smallfont" id="perguntaedit">Você tem certeza?</h4>
+                            <button  class="addaluno" id="confirmareditar">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                         Sim
+                        </button>
+                        <button class="addaluno" id="close3">
+                        <i class="fa-solid fa-xmark"></i>Não</button>
+                   
+
+                        </div>
+                        </div><!--topinfoedit-->
+            </div>
+            <div class="conteudo-anamnese" id="conteudoficha2">
+    <div class="ladoesquerdoform">
+        <div class="form-group">
+            <label for="nome">NOME DE USUÁRIO:</label>
+            <input type="text" id="nome2" name="nome" required maxlenght="255" placeholder="Nome completo" >
+        </div>
+        <div class="compact">
+        <div class="form-group">
+            <label for="senhausuario">NOVA SENHA:</label>
+            <input type="text" id="idade2" name="senhausuario" placeholder="Senha de Usuário"  >
+        </div>
+    </div><!--compact-->
+    <div class="compact">
+        <div class="form-group">
+        <label for="tipousuario">TIPO DE USUÁRIO:</label>
+            <select name="tipousuario" id="tipousuario">
+            <option value="">Selecione</option>
+            <option value="admin">Admin</option>
+            <option value="funcionario">Funcionário</option>
+            </select>
+            
+           
+        </div>
+</div>
+</div>
+        
+        </form>
+       
     </div>
     <div id="overlay" class="overlay"></div>
 </body>

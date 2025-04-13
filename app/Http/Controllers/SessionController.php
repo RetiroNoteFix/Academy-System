@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 class SessionController extends Controller
 {
     public function checkSession(Request $request)
+  
     {
         
         if (Session::has('usuario_id')) {

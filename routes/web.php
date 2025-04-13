@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\SessionController;
 
@@ -19,7 +20,9 @@ Route::get('/alunos', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return app()->call([AlunoController::class, 'listar']);
+
+    $controller = app(AlunoController::class);
+    return $controller->listar();
 })->name('alunos.index');
 
 
@@ -29,6 +32,13 @@ Route::get('/alunos/criar', function () {
     }
     return view('alunos/create');
 })->name("alunos.criar");
+
+Route::get('/usuarios/criar', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
+    return view('usuarios/create');
+})->name("usuarios.criar");
 
 Route::get('/pagamentos', function () {
     if (!Session::has('usuario_id')) {
@@ -41,7 +51,9 @@ Route::get('/usuarios', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    return view('usuarios/index');
+
+    $controller = app(UsuarioController::class);
+    return $controller->listar();
 })->name("usuarios.index");
 
 Route::get('/inicio', function () {
@@ -53,8 +65,10 @@ Route::get('/inicio', function () {
 
 Route::post('/login', [ContaController::class, 'logar'])->name('login.autenticar');
 Route::post('/alunos/criar/store', [AlunoController::class, 'cadastrar'])->name('alunos.cadastrar');
+Route::post('/usuarios/criar/store', [UsuarioController::class, 'cadastrar'])->name('usuarios.cadastrar');
 Route::post('/alunos/desativar/{id}', [AlunoController::class, 'desativar'])->name('alunos.desativar');
 Route::post('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('alunos.ativar');
 Route::post('/alunos/apagar/{id}', [AlunoController::class, 'apagar'])->name('alunos.apagar');
 Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos.editar');
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');
+Route::get('/usuarios/visualizar/{id}', [UsuarioController::class, 'visualizar'])->name('usuarios.visualizar');
