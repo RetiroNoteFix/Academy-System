@@ -163,7 +163,8 @@ toggleAutoCollapse();
 toggleAutoCollapse();
 }
 }
-
+var boxconfirm = document.querySelector("boxconfirm");
+console.log(boxconfirm);
 config1.addEventListener('click', function() {
 config1.style.display = "none";
 config1on.style.display = "block";
@@ -758,6 +759,9 @@ document.querySelectorAll('.editar').forEach(button => {
          
         const alunoIdFicha2 = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
         document.getElementById('save').style.display = 'none';
+        document.getElementById('close3').style.display = 'none';
+        document.getElementById('confirmareditar').style.display = 'none';
+        document.getElementById('perguntaedit').style.display = 'none';
         document.getElementById('popupeditar').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('fechar').style.display = "block";
@@ -775,7 +779,6 @@ document.querySelectorAll('.editar').forEach(button => {
         .then(response => response.json())
       
         .then(data => {
-            console.log(data);
             if (data.error) {
                 document.getElementById('popupeditar').querySelector('p').textContent = data.error;
                 document.getElementById('fechar').style.display = "block";
@@ -893,14 +896,22 @@ document.querySelectorAll('.editar').forEach(button => {
 
 
 const saveedit = document.getElementById("save2");
+const closeconfirm = document.getElementById("close3");
 
     saveedit.addEventListener('click', function() {
+        event.preventDefault();
+        saveedit.style.display = "none";
+        closeconfirm.style.display = "block";
+        document.getElementById('perguntaedit').style.display = 'block';
+        document.getElementById('confirmareditar').style.display = 'block';
+        document.getElementById('close2').style.display = 'none';
      alunoIdEdit = document.getElementById('idalunoedit').value;
         console.log(alunoIdEdit);
+        console.log(sa);
         document.getElementById('popup').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja excluir?';  
-        document.getElementById('confirmareditar').style.display = 'inline-block';  
+        document.getElementById('confirmareditar').style.display = 'block';  
         document.getElementById('confirmar').style.display = 'none';
         document.getElementById('confirmarativar').style.display = 'none';    
         document.getElementById('fechar').textContent = 'Cancelar';  
@@ -908,50 +919,17 @@ const saveedit = document.getElementById("save2");
         document.getElementById('popup').setAttribute('data-id',  alunoIdEdit); 
     });
 
+    closeconfirm.addEventListener('click', function() {
+        event.preventDefault();
+        closeconfirm.style.display = "none";
+        document.getElementById('confirmareditar').style.display = 'none';  
+        document.getElementById('perguntaedit').style.display = 'none';  
+        saveedit.style.display = "block";
+        document.getElementById('close2').style.display = 'block';
+    });
 
-document.getElementById('confirmareditar').addEventListener('click', () => {
-    document.getElementById('overlay').style.display = 'block';
-    alunoIdEdit = document.getElementById('idalunoedit').value;
-      
-    if (alunoIdEdit) {
-        fetch(`/alunos/apagar/${alunoIdEdit}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            
-            if (data.error) {
-                document.getElementById('popup').querySelector('p').textContent = data.error;  
-                document.getElementById('confirmar').style.display = 'none';  
-                document.getElementById('fechar').textContent = 'Fechar';  
-                document.getElementById('fechar').style.display = "block";
-                document.getElementById('overlay').style.display = 'block';
-            } else {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('popup').querySelector('p').textContent = "Excluído com sucesso!"; 
-                document.getElementById('confirmar').style.display = 'none'; 
-                document.getElementById('confirmarativar').style.display = 'none'; 
-                document.getElementById('confirmarapagar').style.display = 'none'; 
-                document.getElementById('fechar').style.display = "none";
-                
-                setTimeout(function() {
-                   closePopup();
-                }, 1500);
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao desativar aluno:', error);
-            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao excluir."; 
-            document.getElementById('confirmar').style.display = 'none';  
-            document.getElementById('fechar').textContent = 'Fechar'; 
-        });
-    }
-});
 
+   
 
 
 
@@ -978,6 +956,63 @@ document.getElementById('fechar').addEventListener('click', () => {
         document.getElementById('overlay').style.display = 'none';
     }
 
+    const userIcon = document.getElementById('usericon');
+    const contextMenu = document.getElementById('contextMenu');
+    const removePhoto = document.getElementById('removePhoto');
 
+    
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    userIcon.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+  
+    userIcon.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      contextMenu.style.display = 'block';
+      contextMenu.style.top = `${e.pageY}px`;
+      contextMenu.style.left = `${e.pageX}px`;
+    });
+
+  
+    window.addEventListener('click', () => {
+      contextMenu.style.display = 'none';
+    });
+
+   
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result;
+        userIcon.style.backgroundImage = `url('${imageData}')`;
+        userIcon.textContent = "";
+        localStorage.setItem('profileImage', imageData);
+        fileInput.value = "";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    removePhoto.addEventListener('click', () => {
+      userIcon.style.backgroundImage = "";
+      userIcon.textContent = "";
+      localStorage.removeItem('profileImage');
+      contextMenu.style.display = 'none';
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedImage = localStorage.getItem('profileImage');
+      if (savedImage) {
+        userIcon.style.backgroundImage = `url('${savedImage}')`;
+        userIcon.textContent = "";
+      }
+    });
 
 loadTheme();

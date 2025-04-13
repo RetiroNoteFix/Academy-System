@@ -1,4 +1,4 @@
-
+@vite(['resources/js/login.js'])
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -58,8 +58,8 @@
 </script>
 <script>
      const papeisDeParede = [
-        "{{ asset('img/login_background.jpg') }}",
-        "{{ asset('img/login_background1.jpg') }}"
+        "{{ asset('img/background.png') }}",
+        "{{ asset('img/background.png') }}"
     ];
     let indiceAtual = 0;
     function mudarPapelParede() {

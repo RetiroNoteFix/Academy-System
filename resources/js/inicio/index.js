@@ -1,9 +1,9 @@
-var optInicioN = document.getElementById("optInicioNOFF");
-var optAlunosN = document.getElementById("optAlunosNON");
+var optInicioN = document.getElementById("optInicioN");
+var optAlunosN = document.getElementById("optAlunosN");
 var optPagamentosN = document.getElementById("optPagamentosN");
 var optUsuariosN = document.getElementById("optUsuariosN");
- var optInicio = document.getElementById("optInicioOFF");
-var optAlunos = document.getElementById("optAlunosON");
+ var optInicio = document.getElementById("optInicio");
+var optAlunos = document.getElementById("optAlunos");
 var optPagamento = document.getElementById("optPagamentos");
 var optUsuario = document.getElementById("optUsuarios");
 var optConfig = document.getElementById("optConfig");
@@ -25,7 +25,7 @@ var paragraphs = document.querySelectorAll("p");
 const linetop = document.getElementById("linetop");
 const linetopconfig = document.getElementById("linetopconfig");
 const menu = document.querySelector(".menu");
-const mainContent = document.querySelector("#maincontentform");
+const mainContent = document.querySelector("#maincontent");
 const pagetitle = document.querySelector("#pagetitle");
 const copy = document.querySelector("#copy");
 const footers = document.querySelectorAll('footer');
@@ -34,170 +34,40 @@ var tdElements = document.querySelectorAll("table td");
 var trElements = document.querySelectorAll("table tr");
 var boxbuttons = document.querySelectorAll(".boxbuttons");
 var fichabtn = document.querySelectorAll(".ficha");
-var ignorarbtn = document.querySelectorAll(".desativar");
-var anamnesebtn = document.getElementById("anamnesebtn");
-var apagarbtn = document.querySelectorAll(".apagar");
+var ignorarbtn = document.querySelectorAll(".ignorar");
 var optConfigN = document.getElementById("optConfigN");
-var cep = document.getElementById("cep")
-const rgInput = document.getElementById('rg');
-const cpfInput = document.getElementById('cpf');
-const telefoneInput = document.getElementById('telefone');
-const telefoneFamiliaInput = document.getElementById('telefone_familia');
-var idade = document.getElementById("idade")
-const inputValor = document.getElementById('valor');
-var btnback = document.getElementById("btnback");
-
-btnback.addEventListener('click', function (){
-window.history.back();
+optAlunos.addEventListener("mouseover", function() {
+optInicio.style.backgroundColor = "#fff";
+optInicio.style.border = "none";
 });
-
-
-
-inputValor.addEventListener('input', function (event) {
-  let value = inputValor.value;
-
-  value = value.replace(/\D/g, '');
-
-  value = (value / 100).toFixed(2);
-
-  value = value.replace('.', ',');
-
-  inputValor.value = `R$ ${value}`;
+optPagamento.addEventListener("mouseover", function() {
+optInicio.style.backgroundColor = "#fff";
+optInicio.style.border = "none";
 });
-
-idade.addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value.replace(/\D/g, ''); 
-    if (valor) {
-        input.value = `${valor} Anos`;
-    } else {
-        input.value = '';
-    }
-
-    const posicaoCursor = valor.length;
-    input.setSelectionRange(posicaoCursor, posicaoCursor);
+optUsuario.addEventListener("mouseover", function() {
+optInicio.style.backgroundColor = "#fff";
+optInicio.style.border = "none";
 });
-
-    telefoneFamiliaInput.addEventListener('input', function(event) {
-        let value = this.value.replace(/\D/g, '');
-
-   
-        if (value.length <= 2) {
-            value = value.replace(/^(\d{2})/, '($1)');
-        }
-        if (value.length > 2 && value.length <= 6) {
-            value = value.replace(/^(\d{2})(\d{5})(\d{1,4})/, '($1) $2-$3');
-        }
-        if (value.length > 6) {
-            value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-        }
-
-        this.value = value; 
-    });
-
-   
-        telefoneInput.addEventListener('input', function(event) {
-            let value = this.value.replace(/\D/g, ''); 
-
-            
-            if (value.length <= 2) {
-                value = value.replace(/^(\d{2})/, '($1)');
-            }
-            if (value.length > 2 && value.length <= 6) {
-                value = value.replace(/^(\d{2})(\d{5})(\d{1,4})/, '($1) $2-$3');
-            }
-            if (value.length > 6) {
-                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-            }
-
-            this.value = value;
-        });
-
-
-
-
-rgInput.addEventListener('input', function(event) {
-            let value = this.value.replace(/\D/g, ''); 
-            if (value.length <= 2) {
-                value = value.replace(/^(\d{2})/, '$1');
-            }
-            if (value.length > 2 && value.length <= 5) {
-                value = value.replace(/^(\d{2})(\d{1,3})/, '$1.$2');
-            }
-            if (value.length > 5 && value.length <= 8) {
-                value = value.replace(/^(\d{2})(\d{3})(\d{1,3})/, '$1.$2.$3');
-            }
-            if (value.length > 8 && value.length <= 12) {
-                value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3-$4');
-            }
-            if (value.length > 12) {
-                value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-            }
-
-            this.value = value; 
-        });
-
-            cpfInput.addEventListener('input', function(event) {
-                let value = this.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-    
-                // Aplica a máscara corretamente para o formato 000.000.000-00
-                if (value.length <= 3) {
-                    value = value.replace(/^(\d{3})/, '$1');
-                }
-                if (value.length > 3 && value.length <= 6) {
-                    value = value.replace(/^(\d{3})(\d{1,3})/, '$1.$2');
-                }
-                if (value.length > 6 && value.length <= 9) {
-                    value = value.replace(/^(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-                }
-                if (value.length > 9) {
-                    value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-                }
-    
-                this.value = value; // Atualiza o valor do campo de entrada
-            });
-cep.addEventListener('input', function() {
-    let cepValue = this.value;
-    cepValue = cepValue.replace(/\D/g, '');
-    if (cepValue.length <= 5) {
-      this.value = cepValue;  
-    } else {
-      this.value = cepValue.replace(/(\d{5})(\d{3})/, '$1-$2');
-    }
-  });
-
-optInicio.addEventListener("mouseover", function() {
-    optAlunos.style.backgroundColor = "#fff";
-    optAlunos.style.border = "none";
-    });
-    optPagamento.addEventListener("mouseover", function() {
-    optAlunos.style.backgroundColor = "#fff";
-    optAlunos.style.border = "none";
-    });
-    optUsuario.addEventListener("mouseover", function() {
-    optAlunos.style.backgroundColor = "#fff";
-    optAlunos.style.border = "none";
-    });
-    optConfig.addEventListener("mouseover", function() {
-    optAlunos.style.backgroundColor = "#fff";
-    optAlunos.style.border = "none";
-    });
-    optInicio.addEventListener("mouseout", function() {
-    optAlunos.style.backgroundColor = "#e0dfdf";
-    optAlunos.style.borderLeft = "2px solid #616161"
-    });
-    optPagamento.addEventListener("mouseout", function() {
-    optAlunos.style.backgroundColor = "#e0dfdf";
-    optAlunos.style.borderLeft = "2px solid #616161";
-    });
-    optUsuario.addEventListener("mouseout", function() {
-    optAlunos.style.backgroundColor = "#e0dfdf";
-    optAlunos.style.borderLeft = "2px solid #616161";
-    });
-    optConfig.addEventListener("mouseout", function() {
-    optAlunos.style.backgroundColor = "#e0dfdf";
-    optAlunos.style.borderLeft = "2px solid #616161";
-    });
+optConfig.addEventListener("mouseover", function() {
+optInicio.style.backgroundColor = "#fff";
+optInicio.style.border = "none";
+});
+optAlunos.addEventListener("mouseout", function() {
+optInicio.style.backgroundColor = "#e0dfdf";
+optInicio.style.borderLeft = "2px solid #616161"
+});
+optPagamento.addEventListener("mouseout", function() {
+optInicio.style.backgroundColor = "#e0dfdf";
+optInicio.style.borderLeft = "2px solid #616161";
+});
+optUsuario.addEventListener("mouseout", function() {
+optInicio.style.backgroundColor = "#e0dfdf";
+optInicio.style.borderLeft = "2px solid #616161";
+});
+optConfig.addEventListener("mouseout", function() {
+optInicio.style.backgroundColor = "#e0dfdf";
+optInicio.style.borderLeft = "2px solid #616161";
+});
 optConfig.addEventListener('click', function() {
 configsection.classList.toggle("exibir");
 });
@@ -543,24 +413,6 @@ document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
 });
 });
-apagarbtn.forEach(apagar => {
-    apagar.addEventListener('click', () => {
-    document.getElementById('popupapagaraluno').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    });
-    
-    
-    document.getElementById('fecharapagar').addEventListener('click', () => {
-    document.getElementById('popupapagaraluno').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    
-    document.getElementById('confirmarapagar').addEventListener('click', () => {
-    alert("Item ignorado com sucesso!");
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-    });
-    });
 fichabtn.forEach(ficha => {
     ficha.addEventListener('click', () => {
     document.getElementById('popupficha').style.display = 'block';
@@ -573,156 +425,69 @@ fichabtn.forEach(ficha => {
     document.getElementById('overlay').style.display = 'none';
     });
     
-    
     document.getElementById('confirmar').addEventListener('click', () => {
     document.getElementById('popupficha').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
     });
     });
 
+    const userIcon = document.getElementById('usericon');
+    const contextMenu = document.getElementById('contextMenu');
+    const removePhoto = document.getElementById('removePhoto');
 
-
-    anamnesebtn.addEventListener('click', () => {
-        event.preventDefault();
-        document.getElementById('popupanamnese').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-        });
-        
-function fecharAnamnese() {
-    event.preventDefault();
-    document.getElementById('popupanamnese').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-}
-
-function toggleLesaoInput(select) {
-    const lesaoDetalhesDiv = document.getElementById('lesao_detalhes');
-    const lesaoDetalhesInput = document.getElementById('lesao_detalhes_input');
     
-    if (select.value === "Sim - ") {
-      lesaoDetalhesDiv.style.display = "block";
-      lesaoDetalhesInput.required = true; 
-    } else {
-      lesaoDetalhesDiv.style.display = "none";
-      lesaoDetalhesInput.required = false; 
-      lesaoDetalhesInput.value = ""; 
-    }
-  }
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
 
-  function toggledoencaInput(select) {
-    const doencaDetalhesDiv = document.getElementById('doenca_detalhes');
-    const doencaDetalhesInput = document.getElementById('doenca_detalhes_input');
-    
-    if (select.value === "Sim - ") {
-      doencaDetalhesDiv.style.display = "block"; 
-      doencaDetalhesInput.required = true; 
-    } else {
-      doencaDetalhesDiv.style.display = "none"; 
-      doencaDetalhesInput.required = false; 
-      doencaDetalhesInput.value = ""; 
-    }
-}
-
-  function togglecolunaInput(select) {
-    const colunaDetalhesDiv = document.getElementById('coluna_detalhes');
-    const colunaDetalhesInput = document.getElementById('coluna_detalhes_input');
-    
-    if (select.value === "Sim - ") {
-      colunaDetalhesDiv.style.display = "block"; 
-      colunaDetalhesInput.required = true; 
-    } else {
-      colunaDetalhesDiv.style.display = "none"; 
-      colunaDetalhesInput.required = false; 
-      colunaDetalhesInput.value = ""; 
-    }
-  }
-
-  document.getElementById('peso').addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value.replace(/[^0-9,\.]/g, '');
-    valor = valor.replace(',', '.'); 
-    
-    if (valor) {
-        input.value = `${valor} Kg`;
-    } else {
-        input.value = ''; 
-    }
+    userIcon.addEventListener('click', () => {
+      fileInput.click();
+    });
 
   
-    const posicaoCursor = valor.length; 
-    input.setSelectionRange(posicaoCursor, posicaoCursor);
-});
+    userIcon.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      contextMenu.style.display = 'block';
+      contextMenu.style.top = `${e.pageY}px`;
+      contextMenu.style.left = `${e.pageX}px`;
+    });
 
-const ids = [
-    'input-torax',
-    'input-cintura',
-    'input-abdome',
-    'input-quadril',
-    'input-bracos',
-    'input-antebracos',
-    'input-panturrilha',
-    'input-pernas'
-];
-
-
-function aplicarMascara(id) {
-    document.getElementById(id).addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value;
+  
+    window.addEventListener('click', () => {
+      contextMenu.style.display = 'none';
+    });
 
    
-    valor = valor.replace(',', '.');
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
 
-   
-    valor = valor.replace(/[^0-9\/\.]/g, '');
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result;
+        userIcon.style.backgroundImage = `url('${imageData}')`;
+        userIcon.textContent = "";
+        localStorage.setItem('profileImage', imageData);
+        fileInput.value = "";
+      };
+      reader.readAsDataURL(file);
+    });
 
-  
-    if (valor.includes('/')) {
-        const partes = valor.split('/');
-        if (partes.length > 2) {
-            valor = partes[0] + '/' + partes[1].slice(0, 1); 
-        }
-    }
+    removePhoto.addEventListener('click', () => {
+      userIcon.style.backgroundImage = "";
+      userIcon.textContent = "";
+      localStorage.removeItem('profileImage');
+      contextMenu.style.display = 'none';
+    });
 
-  
-    if (valor) {
-        input.value = `${valor} CM`; 
-    } else {
-        input.value = ''; 
-    }
-
-  
-    if (input.selectionStart === input.value.length - 3) { 
-        input.setSelectionRange(input.value.length - 3, input.value.length - 3);
-    } else if (input.selectionStart === input.value.length) { 
-        input.setSelectionRange(input.value.length - 3, input.value.length - 3);
-    }
-});
-}
-ids.forEach(aplicarMascara);
-
-document.getElementById('input-altura').addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value;
-
-    valor = valor.replace(',', '.');
-    valor = valor.replace(/[^0-9.]/g, '');
-
-    const partes = valor.split('.');
-    if (partes.length > 2) {
-        valor = partes[0] + '.' + partes[1].slice(0, 2);
-    }
-
-    if (valor.length > 4) {
-        valor = valor.slice(0, 4);
-    }
-
-    input.value = valor ? `${valor} m` : '';
-
-    if (input.selectionStart === input.value.length - 2) { 
-        input.setSelectionRange(input.value.length - 2, input.value.length - 2);
-    } else if (input.selectionStart === input.value.length) { 
-        input.setSelectionRange(input.value.length - 2, input.value.length - 2);
-    }
-});
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedImage = localStorage.getItem('profileImage');
+      if (savedImage) {
+        userIcon.style.backgroundImage = `url('${savedImage}')`;
+        userIcon.textContent = "";
+      }
+    });
 
 loadTheme();

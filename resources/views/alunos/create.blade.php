@@ -1,3 +1,4 @@
+@vite(['resources/js/alunos/criar.js'])
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,8 +17,11 @@
             <h4 id="appname">Academia Ritmo Fitness</h4>
         </div><!--linha menu-->
         <div class="options">
-        <div class="user"><i id="usericon" class="fa-solid fa-circle-user"></i><div class="userinfo"><p id="username">Olá, SUPORTE </p></i></u><p id="userjoin">Bom dia!</p>
-        </div><!--user info-->
+        <div class="user"><i id="usericon"  title="Adicionar foto de Perfil"></i><div class="userinfo"><p id="username">Olá, SUPORTE </p></i></u><p id="userjoin">Bom dia!</p>
+        <div id="contextMenu">
+    <div id="removePhoto"><h4>Remover Foto</h4></div>
+  </div>
+    </div><!--user info-->
         </div><!--user-->
         <a class="nostyle" href="{{route('inicio.index')}}"><div class="opt" id="optInicioOFF">
             <i data-opticon="true" id="opticon" class="fa-solid fa-house"></i> <p id="optname">Início</p>
@@ -576,23 +580,5 @@
         </div>
     </div>
     <div id="overlay" class="overlay"></div>
-    <script src="{{ asset('script/alunos-criar.js') }}"> </script>
-    <script>
-   function closePopup() {
-    document.getElementById('popuplogin').classList.remove('show');
-   
-}
-
-// Mostrar popup se houver erros
-document.addEventListener('DOMContentLoaded', function() {
-    const popup = document.getElementById('popuplogin');
-
-    
-    @if ($errors->any() || session('error'))
-        popup.classList.add('show');
-       
-    @endif
-});
-</script>
 </body>
 </html>

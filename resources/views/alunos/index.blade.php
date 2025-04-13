@@ -1,3 +1,4 @@
+@vite(['resources/js/alunos/index.js'])
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,8 +17,11 @@
             <h4 id="appname">Academia Ritmo Fitness</h4>
         </div><!--linha menu-->
         <div class="options">
-        <div class="user"><i id="usericon" class="fa-solid fa-circle-user"></i><div class="userinfo"><p id="username">Olá, SUPORTE </p></i></u><p id="userjoin">Bom dia!</p>
-        </div><!--user info-->
+        <div class="user"><i id="usericon"  title="Adicionar foto de Perfil"></i><div class="userinfo"><p id="username">Olá, SUPORTE </p></i></u><p id="userjoin">Bom dia!</p>
+        <div id="contextMenu">
+    <div id="removePhoto"><h4>Remover Foto</h4></div>
+  </div>
+    </div><!--user info-->
         </div><!--user-->
         <a class="nostyle" href="{{route('inicio.index')}}"><div class="opt" id="optInicioOFF">
             <i data-opticon="true" id="opticon" class="fa-solid fa-house"></i> <p id="optname">Início</p>
@@ -197,7 +201,7 @@
             <button id="confirmar">Sim</button>
             <button id="confirmarativar">Sim</button>
             <button id="confirmarapagar">Sim</button>
-            <button id="confirmareditar">Sim</button>
+        
             <button id="fechar">Cancelar</button>
             </div>
         </div>
@@ -205,7 +209,7 @@
     <div id="popupficha" class="popupficha">
         <div class="conteudo-ficha" >
         <div class="form-titulo" id="titulopopup">
-                <h4 id="nomealunoficha">VISUALUZAR ALUNO:</h4>  <div class="btnamnese">
+                <h4 id="nomealunoficha">VISUALIZAR ALUNO:</h4>  <div class="btnamnese">
                     <button  class="addaluno" id="save"  onclick="fecharAnamnese()">
                         <i class="fa-solid fa-floppy-disk"></i>
                          Salvar
@@ -497,17 +501,33 @@
     <div id="popupeditar" class="popupficha">
         <div class="conteudo-ficha" >
         <div class="form-titulo" id="titulopopup">
-            <form id="formedit" action="#">
+            <form id="formedit" action="{{ route('alunos.editar')}}" method="post">
+                @csrf
+                <div class="topinfoedit">
+                <div class="ladoesquerdoinfo">
                 <h4 id="nomealunoficha">EDITAR ALUNO:</h4>
-                <input type="text" id="idalunoedit" style="display: none;">
-                  <div class="btnamnese">
+                <input type="text" name="idalunoedit" id="idalunoedit" style="opacity: 0;">
+                </div><!--ladoesquerdoinfo-->
+                <div class="btnamnese">
+                
                     <button  class="addaluno" id="save2">
                         <i class="fa-solid fa-floppy-disk"></i>
                          Salvar
                         </button>
-                        <button class="addaluno" id="close"  onclick="fecharAnamnese()">
+                        <button class="addaluno" id="close2"  onclick="fecharAnamnese()">
                             <i class="fa-solid fa-xmark"></i>Fechar</button>
+                           
+                            <h4 class="smallfont" id="perguntaedit">Você tem certeza?</h4>
+                            <button  class="addaluno" id="confirmareditar">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                         Sim
+                        </button>
+                        <button class="addaluno" id="close3">
+                        <i class="fa-solid fa-xmark"></i>Não</button>
+                   
+
                         </div>
+                        </div><!--topinfoedit-->
             </div>
             <div class="conteudo-anamnese" id="conteudoficha2">
     <div class="ladoesquerdoform">
@@ -677,7 +697,7 @@
             <div class="compact">
             <div class="form-group">
                <label for="endereco">ENDEREÇO:</label>
-               <textarea type="text" id="endereco2" ></textarea>
+               <textarea type="text" name="endereco" id="endereco2" ></textarea>
 </div>
             </div><!--compact-->
            
@@ -788,12 +808,8 @@
         </div>
         </div>
         </form>
+       
     </div>
-
-   
-
     <div id="overlay" class="overlay"></div>
-    
-    <script src="{{ asset('script/alunos.js') }}"> </script>
 </body>
 </html>

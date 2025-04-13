@@ -15,18 +15,32 @@ Route::get('/', function () {
     return view('login');
 })->name("login");
 
-Route::get('/alunos', [AlunoController::class, 'listar'])->name("alunos.index");
+Route::get('/alunos', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
+    return app()->call([AlunoController::class, 'listar']);
+})->name('alunos.index');
 
 
 Route::get('/alunos/criar', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
     return view('alunos/create');
 })->name("alunos.criar");
 
 Route::get('/pagamentos', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
     return view('pagamentos/index');
 })->name("pagamentos.index");
 
 Route::get('/usuarios', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
     return view('usuarios/index');
 })->name("usuarios.index");
 
@@ -42,4 +56,5 @@ Route::post('/alunos/criar/store', [AlunoController::class, 'cadastrar'])->name(
 Route::post('/alunos/desativar/{id}', [AlunoController::class, 'desativar'])->name('alunos.desativar');
 Route::post('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('alunos.ativar');
 Route::post('/alunos/apagar/{id}', [AlunoController::class, 'apagar'])->name('alunos.apagar');
+Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos.editar');
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');

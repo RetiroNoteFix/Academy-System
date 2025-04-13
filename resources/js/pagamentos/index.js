@@ -528,3 +528,62 @@ function excluirPagamento(id) {
 
 // Gerar a tabela ao carregar a página
 gerarTabela();
+
+const userIcon = document.getElementById('usericon');
+    const contextMenu = document.getElementById('contextMenu');
+    const removePhoto = document.getElementById('removePhoto');
+
+    
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+
+    userIcon.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+  
+    userIcon.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      contextMenu.style.display = 'block';
+      contextMenu.style.top = `${e.pageY}px`;
+      contextMenu.style.left = `${e.pageX}px`;
+    });
+
+  
+    window.addEventListener('click', () => {
+      contextMenu.style.display = 'none';
+    });
+
+   
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result;
+        userIcon.style.backgroundImage = `url('${imageData}')`;
+        userIcon.textContent = "";
+        localStorage.setItem('profileImage', imageData);
+        fileInput.value = "";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    removePhoto.addEventListener('click', () => {
+      userIcon.style.backgroundImage = "";
+      userIcon.textContent = "";
+      localStorage.removeItem('profileImage');
+      contextMenu.style.display = 'none';
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedImage = localStorage.getItem('profileImage');
+      if (savedImage) {
+        userIcon.style.backgroundImage = `url('${savedImage}')`;
+        userIcon.textContent = "";
+      }
+    });
