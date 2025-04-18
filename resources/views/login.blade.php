@@ -47,22 +47,26 @@
    
 </body>
 
-    <script>
-    
-
-    
-
-    function closePopup() {
-        document.getElementById('popuplogin').classList.remove('show');
-    }
-</script>
 <script>
-     const papeisDeParede = [
+    
+    const popup = document.getElementById('popuplogin');
+    
+    @if ($errors->any() || session('error'))
+        popup.classList.add('show');
+        setTimeout(() => {
+                closePopup();
+            }, 3000);
+    @endif
+
+// mudar papel de parede
+
+    const papeisDeParede = [
         "{{ asset('img/background.png') }}",
         "{{ asset('img/background.png') }}"
     ];
     let indiceAtual = 0;
-    function mudarPapelParede() {
+    
+function mudarPapelParede() {
         const container = document.querySelector('.indexContainer');
         
         if (container) {
@@ -71,28 +75,16 @@
             container.style.backgroundImage = `url(${papeisDeParede[indiceAtual]})`;
         }
     }
+
     setInterval(mudarPapelParede, 10000);
 
     mudarPapelParede();
-</script>
-<script>
-   function closePopup() {
-    document.getElementById('popuplogin').classList.remove('show');
+
+// fechar popup
+function closePopup() {
+        document.getElementById('popuplogin').classList.remove('show');
+    }
    
-}
-
-// Mostrar popup se houver erros
-document.addEventListener('DOMContentLoaded', function() {
-    const popup = document.getElementById('popuplogin');
-
-    
-    @if ($errors->any() || session('error'))
-        popup.classList.add('show');
-        setTimeout(() => {
-                closePopup();
-            }, 3000);
-    @endif
-});
 </script>
 
 

@@ -12,22 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id('idUsuario');
-            $table->unsignedBigInteger('idPessoa')->nullable();
-            $table->foreign('idPessoa')->references('idPessoa')->on('pessoas')->onDelete('cascade');
+            $table->id('id');
+            $table->unsignedBigInteger('id_pessoa')->nullable();
+            $table->foreign('id_pessoa')->references('id')->on('pessoas')->onDelete('cascade');
             $table->string('senha', 255);
             $table->enum('tipo_usuario', ['admin', 'funcionario'])->nullable();
-    
             $table->timestamps();
         });
     
        
         DB::table('usuarios')->insert([
-            'idUsuario' => 1,
-            'idPessoa' => 1,
+            'id' => 1,
+            'id_pessoa' => 1,
             'senha' => '$2y$10$72Aun8rRTuTKjkcxGfjXSumJglXD4VmFXk55xiRldHFLzqPHtaVXa',  
             'tipo_usuario' => 'admin',
-            'fotoPerfil' => null,
         ]);
     }
 

@@ -67,6 +67,15 @@ Route::get('/inicio', function () {
     return view('inicio.index', compact('usuarioNome'));
 })->name('inicio.index');
 
+
+Route::get('/inicio', function () {
+    if (!Session::has('usuario_id')) {
+        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
+    }
+    $controller = app(AlunoController::class);
+    return $controller->listarPendentes();
+})->name('inicio.index');
+
 Route::post('/login', [ContaController::class, 'logar'])->name('login.autenticar');
 Route::post('/alunos/criar/store', [AlunoController::class, 'cadastrar'])->name('alunos.cadastrar');
 Route::post('/usuarios/criar/store', [UsuarioController::class, 'cadastrar'])->name('usuarios.cadastrar');

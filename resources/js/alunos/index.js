@@ -643,7 +643,6 @@ document.querySelectorAll('.ficha').forEach(button => {
             } else {
                 const el = document.getElementById('conteudoficha');
       el.scrollTop = 0;
-                document.getElementById('overlay').style.display = 'block';
                 document.getElementById('nome').value = `${data.nome}`;
                 document.getElementById('data_nascimento').value = data.data_nascimento ?? "";
                 document.getElementById('idade').value = data.idade ?? "Sem dados";
@@ -1016,3 +1015,6 @@ document.getElementById('fechar').addEventListener('click', () => {
     });
 
 loadTheme();
+
+
+window.fecharAnamnese = fecharAnamnese;

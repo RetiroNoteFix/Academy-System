@@ -16,7 +16,6 @@ class ContaController extends Controller
         ]);
     
         $resultado = Usuario::autenticar($request->nomeusuario, $request->senhausuario);
-    
         // Se sucesso, redireciona
         if ($resultado['status'] === 'success') {
             return redirect($resultado['redirect']);

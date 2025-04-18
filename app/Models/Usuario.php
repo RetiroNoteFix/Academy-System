@@ -9,34 +9,33 @@ use Illuminate\Support\Facades\Session;
 class Usuario extends Model
 {
     protected $table = 'usuarios';
-    protected $primaryKey = 'idUsuario';
+    protected $primaryKey = 'id';
     public $timestamps = false;
 
     protected $fillable = [
-        'idPessoa', 'senha', 'tipo_usuario'
+        'id_pessoa', 'senha', 'tipo_usuario'
     ];
 
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class, 'idPessoa', 'idPessoa');
+        return $this->belongsTo(Pessoa::class, 'id_pessoa', 'id');
     }
 
     public static function autenticar($nomeusuario, $senhausuario)
     {
-        // Verifica se a pessoa existe
+    
         $pessoa = Pessoa::where('nome', $nomeusuario)->first();
     
         if (!$pessoa || !$pessoa->usuario) {
             return [
                 'status' => 'error',
-                'tipo' => 'usuario', // Tipo de erro
+                'tipo' => 'usuario',
                 'message' => 'ERRO: Usuário não encontrado!'
             ];
         }
     
         $usuario = $pessoa->usuario;
     
-        // Verifica a senha
         if (!Hash::check($senhausuario, $usuario->senha)) {
             return [
                 'status' => 'error',
@@ -45,8 +44,7 @@ class Usuario extends Model
             ];
         }
     
-        // Autenticação bem-sucedida
-        Session::put('usuario_id', $pessoa->idPessoa);
+        Session::put('usuario_id', $pessoa->id);
         Session::put('usuario_nome', $pessoa->nome);
         Session::put('usuario_tipo', $usuario->tipo_usuario);
     

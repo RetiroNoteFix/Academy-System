@@ -1,400 +1,397 @@
-var optInicioN = document.getElementById("optInicioN");
-var optAlunosN = document.getElementById("optAlunosN");
-var optPagamentosN = document.getElementById("optPagamentosN");
-var optUsuariosN = document.getElementById("optUsuariosN");
- var optInicio = document.getElementById("optInicio");
-var optAlunos = document.getElementById("optAlunos");
-var optPagamento = document.getElementById("optPagamentos");
-var optUsuario = document.getElementById("optUsuarios");
-var optConfig = document.getElementById("optConfig");
-var temaDia = document.getElementById("themeday");
-var temaNoite = document.getElementById("nighttheme");
-var h1alert = document.getElementById("h1alert");
-var usericon = document.getElementById("usericon");
-var userout = document.getElementById("userout");
-var mainheader = document.getElementById("mainheader");
-var linhamenu = document.getElementById("linhamenu");
-var config1 = document.getElementById("optconfigicon1");
-var config1on = document.getElementById("optconfigicon1on");
-var configsection = document.getElementById("sectionconfig");
-var optconfigs = document.querySelector(".optconfigs");
-var h1config= document.getElementById("h1config");
-var appname = document.getElementById("appname");
-var opticons = document.querySelectorAll("[data-opticon]");
-var paragraphs = document.querySelectorAll("p");
+// 🌗 Temas
+const temaDia = document.getElementById("themeday");
+const temaNoite = document.getElementById("nighttheme");
+
+// 🧭 Navegação - Ícones de navegação normal
+const optInicio = document.getElementById("optInicio");
+const optAlunos = document.getElementById("optAlunos");
+const optPagamento = document.getElementById("optPagamentos");
+const optUsuario = document.getElementById("optUsuarios");
+const optConfig = document.getElementById("optConfig");
+
+// 🧭 Navegação - Ícones de navegação escurecidos/desativados
+const optInicioN = document.getElementById("optInicioN");
+const optAlunosN = document.getElementById("optAlunosN");
+const optPagamentosN = document.getElementById("optPagamentosN");
+const optUsuariosN = document.getElementById("optUsuariosN");
+const optConfigN = document.getElementById("optConfigN");
+const pagBtn = document.getElementById("pages");
+const previousPage = document.getElementById("previouspage");
+const nextPage = document.getElementById("nextpage");
+
+// 👤 Informações de usuário
+const usericon = document.getElementById("usericon");
+const userout = document.getElementById("userout");
+
+// 🛠️ Configurações
+const config1 = document.getElementById("optconfigicon1");
+const config1on = document.getElementById("optconfigicon1on");
+const configsection = document.getElementById("sectionconfig");
+const optconfigs = document.querySelector(".optconfigs");
+const h1config = document.getElementById("h1config");
+
+// 🧱 Estrutura principal
+const mainheader = document.getElementById("mainheader");
+const linhamenu = document.getElementById("linhamenu");
 const linetop = document.getElementById("linetop");
 const linetopconfig = document.getElementById("linetopconfig");
 const menu = document.querySelector(".menu");
 const mainContent = document.querySelector("#maincontent");
 const pagetitle = document.querySelector("#pagetitle");
+const appname = document.getElementById("appname");
+const pesquisa = document.getElementById("search");
+const iconePesquisa = document.getElementById("searchicon");
+const inputPesquisa = document.getElementById("searchinput");
+const body = document.getElementById("body");
+const pendente = document.querySelector(".pendente");
+
+
+
+
+// 📢 Alertas e mensagens
+const h1alert = document.getElementById("h1alert");
+
+// 📋 Elementos de conteúdo genéricos
+const opticons = document.querySelectorAll("[data-opticon]");
+const paragraphs = document.querySelectorAll("p");
 const copy = document.querySelector("#copy");
-const footers = document.querySelectorAll('footer');
-var thElements = document.querySelectorAll("table th");
-var tdElements = document.querySelectorAll("table td");
-var trElements = document.querySelectorAll("table tr");
-var boxbuttons = document.querySelectorAll(".boxbuttons");
-var fichabtn = document.querySelectorAll(".ficha");
-var ignorarbtn = document.querySelectorAll(".ignorar");
-var optConfigN = document.getElementById("optConfigN");
-optAlunos.addEventListener("mouseover", function() {
-optInicio.style.backgroundColor = "#fff";
-optInicio.style.border = "none";
+const footers = document.querySelectorAll("footer");
+
+// 📊 Tabelas
+const thElements = document.querySelectorAll("table th");
+const tdElements = document.querySelectorAll("table td");
+const trElements = document.querySelectorAll("table tr");
+
+// 🔘 Botões
+const boxbuttons = document.querySelectorAll(".boxbuttons");
+const fichabtn = document.querySelectorAll(".ficha");
+const ignorarbtn = document.querySelectorAll(".ignorar");
+  
+// Alvos que afetam o estilo do botão "Início"
+const menuItems = [optAlunos, optPagamento, optUsuario, optConfig];
+
+function removerDestaqueInicio() {
+  optInicio.style.backgroundColor = "#fff";
+  optInicio.style.border = "none";
+}
+
+function aplicarDestaqueInicio() {
+  optInicio.style.backgroundColor = "#e0dfdf";
+  optInicio.style.borderLeft = "2px solid #616161";
+}
+
+menuItems.forEach(item => {
+  item.addEventListener("mouseover", removerDestaqueInicio);
+  item.addEventListener("mouseout", aplicarDestaqueInicio);
 });
-optPagamento.addEventListener("mouseover", function() {
-optInicio.style.backgroundColor = "#fff";
-optInicio.style.border = "none";
+
+[optConfig, optConfigN].forEach(btn => {
+  btn.addEventListener('click', () => {
+    configsection.classList.toggle("exibir");
+  });
 });
-optUsuario.addEventListener("mouseover", function() {
-optInicio.style.backgroundColor = "#fff";
-optInicio.style.border = "none";
+
+// Alvos que afetam o estilo do botão "Início" no modo noite
+const menuItemsNoite = [optAlunosN, optPagamentosN, optUsuariosN, optConfigN];
+
+function removerDestaqueInicioNoite() {
+  optInicioN.style.backgroundColor = "#212529";
+  optInicioN.style.border = "none";
+}
+
+function aplicarDestaqueInicioNoite() {
+  optInicioN.style.backgroundColor = "#535151";
+  optInicioN.style.borderLeft = "2px solid red";
+}
+
+menuItemsNoite.forEach(item => {
+  item.addEventListener("mouseover", removerDestaqueInicioNoite);
+  item.addEventListener("mouseout", aplicarDestaqueInicioNoite);
 });
-optConfig.addEventListener("mouseover", function() {
-optInicio.style.backgroundColor = "#fff";
-optInicio.style.border = "none";
-});
-optAlunos.addEventListener("mouseout", function() {
-optInicio.style.backgroundColor = "#e0dfdf";
-optInicio.style.borderLeft = "2px solid #616161"
-});
-optPagamento.addEventListener("mouseout", function() {
-optInicio.style.backgroundColor = "#e0dfdf";
-optInicio.style.borderLeft = "2px solid #616161";
-});
-optUsuario.addEventListener("mouseout", function() {
-optInicio.style.backgroundColor = "#e0dfdf";
-optInicio.style.borderLeft = "2px solid #616161";
-});
-optConfig.addEventListener("mouseout", function() {
-optInicio.style.backgroundColor = "#e0dfdf";
-optInicio.style.borderLeft = "2px solid #616161";
-});
-optConfig.addEventListener('click', function() {
-configsection.classList.toggle("exibir");
-});
-optConfigN.addEventListener('click', function() {
-configsection.classList.toggle("exibir");
-});
+
+
 let autoCollapseEnabled = false;
 
 function applyCompactMargins() {
-menu.style.width = "40px";
-mainContent.style.marginLeft = "40px";
-configsection.style.marginLeft = "40px";
-copy.style.marginLeft = "0px";
-pagetitle.style.marginLeft = "40px";
-userout.style.marginLeft = "8px";
-setTimeout(() => {
-boxbuttons.forEach(button => {
-    button.classList.remove('short');
-});
-}, 100);
+  menu.style.width = "50px";
+  mainContent.style.marginLeft = "50px";
+  configsection.style.marginLeft = "50px";
+  copy.style.marginLeft = "0px";
+  pagetitle.style.marginLeft = "50px";
+  userout.style.marginLeft = "13px";
+
+  setTimeout(() => {
+    boxbuttons.forEach(button => button.classList.remove('short'));
+  }, 100);
 }
 
 function restoreExpandedMargins() {
-setTimeout(() => {
-boxbuttons.forEach(button => {
-    button.classList.add('short');
-});
-}, 100);
-menu.style.width = "250px";
-mainContent.style.marginLeft = "250px";
-configsection.style.marginLeft = "250px";
-copy.style.marginLeft = "250px";
-pagetitle.style.marginLeft = "255px";
-userout.style.marginLeft = "105px";
+  setTimeout(() => {
+    boxbuttons.forEach(button => button.classList.add('short'));
+  }, 100);
 
+  menu.style.width = "250px";
+  mainContent.style.marginLeft = "250px";
+  configsection.style.marginLeft = "250px";
+  copy.style.marginLeft = "250px";
+  pagetitle.style.marginLeft = "255px";
+  userout.style.marginLeft = "105px";
+}
+
+function activateAutoCollapse() {
+  menu.addEventListener('mouseover', restoreExpandedMargins);
+  menu.addEventListener('mouseout', applyCompactMargins);
+  configsection.addEventListener('mouseover', restoreExpandedMargins);
+  configsection.addEventListener('mouseout', applyCompactMargins);
+  config1.style.display = "none";
+  config1on.style.display = "block";
+  applyCompactMargins();
+}
+
+function deactivateAutoCollapse() {
+  menu.removeEventListener('mouseover', restoreExpandedMargins);
+  menu.removeEventListener('mouseout', applyCompactMargins);
+  configsection.removeEventListener('mouseover', restoreExpandedMargins);
+  configsection.removeEventListener('mouseout', applyCompactMargins);
+  config1.style.display = "block";
+  config1on.style.display = "none";
+  restoreExpandedMargins();
 }
 
 function toggleAutoCollapse() {
-if (autoCollapseEnabled) {
-menu.removeEventListener('mouseover', restoreExpandedMargins);
-menu.removeEventListener('mouseout', applyCompactMargins);
-} else {
-menu.addEventListener('mouseover', restoreExpandedMargins);
-menu.addEventListener('mouseout', applyCompactMargins);
-}
-autoCollapseEnabled = !autoCollapseEnabled;
+  autoCollapseEnabled = !autoCollapseEnabled;
+  localStorage.setItem('autoCollapseEnabled', autoCollapseEnabled);
 
-localStorage.setItem('autoCollapseEnabled', autoCollapseEnabled);
+  if (autoCollapseEnabled) {
+    activateAutoCollapse();
+  } else {
+    deactivateAutoCollapse();
+  }
 }
 
 function loadSavedState() {
-const savedState = localStorage.getItem('autoCollapseEnabled');
-if (savedState !== null) {
-autoCollapseEnabled = savedState === 'true';
+  const savedState = localStorage.getItem('autoCollapseEnabled');
 
-if (autoCollapseEnabled) {
-    config1.style.display = "none";
-    config1on.style.display = "block";
-    applyCompactMargins(); 
-} else {
-    config1.style.display = "block";
-    config1on.style.display = "none";
-    restoreExpandedMargins(); 
-}
+  if (savedState !== null) {
+    autoCollapseEnabled = savedState === 'true';
 
-toggleAutoCollapse();
-toggleAutoCollapse();
-}
+    if (autoCollapseEnabled) {
+      activateAutoCollapse();
+    } else {
+      deactivateAutoCollapse();
+    }
+  }
 }
 
-config1.addEventListener('click', function() {
-config1.style.display = "none";
-config1on.style.display = "block";
-applyCompactMargins(); 
-if (!autoCollapseEnabled) {
-toggleAutoCollapse(); 
-}
+config1.addEventListener('click', () => {
+  if (!autoCollapseEnabled) toggleAutoCollapse();
 });
 
-config1on.addEventListener('click', function() {
-config1.style.display = "block";
-config1on.style.display = "none";
-restoreExpandedMargins();
-if (autoCollapseEnabled) {
-toggleAutoCollapse(); 
-}
+config1on.addEventListener('click', () => {
+  if (autoCollapseEnabled) toggleAutoCollapse();
 });
+
 loadSavedState();
 
 function applyDayTheme() {
-config1.style.color = "#333";
-config1on.style.color = "#333";
-optconfigs.style.backgroundColor = "#fff";
-optconfigs.style.border = "none";
-h1config.style.color = "#333";
-linetopconfig.style.backgroundColor = "#fff";
-configsection.style.backgroundColor = "#fff";
-optConfigN.style.display = "none";
-optConfig.style.display = "flex";
-copy.style.color = "#333";
-optInicio.classList.remove("noite");
-optAlunos.classList.remove("noite");
-optPagamentos.classList.remove("noite");
-optUsuarios.classList.remove("noite");
-optInicioN.classList.remove("night");
-optAlunosN.classList.remove("night");
-optPagamentosN.classList.remove("night");
-optUsuariosN.classList.remove("night");
-optInicio.style.display = "flex"; 
-optAlunos.style.display = "flex"; 
-optPagamentos.style.display = "flex"; 
-optUsuarios.style.display = "flex"; 
-optInicioN.style.display = "none";
-optAlunosN.style.display = "none"; 
-optPagamentosN.style.display = "none"; 
-optUsuariosN.style.display = "none"; 
-linhamenu.style.backgroundColor = "#d6d5d5";
-menu.style.borderRight = "1px solid #e0e0e0";
-mainheader.style.backgroundColor = "#e9e9e9";
-mainContent.style.backgroundColor = "#ffffff";
-menu.style.backgroundColor = "#ffffff";
-linetop.style.backgroundColor = "#ffffff";
-temaDia.style.display = "none";
-temaDia.style.color = "#333";
-temaNoite.style.display = "block";
-appname.style.color = "#333";
-opticon.style.color = "#333";
-h1alert.style.color = "#333";
-usericon.style.color = "#333";
-userout.style.color = "#333";
+  // Cores principais
+  const textColor = "#333";
+  const bgColor = "#ffffff";
+  const borderColor = "#e0e0e0";
 
-opticons.forEach(function(icon) {
-icon.style.color = "#333";
-});
+  // Elementos que devem exibir
+  [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.style.display = "flex");
+  [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.style.display = "none");
 
-paragraphs.forEach(function(p) {
-p.style.color = "#333";
-});
+  // Estilização de componentes principais
+  Object.assign(config1.style, { color: textColor });
+  Object.assign(config1on.style, { color: textColor });
+  Object.assign(copy.style, { color: textColor });
+  Object.assign(h1config.style, { color: textColor });
+  Object.assign(appname.style, { color: textColor });
+  Object.assign(opticon.style, { color: textColor });
+  Object.assign(h1alert.style, { color: textColor });
+  Object.assign(usericon.style, { color: textColor });
+  Object.assign(userout.style, { color: textColor });
+  Object.assign(pagBtn.style, { backgroundColor: bgColor });
+  Object.assign(previousPage.style, { color: textColor });
+  Object.assign(nextPage.style, { color: textColor });
+  Object.assign(pesquisa.style, { border: `1px solid ${borderColor}` });
+  Object.assign(iconePesquisa.style, { color: textColor, backgroundColor: bgColor});
+  // Tema claro em áreas grandes
+  Object.assign(menu.style, { backgroundColor: bgColor, borderRight: `1px solid ${borderColor}` });
+  Object.assign(mainContent.style, { backgroundColor: bgColor });
+  Object.assign(mainheader.style, { backgroundColor: "#e9e9e9" });
+  Object.assign(linhamenu.style, { backgroundColor: "#d6d5d5" });
+  Object.assign(linetop.style, { backgroundColor: bgColor });
+  Object.assign(linetopconfig.style, { backgroundColor: bgColor });
+  Object.assign(configsection.style, { backgroundColor: bgColor });
+  Object.assign(optconfigs.style, { backgroundColor: bgColor, border: "none" });
+  Object.assign(inputPesquisa.style, { backgroundColor: bgColor, color: textColor });
+  Object.assign(iconePesquisa.style, { color: textColor });
+  Object.assign(body.style, { backgroundColor: bgColor });
+  Object.assign(pendente.style, { color: "red" });
+  
 
-footers.forEach(function(footer) {
-footer.style.backgroundColor = "#ffffff";
-footer.style.borderTop = "1px solid #e0e0e0";
-});
+  // Ícones
+  opticons.forEach(icon => icon.style.color = textColor);
+  paragraphs.forEach(p => p.style.color = textColor);
+  footers.forEach(f => {
+    f.style.backgroundColor = bgColor;
+    f.style.borderTop = `1px solid ${borderColor}`;
+  });
 
-const tableHeaders = document.querySelectorAll('th');
-const tableCells = document.querySelectorAll('td');
-const tableRows = document.querySelectorAll('tr');
+  // Botões de tema
+  temaDia.style.display = "none";
+  temaNoite.style.display = "block";
+  temaDia.style.color = textColor;
 
-tableHeaders.forEach(function(header) {
-header.style.backgroundColor = "#e9e9e9";
-header.style.border = "1px solid #e0e0e0";
-header.style.color = "#333";
-});
+  // Ocultar/mostrar opções de tema
+  optConfigN.style.display = "none";
+  optConfig.style.display = "flex";
 
-tableCells.forEach(function(cell) {
-cell.style.backgroundColor = "#ffffff";
-cell.style.border = "1px solid #e0e0e0";
-cell.style.color = "#333";
-});
+  // Remover classes noturnas
+  [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.classList.remove("noite"));
+  [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.classList.remove("night"));
 
-tableRows.forEach(function(row) {
-row.style.color = "#333";
-row.style.border = "1px solid #e0e0e0";
-row.style.backgroundColor = "#ffffff";
-row.removeEventListener("mouseover", function() {});
-row.removeEventListener("mouseout", function() {});
-row.addEventListener("mouseover", function() {
-    this.style.backgroundColor = "#f1f1f1";
-    const cells = this.querySelectorAll('td');
-    cells.forEach(cell => cell.style.backgroundColor = "#f1f1f1");
-});
-row.addEventListener("mouseout", function() {
-    this.style.backgroundColor = "#ffffff";
-    const cells = this.querySelectorAll('td');
-    cells.forEach(cell => cell.style.backgroundColor = "#ffffff");
-});
-});
+  // Tabelas
+  const styleTable = (el, bg, border, color) => {
+    el.style.backgroundColor = bg;
+    el.style.border = border;
+    el.style.color = color;
+  };
+
+  document.querySelectorAll("th").forEach(th => styleTable(th, "#e9e9e9", `1px solid ${borderColor}`, textColor));
+  document.querySelectorAll("td").forEach(td => styleTable(td, bgColor, `1px solid ${borderColor}`, textColor));
+  document.querySelectorAll("tr").forEach(tr => {
+    styleTable(tr, bgColor, `1px solid ${borderColor}`, textColor);
+    tr.onmouseover = () => {
+      tr.style.backgroundColor = "#f1f1f1";
+      tr.querySelectorAll("td").forEach(td => td.style.backgroundColor = "#f1f1f1");
+    };
+    tr.onmouseout = () => {
+      tr.style.backgroundColor = bgColor;
+      tr.querySelectorAll("td").forEach(td => td.style.backgroundColor = bgColor);
+    };
+  });
 }
+
+
 
 // Função para aplicar o tema noite
 function applyNightTheme() {
-config1.style.color = "#fff";
-config1on.style.color = "#fff";
-optconfigs.style.backgroundColor = "#212529";
-optconfigs.style.border = "none";
-h1config.style.color = "#fff";
-linetopconfig.style.backgroundColor = "#212529";
-configsection.style.backgroundColor = "#212529";
-optConfigN.style.display = "flex";
-optConfig.style.display = "none";
-copy.style.color = "#fff";
-optInicio.classList.add("noite");
-optAlunos.classList.add("noite");
-optPagamentos.classList.add("noite");
-optUsuarios.classList.add("noite");
-optInicioN.classList.add("night");
-optAlunosN.classList.add("night");
-optPagamentosN.classList.add("night");
-optUsuariosN.classList.add("night");
-optInicio.style.display = "none";
-optAlunos.style.display = "none";
-optPagamentos.style.display = "none";
-optUsuarios.style.display = "none";
-optInicioN.style.display = "flex";
-optAlunosN.style.display = "flex";
-optPagamentosN.style.display = "flex";
-optUsuariosN.style.display = "flex";
-linhamenu.style.backgroundColor = "#972020";
-menu.style.borderRight = "2px solid #8b8b8b";
-mainheader.style.backgroundColor = "#a02c2c";
-mainContent.style.backgroundColor = "#212529";
-menu.style.backgroundColor = "#212529";
-linetop.style.backgroundColor = "#212529";
-temaDia.style.display = "block";
-temaDia.style.color = "#fff";
-temaNoite.style.display = "none";
-appname.style.color = "white";
-opticon.style.color = "white";
-h1alert.style.color = "white";
-usericon.style.color = "white";
-userout.style.color = "#fff";
-opticons.forEach(function(icon) {
-icon.style.color = "white";
-});
-paragraphs.forEach(function(p) {
-p.style.color = "#ffffff";
-});
-footers.forEach(function(footer) {
-footer.style.backgroundColor = "#212529";
-});
-thElements.forEach(function(th) {
-th.style.backgroundColor = "#a02c2c"; 
-th.style.border = "0.1px solid #414141";
-th.style.color = "white";
-});
-tdElements.forEach(function(td) {
-td.style.backgroundColor = "#212529"; 
-td.style.border = "0.1px solid #414141";
-td.style.color = "white";
-});
-trElements.forEach(function(tr) {
-tr.style.color = "white"; 
-tr.style.border = "0.1px solid #414141";
-tr.style.backgroundColor = "#212529"; 
-tr.addEventListener("mouseover", function() {
-    this.style.backgroundColor = "#3a3a3a !important"; 
-    const cells = this.querySelectorAll('td');
-    cells.forEach(cell => cell.style.backgroundColor = "#3a3a3a");
-});
-tr.addEventListener("mouseout", function() {
-    this.style.backgroundColor = "#212529";
-    const cells = this.querySelectorAll('td');
-    cells.forEach(cell => cell.style.backgroundColor = "#212529");
-});
-});
+  const textColor = "#fff";
+  const bgColor = "#212529";
+  const headerColor = "#a02c2c";
+  const borderColor = "#414141";
+
+  // Exibir/ocultar menus noite e dia
+  [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.style.display = "none");
+  [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.style.display = "flex");
+
+  // Ativar classes de tema
+  [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.classList.add("noite"));
+  [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.classList.add("night"));
+
+  // Estilização básica
+  Object.assign(config1.style, { color: textColor });
+  Object.assign(config1on.style, { color: textColor });
+  Object.assign(copy.style, { color: textColor });
+  Object.assign(h1config.style, { color: textColor });
+  Object.assign(appname.style, { color: textColor });
+  Object.assign(opticon.style, { color: textColor });
+  Object.assign(h1alert.style, { color: textColor });
+  Object.assign(usericon.style, { color: textColor });
+  Object.assign(userout.style, { color: textColor });
+  Object.assign(temaDia.style, { display: "block", color: textColor });
+  temaNoite.style.display = "none";
+
+  // Containers e seções
+  Object.assign(optconfigs.style, { backgroundColor: bgColor, border: "none" });
+  Object.assign(linetopconfig.style, { backgroundColor: bgColor });
+  Object.assign(configsection.style, { backgroundColor: bgColor });
+  Object.assign(menu.style, { backgroundColor: bgColor, borderRight: "2px solid #8b8b8b" });
+  Object.assign(mainContent.style, { backgroundColor: bgColor });
+  Object.assign(mainheader.style, { backgroundColor: headerColor });
+  Object.assign(linhamenu.style, { backgroundColor: "#972020" });
+  Object.assign(linetop.style, { backgroundColor: bgColor });
+  Object.assign(pagBtn.style, { backgroundColor: bgColor });
+  Object.assign(previousPage.style, { color: textColor });
+  Object.assign(nextPage.style, { color: textColor });
+  Object.assign(pesquisa.style, { border: `1px solid ${textColor}` });
+  Object.assign(iconePesquisa.style, { color: textColor, backgroundColor: bgColor});
+  Object.assign(inputPesquisa.style, { backgroundColor: bgColor, color: textColor });
+  Object.assign(body.style, { backgroundColor: bgColor });
+
+  // Mostrar botões corretos
+  optConfigN.style.display = "flex";
+  optConfig.style.display = "none";
+
+  // Ícones e textos
+  opticons.forEach(icon => icon.style.color = textColor);
+  paragraphs.forEach(p => p.style.color = textColor);
+  footers.forEach(f => f.style.backgroundColor = bgColor);
+
+  // Tabelas
+  thElements.forEach(th => {
+    Object.assign(th.style, {
+      backgroundColor: headerColor,
+      border: `0.1px solid ${borderColor}`,
+      color: textColor
+    });
+  });
+
+  tdElements.forEach(td => {
+    Object.assign(td.style, {
+      backgroundColor: bgColor,
+      border: `0.1px solid ${borderColor}`,
+      color: textColor
+    });
+  });
+
+  trElements.forEach(tr => {
+    Object.assign(tr.style, {
+      backgroundColor: bgColor,
+      border: `0.1px solid ${borderColor}`,
+      color: textColor
+    });
+
+    tr.onmouseover = function () {
+      this.style.backgroundColor = "#3a3a3a";
+      this.querySelectorAll("td").forEach(td => td.style.backgroundColor = "#3a3a3a");
+    };
+
+    tr.onmouseout = function () {
+      this.style.backgroundColor = bgColor;
+      this.querySelectorAll("td").forEach(td => td.style.backgroundColor = bgColor);
+    };
+  });
 }
 
 function saveTheme(theme) {
-localStorage.setItem('theme', theme);
+  localStorage.setItem('theme', theme);
 }
 
 function loadTheme() {
-const savedTheme = localStorage.getItem('theme');
-console.log(savedTheme);
-if (savedTheme === 'night') {
-applyNightTheme();
-} else {
-applyDayTheme();
-}
+  const savedTheme = localStorage.getItem('theme');
+  console.log("Tema salvo:", savedTheme);
+  if (savedTheme === 'night') {
+    applyNightTheme();
+  } else {
+    applyDayTheme();
+  }
 }
 
 temaDia.addEventListener('click', function() {
-applyDayTheme();
-saveTheme('day'); 
+  applyDayTheme();
+  saveTheme('day'); 
 });
 
 temaNoite.addEventListener('click', function() {
-applyNightTheme();
-saveTheme('night'); 
+  applyNightTheme();
+  saveTheme('night'); 
+});
 
-optAlunosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optPagamentosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optConfigN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optUsuariosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optAlunosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optPagamentosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optUsuariosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optConfigN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-});
-menu.addEventListener("mouseover", () => {
-mainContent.classList.add("expanded");
-pagetitle.classList.add("expanded");
-copy.classList.add("expanded");
-userout.classList.add("expanded");
-configsection.classList.add("expanded");
-});
-menu.addEventListener("mouseout", () => {
-configsection.classList.remove("expanded");
-mainContent.classList.remove("expanded");
-pagetitle.classList.remove("expanded");
-copy.classList.remove("expanded");
-userout.classList.remove("expanded");
-});
 ignorarbtn.forEach(ignorar => {
 ignorar.addEventListener('click', () => {
 document.getElementById('popup').style.display = 'block';
@@ -431,11 +428,12 @@ fichabtn.forEach(ficha => {
     });
     });
 
+    // foto de perfil
+
     const userIcon = document.getElementById('usericon');
     const contextMenu = document.getElementById('contextMenu');
     const removePhoto = document.getElementById('removePhoto');
 
-    
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = 'image/*';
@@ -446,7 +444,6 @@ fichabtn.forEach(ficha => {
       fileInput.click();
     });
 
-  
     userIcon.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       contextMenu.style.display = 'block';
@@ -454,12 +451,10 @@ fichabtn.forEach(ficha => {
       contextMenu.style.left = `${e.pageX}px`;
     });
 
-  
     window.addEventListener('click', () => {
       contextMenu.style.display = 'none';
     });
 
-   
     fileInput.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (!file) return;

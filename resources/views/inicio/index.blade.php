@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name') }}</title>
 </head>
+<body id="body">
 
 <div class="menu">
         <div id="linhamenu">
@@ -73,8 +74,8 @@
                 
                 
                 <div class="menutopcontent">
-                    <div class="pages"><p id="pag">Pág:</p><button id="previouspage"><i class="fa-solid fa-arrow-left"></i></button><div class="pagenumber"><p id="pagenumbercount">1</p></div><button id="nextpage"><i class="fa-solid fa-arrow-right"></i></button></div>
-                    <div class="search"><input id="searchinput" type="text"><div class="icon"><i id="searchicon" class="fa-solid fa-magnifying-glass"></i></div></div>
+                    <div class="pages" id="pages"><p id="pag">Pág:</p><button id="previouspage"><i class="fa-solid fa-arrow-left"></i></button><div class="pagenumber"><p id="pagenumbercount">1</p></div><button id="nextpage"><i class="fa-solid fa-arrow-right"></i></button></div>
+                    <div class="search" id="search"><input id="searchinput" type="text"><div class="icon"><i id="searchicon" class="fa-solid fa-magnifying-glass"></i></div></div>
                 </div><!--menu top content-->
                 <table border="1" style="margin-bottom:10px;">
                 <thead>
@@ -88,13 +89,36 @@
                     <th>AÇÕES</th>
                     </tr>
                 </thead>
-                <tbody id="resultado">
-                   
-                    <tr id="nenhum-aluno">
-                        <td colspan="7">Nenhum aluno encontrado. <a href="#">Cadastre!</a></td>
-                    </tr>
-                 
-                </tbody>
+                <tbody id="tbodyalunoson">
+    @forelse ($pagamentos as $pagamento)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $pagamento->aluno->pessoa->nome ?? 'Sem Dados' }}</td>
+            <td>{{ $pagamento->aluno->pessoa->endereco ?? 'Sem Dados' }}</td>
+            <td>{{ $pagamento->aluno->pessoa->telefone ?? 'Sem Dados' }}</td>
+            <td>{{ \Carbon\Carbon::parse($pagamento->data_vencimento)->format('d/m/Y') ?? 'Sem Dados' }}</td>
+            <td><h4 class="pendente">{{$pendente ?? 'Sem Dados' }}</h4></td>
+            <td>
+                <div class="boxbuttons">
+                    <button class="ficha" title="VER FICHA" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
+                        <i id="btnacticon" class="fa-solid fa-eye"></i>
+                    </button>
+                    <button class="editar" title="EDITAR ALUNO" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
+                        <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="desativar" title="DESATIVAR ALUNO" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
+                        <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    @empty
+        <tr>
+            <td colspan="5">Nenhum pagamento pendente encontrado. <a href="{{ route('alunos.criar') }}">Cadastrar aluno</a>.</td>
+        </tr>
+    @endforelse
+</tbody>
+
             </table>
         
         </div><!--list-->

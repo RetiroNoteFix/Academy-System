@@ -43,7 +43,6 @@ const rgInput = document.getElementById('rg');
 const cpfInput = document.getElementById('cpf');
 const telefoneInput = document.getElementById('telefone');
 const telefoneFamiliaInput = document.getElementById('telefone_familia');
-var idade = document.getElementById("idade")
 const inputValor = document.getElementById('valor');
 var btnback = document.getElementById("btnback");
 
@@ -65,18 +64,7 @@ inputValor.addEventListener('input', function (event) {
   inputValor.value = `R$ ${value}`;
 });
 
-idade.addEventListener('input', function (event) {
-    const input = event.target;
-    let valor = input.value.replace(/\D/g, ''); 
-    if (valor) {
-        input.value = `${valor} Anos`;
-    } else {
-        input.value = '';
-    }
 
-    const posicaoCursor = valor.length;
-    input.setSelectionRange(posicaoCursor, posicaoCursor);
-});
 
     telefoneFamiliaInput.addEventListener('input', function(event) {
         let value = this.value.replace(/\D/g, '');
@@ -785,3 +773,6 @@ const userIcon = document.getElementById('usericon');
     });
 
 loadTheme();
+window.toggleLesaoInput = toggleLesaoInput;
+window.togglecolunaInput = togglecolunaInput;
+window.toggledoencaInput = toggledoencaInput;

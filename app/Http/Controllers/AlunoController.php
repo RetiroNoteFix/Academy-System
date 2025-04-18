@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
 use App\Models\Aluno;
+use App\Models\Pagamento;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
@@ -13,6 +14,7 @@ class AlunoController extends Controller
 {
     public function cadastrar(Request $request)
     {
+        dd($request);
             DB::beginTransaction();
             try {
                 // Validação dos dados
@@ -23,8 +25,7 @@ class AlunoController extends Controller
                     'rg' => 'nullable|string|max:14',
                     'email' => 'nullable|email',
                     'telefone' => 'nullable|string|max:20',
-                    'telefone_familia' => 'nullable|string|max:20',
-                    'data_nascimento' => 'nullable|date',
+                    'telefone_familiar' => 'nullable|string|max:20',
                     'rua' => 'nullable|string|max:50',
                     'numero' => 'nullable|string|max:50',
                     'complemento' => 'nullable|string|max:50',
@@ -32,6 +33,8 @@ class AlunoController extends Controller
                     'cidade' => 'nullable|string|max:50',
                     'estado' => 'nullable|string|max:50',
                     'cep' => 'nullable|string|max:50',
+                    'data_nascimento' => 'nullable|date',
+                  
                     // Dados aluno
                     'tipo_sanguineo' => 'nullable|string|max:50',
                     'modalidade_atual' => 'nullable|string|max:50',
@@ -197,6 +200,28 @@ class AlunoController extends Controller
         return view('alunos.index', compact('alunos', 'alunosoff', 'usuarioNome'));
 }
 
+public function listarPendentes()
+{
+    $usuarioNome = Session::get('usuario_nome');
+
+    $pagamentos = Pagamento::where('situacao', 'pendente')->get();
+    foreach ($pagamentos as $pagamento){
+
+        $pendente = $pagamento->situacao;
+        
+        if ($pendente === "pendente"){
+            $pendente = "PENDENTE";
+        }
+        else {
+            $pendente = $pagamentos->situacao;
+        }
+
+    }
+
+
+    return view('inicio.index', compact('pagamentos', 'usuarioNome', 'pendente'));
+}
+
 public function pessoa()
 {
     return $this->belongsTo(Pessoa::class, 'idPessoa', 'idPessoa');
@@ -308,6 +333,7 @@ public function visualizar(Request $request, $id)
             'pernas' => $aluno->medidaPernas,
             'panturrilha' => $aluno->medidaPanturrilha,
             'observacoes' => $aluno->observacoes,
+            'data_pagamento' => $aluno->data_pagamento,
           
             
 

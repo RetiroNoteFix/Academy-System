@@ -12,26 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pagamentos', function (Blueprint $table) {
-            $table->id('idPagamento');
-            $table->unsignedBigInteger('idAluno')->nullable();
-            $table->foreign('idAluno')->references('idAluno')->on('alunos')->onDelete('cascade');
-            $table->string('planoAluno', 50)->nullable();
-            $table->date('dataReferencia')->nullable();
+            $table->id('id');
+            $table->unsignedBigInteger('id_aluno')->nullable();
+            $table->foreign('id_aluno')->references('id')->on('alunos')->onDelete('cascade');
+            $table->date('data_pagamento')->nullable();
+            $table->string('plano_aluno', 50)->nullable();
             $table->decimal('valor', 10, 2)->nullable();
-            $table->date('dataPagamento')->nullable();
-            $table->date('dataVencimento')->nullable();
-            $table->string('situacao', 50)->nullable();
-        
+            $table->date('data_vencimento')->nullable();
+            $table->enum('situacao', ['pago', 'pendente', 'pausado'])->default('pendente');
+            $table->date('pausado_em')->nullable();
+            $table->string('ativado_em', 50)->nullable();
             $table->timestamps();
         });
         
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        //
+        
     }
 };

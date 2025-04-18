@@ -95,10 +95,6 @@
                     <label for="data_nascimento">DATA DE NASCIMENTO:</label>
                     <input type="date" id="data_nascimento" name="data_nascimento" maxlength="10" >
                 </div>
-                <div class="form-group">
-                    <label for="idade">IDADE:</label>
-                    <input type="text" id="idade" name="idade" placeholder="Idade" >
-                </div>
             </div><!--compact-->
             <div class="compact">
                 <div class="form-group">
@@ -117,7 +113,7 @@
                 </div>
                 <div class="form-group">
                     <label for="telefone_familia">TELEFONE FAMILIAR:</label>
-                    <input type="tel" id="telefone_familia"  maxlength="15" name="telefone_familia" placeholder="(00) 00000-0000" >
+                    <input type="tel" id="telefone_familia"  maxlength="15" name="telefone_familiar" placeholder="(00) 00000-0000" >
                 </div>
             </div><!--compact-->
                 <div class="form-group">
@@ -132,12 +128,12 @@
             </div>
             <div class="compact">
                 <div class="form-group">
-                    <label for="cep">CEP:</label>
-                    <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9">
+                    <label for="endereco[cep]">CEP:</label>
+                    <input type="text" id="cep" name="endereco[cep]" placeholder="00000-000" maxlength="9">
                 </div>
                 <div class="form-group">
-                    <label for="estado">ESTADO:</label>
-                    <select id="estado" name="estado" >
+                    <label for="endereco[estado]">ESTADO:</label>
+                    <select id="estado" name="endereco[estado]" >
                         <option value="">Selecione seu estado</option>
                         <option value="AC">Acre (AC)</option>
                         <option value="AL">Alagoas (AL)</option>
@@ -171,26 +167,26 @@
             </div><!--compact-->
             <div class="compact">
                 <div class="form-group">
-                    <label for="rua">RUA:</label>
-                    <input type="text" id="rua" name="rua" placeholder="Digite sua rua">
+                    <label for="endereco[rua]">RUA:</label>
+                    <input type="text" id="rua" name="endereco[rua]" placeholder="Digite sua rua">
                 </div>
                 <div class="form-group">
-                    <label for="bairro">BAIRRO:</label>
-                    <input type="text" id="bairro" name="bairro" placeholder="Digite seu bairro" >
+                    <label for="endereco[bairro]">BAIRRO:</label>
+                    <input type="text" id="bairro" name="endereco[bairro]" placeholder="Digite seu bairro" >
                 </div>
                 <div class="form-group">
-                    <label for="cidade">CIDADE:</label>
-                    <input type="text" id="cidade" name="cidade" placeholder="Digite sua cidade" value="RETIROLÂNDIA-BA" >
+                    <label for="endereco[cidade]">CIDADE:</label>
+                    <input type="text" id="cidade" name="endereco[cidade]" placeholder="Digite sua cidade" value="RETIROLÂNDIA-BA" >
                 </div>
             </div><!--compact-->
             <div class="compact">
                 <div class="form-group">
-                    <label for="numero">Nº:</label>
-                    <input type="text" id="numero" name="numero" placeholder="Número da residência" >
+                    <label for="endereco[numero]">Nº:</label>
+                    <input type="text" id="numero" name="endereco[numero]" placeholder="Número da residência" >
                 </div>
                 <div class="form-group">
-                    <label for="complemento">COMPLEMENTO:</label>
-                    <input type="text" id="complemento" name="complemento" placeholder="Apartamento, bloco, sala (opcional)">
+                    <label for="endereco[complemento]">COMPLEMENTO:</label>
+                    <input type="text" id="complemento" name="endereco[complemento]" placeholder="Apartamento, bloco, sala (opcional)">
                 </div>
             </div><!--compact-->
             <div class="form-titulo">
@@ -203,16 +199,16 @@
             <div class="compact">
             
             <div class="form-group">
-                <label for="dataPagamento">DATA DE PAGAMENTO:</label>
-                <input type="date" id="dataPagamento" name="dataPagamento" required>
+                <label for="data_pagamento">DATA DE PAGAMENTO:</label>
+                <input type="date" id="dataPagamento" name="data_pagamento" required>
             </div>
             <div class="form-group">
                 <label for="plano">Plano:</label>
                 <select id="plano" name="plano" required>
                     <option value="">Selecione</option>
-                    <option value="Mensal">Mensal</option>
-                    <option value="Semestral">Semestral</option>
-                    <option value="Anual">Anual</option>
+                    <option value="mensal">Mensal</option>
+                    <option value="semestral">Semestral</option>
+                    <option value="anual">Anual</option>
                 </select>
             </div>
             </div><!--compact-->
@@ -436,20 +432,20 @@
         <h4 id="h5form">HISTÓRICO E OBJETIVO NA ACADEMIA</h4>
     </div>
         <div class="form-group">
-            <label for="jaFez_modalidade">QUE MODALIDADE FAZ OU JÁ FEZ:</label>
-            <input type="text" id="jaFez_modalidade" name="jaFez_modalidade" placeholder="Descreva quais modalidades já realizou" >
+            <label for="modalidade_anterior">QUE MODALIDADE FAZ OU JÁ FEZ:</label>
+            <input type="text" id="jaFez_modalidade" name="modalidade_anterior" placeholder="Descreva quais modalidades já realizou" >
         </div>
         <div class="form-group" style="display:none;">
             <label for="modalidade_atual">QUE MODALIDADE PRATICA ATUALMENTE:</label>
-            <input type="text" value="Musculação" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
+            <input type="text" value="musculacao" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
         </div>
         <div class="form-group">
             <label for="objetivo_atividade_fisica">QUAL O SEU OBJETIVO:</label>
             <input type="text" id="objetivo_atividade_fisica" name="objetivo_atividade_fisica" placeholder="Descreva qual seu objetivo com a atividade física" >
         </div>
         <div class="form-group">
-            <label for="soubeDa_academia">COMO SOUBE DA ACADEMIA:</label>
-            <input type="text" id="soubeDa_academia" name="soubeDa_academia" placeholder="Como conheceu nossa academia?" >
+            <label for="como_soube_da_academia">COMO SOUBE DA ACADEMIA:</label>
+            <input type="text" id="soubeDa_academia" name="como_soube_da_academia" placeholder="Como conheceu nossa academia?" >
         </div>
         <div class="form-titulo">
             <h5>DADOS ANTROPOMÉTRICOS E DE SAÚDE</h5>
@@ -492,8 +488,8 @@
         </div>
         <div class="compact">
         <div class="form-group">
-            <label for="fumar">FUMA:</label>
-            <select class="smallinput" id="fumar" name="fumar" >
+            <label for="fuma">FUMA:</label>
+            <select class="smallinput" id="fumar" name="fuma" >
             <option value="" disabled selected>Selecione</option>
             <option value="Sim">Sim</option>
             <option value="Não">Não</option>
@@ -512,8 +508,8 @@
     </div><!--compact-->
     <div class="compact">
         <div class="form-group">
-            <label for="bebida_alcoolica">CONSOME ÁLCOOL:</label>
-            <select  id="bebida_alcoolica" name="bebida_alcoolica" >
+            <label for="usa_bebida_alcoolica">CONSOME ÁLCOOL:</label>
+            <select  id="bebida_alcoolica" name="usa_bebida_alcoolica" >
             <option value="" disabled selected>Selecione</option>
             <option value="Sim">Sim</option>
             <option value="Não">Não</option>
@@ -536,43 +532,43 @@
 <table id="tabela-medidas">
 <tr id="linha-altura">
     <th id="th-torax">ALTURA:</th>
-    <td class="input-coluna" id="td-altura"><input id="input-altura" type="text" name="altura" placeholder="Metros"></td>
+    <td class="input-coluna" id="td-altura"><input id="input-altura" type="text" name="medida[altura]" placeholder="Metros"></td>
 </tr>
 <tr id="linha-torax">
     <th id="th-torax">TÓRAX:</th>
-    <td class="input-coluna" id="td-torax"><input id="input-torax" type="text" name="torax" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-torax"><input id="input-torax" type="text" name="medida[torax]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-cintura">
     <th id="th-cintura">CINTURA:</th>
-    <td class="input-coluna" id="td-cintura"><input id="input-cintura" type="text" name="cintura" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-cintura"><input id="input-cintura" type="text" name="medida[cintura]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-abdome">
     <th id="th-abdome">ABDOME:</th>
-    <td class="input-coluna" id="td-abdome"><input id="input-abdome" type="text" name="abdome" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-abdome"><input id="input-abdome" type="text" name="medida[abdome]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-quadril">
     <th id="th-quadril">QUADRIL:</th>
-    <td class="input-coluna" id="td-quadril"><input id="input-quadril" type="text" name="quadril" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-quadril"><input id="input-quadril" type="text" name="medida[quadril]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-bracos">
     <th id="th-bracos">BRAÇOS (direito e esquerdo):</th>
-    <td class="input-coluna" id="td-bracos"><input id="input-bracos" type="text" name="bracos" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-bracos"><input id="input-bracos" type="text" name="medida[bracos]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-antebracos">
     <th id="th-antebracos">ANTEBRAÇOS (direito e esquerdo):</th>
-    <td class="input-coluna" id="td-antebracos"><input id="input-antebracos" type="text" name="antebracos" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-antebracos"><input id="input-antebracos" type="text" name="medida[antebracos]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-pernas">
     <th id="th-pernas">PERNA (direita e esquerda):</th>
-    <td class="input-coluna" id="td-pernas"><input id="input-pernas" type="text" name="pernas" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-pernas"><input id="input-pernas" type="text" name="medida[pernas]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-panturrilha">
     <th id="th-panturrilha">PANTURRILHA (direita e esquerda):</th>
-    <td class="input-coluna" id="td-panturrilha"><input id="input-panturrilha" type="text" name="panturrilha" placeholder="Centímetros"></td>
+    <td class="input-coluna" id="td-panturrilha"><input id="input-panturrilha" type="text" name="medida[panturrilha]" placeholder="Centímetros"></td>
 </tr>
 <tr id="linha-observacoes">
     <th id="th-observacoes">OBSERVAÇÕES:</th>
-    <td class="input-coluna" id="td-observacoes"><input id="input-observacoes" type="text" name="obsmedida" placeholder="Observações"></td>
+    <td class="input-coluna" id="td-observacoes"><input id="input-observacoes" type="text" name="medida[obs]" placeholder="Observações"></td>
 </tr>
 </table>
        </div><!--ladodireitoform-->

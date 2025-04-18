@@ -9,94 +9,68 @@ class Aluno extends Model
 {
     use HasFactory;
 
-    /**
-     * Nome da tabela associada ao model.
-     *
-     * @var string
-     */
     protected $table = 'alunos';
-
-    /**
-     * Nome da chave primária.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'idAluno';
-
-    /**
-     * Indica se os IDs são autoincrementáveis.
-     *
-     * @var bool
-     */
+    protected $primaryKey = 'id';
     public $incrementing = true;
 
-    /**
-     * Atributos que podem ser preenchidos em massa.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'idPessoa',
-        'profissao',
-        'escolaridade',
-        'estadoCivil',
-        'tipoSanguineo',
+        'id',
+        //// Dados gerais do aluno (perfil físico e objetivo)
+        'tipo_sanguineo',
         'modalidade',
-        'comoSoubeAcademia',
+        'como_soube_da_academia',
         'objetivo',
-        'idade',
+        // Informações físicas e hábitos
         'peso',
         'altura',
         'fuma',
-        'fazDieta',
-        'usaBebidaAlcoolica',
+        'faz_dieta',
+        'usa_bebida_alcoolica',
         'sedentario',
-        'modalidadeAnterior',
-        'temVarizes',
-        'pressaoArterial',
+        'modalidade_anterior',
+         // Condições médicas e saúde geral
+        'tem_varizes',
+        'pressao_arterial',
         'cirurgia',
-        'dormeBem',
-        'lesaoArticular',
-        'problemaColuna',
-        'tempoMedico',
+        'dorme_bem',
+        'lesao_articular',
+        'problema_coluna',
+        'tempo_medico',
         'medicamento',
-        'problemaSaude',
-        'parqProblemaCoracao',
-        'parqDorPeitoComAtividade',
-        'parqDorPeitoSemAtividade',
-        'parqEquilibrio',
-        'parqProblemaOsseo',
-        'parqReceitaMedica',
-        'parqRazao',
+        'problema_saude',
+        //parq
+        'parq_problema_coracao',
+        'parq_dor_peito_com_atividade',
+        'parq_dor_peito_sem_atividade',
+        'parq_equilibrio',
+        'parq_problema_osseo',
+        'parq_receita_medica',
+        'parq_razao',
+        // histórico familiar e doença
         'obesidade',
         'diabetes',
-        'colesterolElevado',
+        'colesterol_elevado',
         'infarto',
-        'doencaCardiaca',
+        'doenca_cardiaca',
         'derrame',
-        'pressaoAlta',
-        'medidaTorax',
-        'medidaCintura',
-        'medidaAbdome',
-        'medidaQuadril',
-        'medidaBracos',
-        'medidaAntebracos',
-        'medidaPanturrilha',
-        'medidaPernas',
+        // medidas
+        'medida_torax',
+        'medida_cintura',
+        'medida_abdome',
+        'medida_quadril',
+        'medida_bracos',
+        'medida_antebracos',
+        'medida_panturrilha',
+        'medida_pernas',
+        // obs
         'observacoes',
-        'percentualGordura',
-        'imc',
+        // pagamento
         'valor',
         'data_pagamento',
         'situacao',
-        'plano'
+        'plano',
     ];
 
-    /**
-     * Atributos que devem ser convertidos para tipos nativos.
-     *
-     * @var array
-     */
     protected $casts = [
         'valor' => 'decimal:2',
         'data_pagamento' => 'date',
@@ -104,60 +78,21 @@ class Aluno extends Model
         'plano' => 'string'
     ];
 
-    /**
-     * Relacionamento com a tabela pessoas.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class, 'idPessoa', 'idPessoa');
+        return $this->belongsTo(Pessoa::class, 'id_pessoa', 'id');
     }
-
-    /**
-     * Escopo para alunos ativos.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+    
     public function scopeAtivos($query)
     {
-        return $query->where('situacao', 'Ativo');
+        return $query->where('situacao', 'ativo');
     }
 
-    /**
-     * Escopo para alunos inativos.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function scopeInativos($query)
     {
-        return $query->where('situacao', 'Inativo');
+        return $query->where('situacao', 'inativo');
     }
 
-    /**
-     * Calcula o IMC do aluno.
-     *
-     * @return float|null
-     */
-    public function calcularIMC()
-    {
-        if (!$this->peso || !$this->altura) {
-            return null;
-        }
-
-        $alturaMetros = str_replace(',', '.', $this->altura);
-        $pesoKg = str_replace(',', '.', $this->peso);
-
-        return round($pesoKg / ($alturaMetros * $alturaMetros), 2);
-    }
-
-    /**
-     * Verifica se o aluno está com pagamento em dia.
-     *
-     * @return bool
-     */
     public function pagamentoEmDia()
     {
         if (!$this->data_pagamento) {
