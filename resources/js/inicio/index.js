@@ -485,4 +485,15 @@ fichabtn.forEach(ficha => {
       }
     });
 
+    const userjoin = document.getElementById('userjoin');
+    const hour = new Date().getHours();
+  
+    if (hour >= 5 && hour < 12) {
+      userjoin.textContent = 'Bom dia!';
+    } else if (hour >= 12 && hour < 18) {
+      userjoin.textContent = 'Boa tarde!';
+    } else {
+      userjoin.textContent = 'Boa noite!';
+    }
+
 loadTheme();
