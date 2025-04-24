@@ -200,27 +200,7 @@ class AlunoController extends Controller
         return view('alunos.index', compact('alunos', 'alunosoff', 'usuarioNome'));
 }
 
-public function listarPendentes()
-{
-    $usuarioNome = Session::get('usuario_nome');
 
-    $pagamentos = Pagamento::where('situacao', 'pendente')->get();
-    foreach ($pagamentos as $pagamento){
-
-        $pendente = $pagamento->situacao;
-        
-        if ($pendente === "pendente"){
-            $pendente = "PENDENTE";
-        }
-        else {
-            $pendente = $pagamentos->situacao;
-        }
-
-    }
-
-
-    return view('inicio.index', compact('pagamentos', 'usuarioNome', 'pendente'));
-}
 
 public function pessoa()
 {
@@ -274,75 +254,23 @@ public function apagar($id)
 public function visualizar(Request $request, $id)
 {
     try {
-        // Buscar aluno pelo ID, incluindo os dados da pessoa relacionada
-        $aluno = Aluno::with('pessoa')->findOrFail($id);  // A relação 'pessoa' deve estar definida no modelo Aluno
+     
+        $aluno = Aluno::with('pessoa')->findOrFail($id); 
         
-        // Retornar os dados combinados de Aluno e Pessoa
+        
         return response()->json([
-            // dados pessoa
-            'idaluno' => $aluno->idAluno,
+
+            'idaluno' => $aluno->id_aluno,
             'nome' => $aluno->pessoa->nome,
             'cpf' => $aluno->pessoa->cpf,
             'rg' => $aluno->pessoa->rg,
             'email' => $aluno->pessoa->email,
             'telefone' => $aluno->pessoa->telefone,
-            'telefone_familia' => $aluno->pessoa->telefone_familiar,
-            'data_nascimento' => $aluno->pessoa->dataNascimento,
+            'telefone_familiar' => $aluno->pessoa->telefone_familiar,
+            
+            'data_nascimento' => $dataFormatada = \Carbon\Carbon::parse($aluno->pessoa->data_nascimento)->format('d/m/Y'),
             'endereco' => $aluno->pessoa->endereco,
-            'idade' => $aluno->idade,
-            'email' => $aluno->pessoa->email,
-            // dados aluno
-            'cirurgia' => $aluno->cirurgia,
-            'dorme_bem' => $aluno->dormeBem,
-            'lesao_detalhes_input' => $aluno->lesaoArticular,
-            'coluna_detalhes_input' => $aluno->problemaColuna,
-            'tempo_sem_medico' => $aluno->tempoMedico,
-            'uso_medicamento' => $aluno->medicamento,
-            'problema_saude' => $aluno->problemaSaude,
-            'varizes' => $aluno->temVarizes,
-            'infarto' => $aluno->infarto,
-            'doenca_detalhes_input' => $aluno->doencaCardiaca,
-            'derrame' => $aluno->derrame,
-            'diabetes' => $aluno->diabetes,
-            'obesidade' => $aluno->obesidade,
-            'colesterol_elevado' => $aluno->colesterolElevado,
-            'input_sim1' => $aluno->parqProblemaCoracao,
-            'input_sim2' => $aluno->parqDorPeitoComAtividade,
-            'input_sim3' => $aluno->parqdorPeitoSemAtividade,
-            'input_sim4' => $aluno->parqEquilibrio,
-            'input_sim5' => $aluno->parqProblemaOsseo,
-            'input_sim6' => $aluno->parqReceitaMedica,
-            'input_sim7' => $aluno->parqRazao,
-            'modalidade_atual' => $aluno->modalidade,
-            'objetivo_atividade_fisica' => $aluno->objetivo,
-            'soubeDa_academia' => $aluno->comoSoubeAcademia,
-            'peso' => $aluno->peso,
-            'tipo_sanguineo' => $aluno->tipoSanguineo,
-            'pressao_arterial' => $aluno->pressaoArterial,
-            'fumar' => $aluno->fuma,
-            'faz_dieta' => $aluno->fazDieta,
-            'bebida_alcoolica' => $aluno->usaBebidaAlcoolica,
-            'sedentario' => $aluno->sedentario,
-            'altura' => $aluno->altura,
-            'torax' => $aluno->medidaTorax,
-            'cintura' => $aluno->medidaCintura,
-            'abdome' => $aluno->medidaAbdome,
-            'quadril' => $aluno->medidaQuadril,
-            'bracos' => $aluno->medidaBracos,
-            'antebracos' => $aluno->medidaAntebracos,
-            'pernas' => $aluno->medidaPernas,
-            'panturrilha' => $aluno->medidaPanturrilha,
-            'observacoes' => $aluno->observacoes,
-            'data_pagamento' => $aluno->data_pagamento,
           
-            
-
-            
-
-            
-
-
-            'situacao' => $aluno->situacao,
             
         ]);
     } catch (\Exception $e) {

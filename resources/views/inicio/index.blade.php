@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css')}}">
-   
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
         <a class="nostyle" href="{{route('inicio.index')}}"><div class="opt" id="optInicio">
             <i data-opticon="true" id="opticon" class="fa-solid fa-house"></i> <p id="optname">Início</p>
         </div></a><!--optInicio-->
-        <a class="nostyle" href="{{route('inicio.index')}}"><div  id="optInicioN">
+        <a class="nostyle" href="{{route('inicio.index')}}"><div class="opt" id="optInicioN">
             <i data-opticon="true" id="opticon4" class="fa-solid fa-house"></i> <p id="optname4">Início</p>
         </div></a><!--optInicioN-->
         <a class="nostyle" href="{{route('alunos.index')}}"><div class="opt" id="optAlunos">
@@ -100,13 +100,13 @@
             <td><h4 class="pendente">{{$pendente ?? 'Sem Dados' }}</h4></td>
             <td>
                 <div class="boxbuttons">
-                    <button class="ficha" title="VER FICHA" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
-                        <i id="btnacticon" class="fa-solid fa-eye"></i>
+                    <button class="ficha" title="ATUALIZAR PAGAMENTO" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
+                    <i id="btnacticon" class="fa-solid fa-circle-check"></i>
                     </button>
-                    <button class="editar" title="EDITAR ALUNO" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
-                        <i id="btnacticon" class="fa-solid fa-pen-to-square"></i>
+                    <button class="msg" title="ENVIAR MENSAGEM" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
+                    <i id="btnacticon" class="fa-solid fa-comment"></i>
                     </button>
-                    <button class="desativar" title="DESATIVAR ALUNO" data-id="{{ $pagamento->aluno->idAluno ?? 'N/A' }}">
+                    <button class="desativar" title="IGNORAR COBRANÇA" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
                         <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
                     </button>
                 </div>
@@ -135,8 +135,77 @@
         </div>
     </div>
     <div id="popupficha" class="popupficha">
-        <div class="conteudo-ficha">
+        <div class="conteudoficha2" id="conteudofichapgt">
+        <div class="form-titulo" id="titulopopup">
+                <h4 id="h4titulopgt">NOTIFICAÇÃO DE COBRANÇA</h4>  <div class="btnamnese">
+                        <button class="addaluno" id="close"  onclick="fecharAnamnese()">
+                            <i class="fa-solid fa-xmark"></i>Fechar</button>
+                        </div>
+            </div>
+            <div class="conteudo-anamnese" id='conteudo-anamnese2'>
+    <div class="ladoesquerdoformpgt">
+        <div class="compact">
+            <h5 class="h5fichapgt" id="nomepgt">NOME COMPLETO: CARREGANDO...</h5>
+            </div><!--compact-->
+            <div class="compact">
+            <h5 class="h5fichapgt" id="telefonepgt">TELEFONE: CARREGANDO...</h5>
+            <h5 class="h5fichapgt" id="telefone_familiarpgt">TELEFONE FAMILIAR: CARREGANDO...</h5>    
+        </div><!--compact-->
+            <div class="barrinha"></div>
+           
+            <div class="compact">
+            <h5 class="h5fichapgt" id="ruapgt">RUA: CARREGANDO...</h5>
+            <h5 class="h5fichapgt" id="numeropgt">NÚMERO: CARREGANDO...</h5>
+            </div><!--compact-->
+            <div class="compact">
+            <h5 class="h5fichapgt" id="complementopgt">COMPLEMENTO: CARREGANDO...</h5>
+            <h5 class="h5fichapgt" id="bairropgt">BAIRRO: CARREGANDO...</h5>
+            </div><!--compact-->
+            <div class="compact">
+            <h5 class="h5fichapgt" id="cidadepgt">CIDADE: CARREGANDO...</h5>
+            <h5 class="h5fichapgt" id="ceppgt">CEP: CARREGANDO...</h5>
+            </div><!--compact-->
+            <div class="barrinha" id="barrinha"></div>
+      
+        <div class="compact">
+        <h5 class="h5fichapgt" id="diapgt">DIA DE PAGAMENTO: CARGNDO...</h5>
+        <h5 class="h5fichapgt" id="planopgt">PLANO ALUNO: CARREGANDO...</h5>
+        </div><!--compact-->
+        <div class="barrinha" id="barrinha"></div>
+        <div class="boxpgt">
+<form id="formpgt" action="" method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DATA DE VENCIMENTO</th>
+                        <th>VALOR COBRADO</th>
+                        <th>SITUAÇÃO DO PAGAMENTO</th>
+                        <th id="thacoespgt">AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodypagamentos">
+                  <td class="pgtmes" id="data_vencimento">CARREGANDO...</td>
+            <td id="valor">CARREGANDO...</td>
+            <td class="tdstatus">
+                <span class="status"><input type="text" id="situacao" value="CARREGANDO..."></span>
+            </td>
+            <td class="actions">
+        
+                <button class="atualizarpgt" id="save" onclick="editarPagamento(${pagamento.id})">Atualizar</button>
+        
+                </td>
+                </tbody>
+            </table>
+            </form>
         </div>
+          
+        </div><!--boxpgt-->
+        </div><!--ladoesquerdoform-->
+        </div>
+        </div>
+    </div>
+        </div>
+
     </div>
     <div id="overlay" class="overlay"></div>
 </body>

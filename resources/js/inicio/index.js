@@ -410,23 +410,200 @@ document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
 });
 });
-fichabtn.forEach(ficha => {
-    ficha.addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-    });
+document.querySelectorAll('.ficha').forEach(button => {
+  button.addEventListener('click', function() {
+      const el = document.getElementById('conteudofichapgt');
+     
+      el.scrollTop = 0;
+          
+       
+      const alunoIdFicha = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
+      console.log(alunoIdFicha);
+     
+      document.getElementById('popupficha').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('fechar').style.display = "block";
+      document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
+ 
+
+      // Realiza a requisição para buscar os dados do aluno
+      fetch(`/inicio/pendentes/${alunoIdFicha}`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          },
+      })
+      .then(response => response.json())
     
+      .then(data => {
+          console.log(data);
+          if (data.error) {
+              document.getElementById('popupficha').querySelector('p').textContent = data.error;
+              document.getElementById('fechar').style.display = "block";
+              document.getElementById('overlay').style.display = 'block';
+          } else {
+              const el = document.getElementById('conteudofichapgt');
+   
     
-    document.getElementById('fechar').addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+    function calcularIdade(dataNascStr) {
+      const partes = dataNascStr.split('/'); // ["21", "04", "1998"]
+      const dia = parseInt(partes[0], 10);
+      const mes = parseInt(partes[1], 10) - 1; // mês começa do 0 (jan = 0)
+      const ano = parseInt(partes[2], 10);
+  
+      const dataNasc = new Date(ano, mes, dia);
+      const hoje = new Date();
+  
+      let idade = hoje.getFullYear() - dataNasc.getFullYear();
+      const m = hoje.getMonth() - dataNasc.getMonth();
+  
+      if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) {
+          idade--;
+      }
+  
+      return idade;
+  }
+
+  const idade = calcularIdade(data.data_nascimento);
+
+              document.getElementById('nomepgt').textContent = `NOME COMPLETO: ${data.nome ?? 'Sem dados'}`;
+              document.getElementById('ruapgt').textContent = `RUA: ${data.rua ?? 'Sem dados'}`;
+              document.getElementById('complementopgt').textContent = `COMPLEMENTO: ${data.complemento ?? 'Sem dados'}`;
+              document.getElementById('cidadepgt').textContent = `CIDADE: ${data.cidade ?? 'Sem dados'}`;
+              document.getElementById('numeropgt').textContent = `NUMERO: ${data.numero ?? 'Sem dados'}`;
+              document.getElementById('bairropgt').textContent = `BAIRRO: ${data.bairro ?? 'Sem dados'}`;
+              document.getElementById('ceppgt').textContent = `CEP: ${data.cep ?? 'Sem dados'}`;
+              document.getElementById('telefonepgt').textContent = `TELEFONE: ${data.telefone ?? 'Sem dados'}`;
+              document.getElementById('telefone_familiarpgt').textContent = `TELEFONE FAMILIAR: ${data.telefone_familiar ?? 'Sem dados'}`;
+              document.getElementById('data_vencimento').textContent = `${data.data_vencimento ?? 'Sem dados'}`;
+              document.getElementById('valor').textContent = `R$${data.valor ?? 'Sem dados'}`;
+              document.getElementById('planopgt').textContent = `PLANO: ${data.plano_aluno ?? 'Sem dados'}`;
+              document.getElementById('diapgt').textContent = `DIA DE PAGAMENTO: ${data.data_pagamento ?? 'Sem dados'}`;
+              document.getElementById('situacao').value = `${data.situacao ?? 'Sem dados'}`;
+              // estilos
+              document.getElementById('nomepgt').style.fontWeight = 'bold';
+              document.getElementById('ruapgt').style.fontWeight = 'bold';
+              document.getElementById('telefonepgt').style.fontWeight = 'bold';
+              document.getElementById('planopgt').style.fontWeight = 'bold';
+              document.getElementById('situacao').style.color = 'red';
+              document.getElementById('diapgt').style.fontWeight = "bold";
+            
+          }
+      })
+      .catch(error => {
+          console.error('Erro ao buscar dados do aluno:', error);
+          document.getElementById('popupficha').querySelector('p').textContent = "Ocorreu um erro ao visualizar os dados."; 
+          document.getElementById('confirmar').style.display = 'none';  
+          document.getElementById('fechar').textContent = 'Fechar'; 
+     
+      });
+  
+  });
+
+});
+
+
+
+
+
+
+const atualizar = document.getElementById("save");
+
+atualizar.addEventListener('click', function (e) {
+    e.preventDefault(); // Impede que o botão envie o formulário de forma tradicional
+
+    // Aqui você coleta os dados do formulário
+    const form = document.getElementById('formpgt');
+
+    // Opcional: se você tiver inputs, pode usar isso
+    const formData = new FormData(form);
+    const dados = {};
+    formData.forEach((value, key) => {
+        dados[key] = value;
     });
-    
-    document.getElementById('confirmar').addEventListener('click', () => {
-    document.getElementById('popupficha').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
+
+    console.log(formData);
+
+    fetch(`/inicio/pendentes/${alunoIdFicha}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(dados) // envia os dados como JSON
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        if (data.error) {
+            document.getElementById('popupficha').querySelector('p').textContent = data.error;
+        } else {
+            // sucesso - exiba algo se quiser
+            document.getElementById('popupficha').querySelector('p').textContent = 'Pagamento atualizado com sucesso.';
+        }
+
+        document.getElementById('fechar').style.display = "block";
+        document.getElementById('overlay').style.display = 'block';
+    })
+    .catch(error => {
+        console.error('Erro ao atualizar:', error);
+        document.getElementById('popupficha').querySelector('p').textContent = "Erro ao enviar dados."; 
+        document.getElementById('fechar').textContent = 'Fechar'; 
     });
-    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // foto de perfil
 
@@ -495,5 +672,10 @@ fichabtn.forEach(ficha => {
     } else {
       userjoin.textContent = 'Boa noite!';
     }
-
+    function fecharAnamnese() {
+      event.preventDefault();
+      document.getElementById('popupficha').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+  }
 loadTheme();
+window.fecharAnamnese = fecharAnamnese;

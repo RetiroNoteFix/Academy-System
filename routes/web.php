@@ -5,7 +5,7 @@ use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\SessionController;
-
+use App\Http\Controllers\PagamentoController;
 
 Route::get('/check-session', [SessionController::class, 'checkSession'])->name('check-session');
 Route::get('/logout', [SessionController::class, 'logout'])->name('logout');
@@ -72,7 +72,7 @@ Route::get('/inicio', function () {
     if (!Session::has('usuario_id')) {
         return redirect()->route('login')->with('error', 'Você precisa estar logado.');
     }
-    $controller = app(AlunoController::class);
+    $controller = app(PagamentoController::class);
     return $controller->listarPendentes();
 })->name('inicio.index');
 
@@ -84,4 +84,5 @@ Route::post('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('al
 Route::post('/alunos/apagar/{id}', [AlunoController::class, 'apagar'])->name('alunos.apagar');
 Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos.editar');
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');
+Route::post('/inicio/pendentes/{id}', [PagamentoController::class, 'visualizarNotificacao'])->name('inicio.pendentes');
 Route::get('/usuarios/visualizar/{id}', [UsuarioController::class, 'visualizar'])->name('usuarios.visualizar');

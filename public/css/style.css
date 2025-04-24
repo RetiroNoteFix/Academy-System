@@ -176,7 +176,7 @@ table th, table td {
     white-space: normal;
 }
 #thactions{
-
+   
     width: 120px;
 
 }
@@ -190,7 +190,7 @@ table th, table td {
     padding: 0;
     padding-bottom: 0;
     width: 150px;
-
+    text-align: center;
 margin: 0;
 }
 .alinharbtn{
@@ -203,12 +203,13 @@ align-items: center;
 line-height: normal;
 }
 .status {
-    padding: 6px 12px;
+    padding: 9px 12px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
 }
 .tdstatus{
+    border: none;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -221,6 +222,9 @@ line-height: normal;
 .status.pendente {
     background-color: #dc3545;
     color: #fff;
+}
+.pendente{
+    color: red;
 }
 table th {
     transition: 0.6s ease;
@@ -635,7 +639,11 @@ table tr:hover {
 #pgtprx:hover{
     background: #228d3b;
 }
-.editar{
+.atualizarpgt{
+    margin-top: 7px;
+    margin-bottom: -5px;
+}
+.editar, .atualizarpgt{
     color: #fff;
     font-weight: 600;
     padding: 2px;
@@ -731,6 +739,10 @@ align-items: center;
     overflow-y: scroll;
    
   }
+.conteudoficha2{
+    max-height: 320px;
+    overflow: hidden;
+}
 .popup-content, .conteudo-apagar {
     text-align: center;
     display: flex;
@@ -812,6 +824,28 @@ align-items: center;
 }
 
 .smallfont{
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 5px;
+    
+}
+.barrinha{
+    width: 100%;
+    height: 1px;
+    margin-bottom: -3px;
+    margin-top: 10px;
+
+}
+
+#barrinha{
+    width: 100%;
+    height: 1px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+
+}
+
+#smallfont{
     font-size: 14px;
     font-weight: 500;
     margin-right: 5px;
@@ -1130,6 +1164,9 @@ gap: 70px;
     max-height: 500px;
     overflow-y: scroll;
 }
+#conteudo-anamnese2{
+    overflow-y: hidden;
+}
 .btnamnese{
     display: flex;
     justify-content: space-between;
@@ -1143,7 +1180,7 @@ gap: 70px;
 #h5form{
     font-size: 22px;
 }
-#h5fichapgt{
+.h5fichapgt{
     font-size: 13px;
     font-weight: 500;
 }
