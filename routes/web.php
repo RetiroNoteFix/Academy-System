@@ -84,5 +84,6 @@ Route::post('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('al
 Route::post('/alunos/apagar/{id}', [AlunoController::class, 'apagar'])->name('alunos.apagar');
 Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos.editar');
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');
-Route::post('/inicio/pendentes/{id}', [PagamentoController::class, 'visualizarNotificacao'])->name('inicio.pendentes');
+Route::post('/inicio/pendentes/{id}/{idaluno}', [PagamentoController::class, 'visualizarNotificacao'])->name('inicio.pendentes');
+Route::post('/inicio/pendentes/atualizar/', [PagamentoController::class, 'atualizarPendente'])->name('inicio.pendentes.atualizar');
 Route::get('/usuarios/visualizar/{id}', [UsuarioController::class, 'visualizar'])->name('usuarios.visualizar');

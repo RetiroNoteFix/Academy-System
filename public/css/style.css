@@ -209,7 +209,8 @@ line-height: normal;
     font-weight: bold;
 }
 .tdstatus{
-    border: none;
+    color: red;
+    padding: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -725,6 +726,22 @@ align-items: center;
     border-radius: 10px;
     z-index: 1000;
 }
+
+.confirmation-question h4 {
+  color: #333; /* Cor padrão para tema claro */
+}
+
+/* Estilo para tema escuro */
+.night .confirmation-question h4,
+.night.confirmation-question h4 {
+  color: #fff; /* Cor branca para tema escuro */
+}
+#h4confimar{
+    font-weight: 500;
+}
+#white{
+    color: #fff;
+}
 #popuplogin{
     background: #000;
     color: red;
@@ -740,7 +757,8 @@ align-items: center;
    
   }
 .conteudoficha2{
-    max-height: 320px;
+    width: 500px;
+    max-height: 315px;
     overflow: hidden;
 }
 .popup-content, .conteudo-apagar {
@@ -813,11 +831,24 @@ align-items: center;
     margin-bottom: 10px;
     height: 30px;
 }
-#confirmareditar, #close3{
+#confirmareditar, #close3, #confirmarpagar, #fecharpagar{
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 10px;
     height: 30px;
+}
+#btnpagar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+#confirmarpagar, #fecharpagar{
+    width: 50px;
+  
+    border: none;
+    border-radius: 5px;
+    color: #fff;
 }
 #save, #save2, #confirmareditar{
     margin-right: 5px;
@@ -851,11 +882,11 @@ align-items: center;
     margin-right: 5px;
     margin-top: 5px;
 }
-#addaluno, #btncadastraraluno, #close, .excluir, #close2, #close3{
+#addaluno, #btncadastraraluno, #close, .excluir, #close2, #close3, #fecharpagar{
     transition: 0.6s ease;
     background: #fd0000;
 }
-#addaluno:hover, #btncadastraraluno:hover,#close:hover, .excluir:hover, #close2:hover, #close3:hover{
+#addaluno:hover, #btncadastraraluno:hover,#close:hover, .excluir:hover, #close2:hover, #close3:hover, #fecharpagar:hover{
     background: #ca0202;
 }
 #optmenutopname, #optmenutopname2{
@@ -892,11 +923,15 @@ align-items: center;
     transition: 0.6s ease;
     background: #258300;
 }
-#alunosoff.alunoson, #anamnesebtn, #save, #pgtpndt, #save2, #confirmareditar{
+#tablepgt{
+    width: 500px;
+}
+#alunosoff.alunoson, #anamnesebtn, #save, #pgtpndt, #save2, #confirmareditar, #confirmarpagar{
+    color: #fff;
     transition: 0.6s ease;
     background: #00a2ff;
 }
-#alunosoff:hover.alunoson, #anamnesebtn:hover, #save:hover, #pgtpndt:hover, #confirmareditar:hover{
+#alunosoff:hover.alunoson, #anamnesebtn:hover, #save:hover, #pgtpndt:hover, #confirmareditar:hover, #confirmarpagar:hover{
     background: #0088d6;
 }
 #alunosoff:hover{
@@ -1189,7 +1224,7 @@ gap: 70px;
     font-weight: 700;
 }
 .boxpgt{
-    width: 500px;
+    width: 200px;
     height: 300px;
    
 }
@@ -1305,6 +1340,21 @@ gap: 70px;
         text-decoration: none;
         
     }
+
+/*modal pagamento*/
+#situacao{
+    padding: 15px;
+    color: red;
+    font-weight: bold;
+}
+
+#valor{
+    background: none;
+    width: 70px;
+    font-weight: bold;
+    
+    margin-left: 16px;
+}
 /*fim login*/
 
 /* Responsividade para telas médias (tablets, entre 481px e 1024px) */

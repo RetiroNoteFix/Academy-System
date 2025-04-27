@@ -100,7 +100,7 @@
             <td><h4 class="pendente">{{$pendente ?? 'Sem Dados' }}</h4></td>
             <td>
                 <div class="boxbuttons">
-                    <button class="ficha" title="ATUALIZAR PAGAMENTO" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
+                    <button class="ficha" title="ATUALIZAR PAGAMENTO" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}" data-idpgt="{{ $pagamento->id ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-circle-check"></i>
                     </button>
                     <button class="msg" title="ENVIAR MENSAGEM" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
@@ -114,7 +114,7 @@
         </tr>
     @empty
         <tr>
-            <td colspan="5">Nenhum pagamento pendente encontrado. <a href="{{ route('alunos.criar') }}">Cadastrar aluno</a>.</td>
+            <td colspan="7">Nenhum pagamento pendente encontrado.</td>
         </tr>
     @endforelse
 </tbody>
@@ -129,9 +129,12 @@
     </footer>
     <div id="popup" class="popup">
         <div class="popup-content">
-            <p>Tem certeza de que deseja ignorar?</p>
-            <button id="confirmar">Sim</button>
-            <button id="fechar">Cancelar</button>
+            <h4 id="h4confimar">Tem certeza?</h4>
+            <div class="boxbtn">
+            <button id="confirmarpagar">Sim</button>
+            <button id="fecharpagar">Não</button>
+            <button id="fechar" style="display: none;" >Cancelar</button>
+            </div>
         </div>
     </div>
     <div id="popupficha" class="popupficha">
@@ -139,74 +142,14 @@
         <div class="form-titulo" id="titulopopup">
                 <h4 id="h4titulopgt">NOTIFICAÇÃO DE COBRANÇA</h4>  <div class="btnamnese">
                         <button class="addaluno" id="close"  onclick="fecharAnamnese()">
-                            <i class="fa-solid fa-xmark"></i>Fechar</button>
+                            Fechar</button>
                         </div>
             </div>
             <div class="conteudo-anamnese" id='conteudo-anamnese2'>
-    <div class="ladoesquerdoformpgt">
-        <div class="compact">
-            <h5 class="h5fichapgt" id="nomepgt">NOME COMPLETO: CARREGANDO...</h5>
-            </div><!--compact-->
-            <div class="compact">
-            <h5 class="h5fichapgt" id="telefonepgt">TELEFONE: CARREGANDO...</h5>
-            <h5 class="h5fichapgt" id="telefone_familiarpgt">TELEFONE FAMILIAR: CARREGANDO...</h5>    
-        </div><!--compact-->
-            <div class="barrinha"></div>
-           
-            <div class="compact">
-            <h5 class="h5fichapgt" id="ruapgt">RUA: CARREGANDO...</h5>
-            <h5 class="h5fichapgt" id="numeropgt">NÚMERO: CARREGANDO...</h5>
-            </div><!--compact-->
-            <div class="compact">
-            <h5 class="h5fichapgt" id="complementopgt">COMPLEMENTO: CARREGANDO...</h5>
-            <h5 class="h5fichapgt" id="bairropgt">BAIRRO: CARREGANDO...</h5>
-            </div><!--compact-->
-            <div class="compact">
-            <h5 class="h5fichapgt" id="cidadepgt">CIDADE: CARREGANDO...</h5>
-            <h5 class="h5fichapgt" id="ceppgt">CEP: CARREGANDO...</h5>
-            </div><!--compact-->
-            <div class="barrinha" id="barrinha"></div>
-      
-        <div class="compact">
-        <h5 class="h5fichapgt" id="diapgt">DIA DE PAGAMENTO: CARGNDO...</h5>
-        <h5 class="h5fichapgt" id="planopgt">PLANO ALUNO: CARREGANDO...</h5>
-        </div><!--compact-->
-        <div class="barrinha" id="barrinha"></div>
-        <div class="boxpgt">
-<form id="formpgt" action="" method="post">
-            <table>
-                <thead>
-                    <tr>
-                        <th>DATA DE VENCIMENTO</th>
-                        <th>VALOR COBRADO</th>
-                        <th>SITUAÇÃO DO PAGAMENTO</th>
-                        <th id="thacoespgt">AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody class="tbodypagamentos">
-                  <td class="pgtmes" id="data_vencimento">CARREGANDO...</td>
-            <td id="valor">CARREGANDO...</td>
-            <td class="tdstatus">
-                <span class="status"><input type="text" id="situacao" value="CARREGANDO..."></span>
-            </td>
-            <td class="actions">
-        
-                <button class="atualizarpgt" id="save" onclick="editarPagamento(${pagamento.id})">Atualizar</button>
-        
-                </td>
-                </tbody>
-            </table>
-            </form>
-        </div>
-          
-        </div><!--boxpgt-->
-        </div><!--ladoesquerdoform-->
-        </div>
-        </div>
+            <h4 id="loading">CARREGANDO...</h4>
     </div>
-        </div>
-
-    </div>
+</div>
+</div>
     <div id="overlay" class="overlay"></div>
 </body>
 </html>

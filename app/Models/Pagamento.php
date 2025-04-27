@@ -30,12 +30,7 @@ class Pagamento extends Model
         return $this->belongsTo(Aluno::class, 'id_aluno');
     }
 
-    public static function pagamentoPendente($id){
-
-    return Pagamento::where('id_aluno', $id)->
-    firstOrFail();
-
-    }
+    
 // o Eloquent converte esses campos automaticamente em tipos php específicos (date, datetime, etc)
     protected $casts = [
         'data_pagamento' => 'datetime',

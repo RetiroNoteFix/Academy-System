@@ -44,7 +44,10 @@ const iconePesquisa = document.getElementById("searchicon");
 const inputPesquisa = document.getElementById("searchinput");
 const body = document.getElementById("body");
 const pendente = document.querySelector(".pendente");
-
+const popupficha = document.getElementById("popupficha");
+const h4titulopgt = document.getElementById("h4titulopgt");
+const loading = document.getElementById("loading");
+const titulopopup = document.getElementById("titulopopup");
 
 
 
@@ -231,6 +234,10 @@ function applyDayTheme() {
   Object.assign(iconePesquisa.style, { color: textColor });
   Object.assign(body.style, { backgroundColor: bgColor });
   Object.assign(pendente.style, { color: "red" });
+  Object.assign(popupficha.style, { backgroundColor: bgColor });
+  Object.assign(h4titulopgt.style, { color: textColor });
+  Object.assign(loading.style, { color: textColor });
+  Object.assign(titulopopup.style, { borderBottom: `1px solid ${textColor}` });
   
 
   // Ícones
@@ -278,22 +285,18 @@ function applyDayTheme() {
 
 
 
-// Função para aplicar o tema noite
 function applyNightTheme() {
   const textColor = "#fff";
   const bgColor = "#212529";
   const headerColor = "#a02c2c";
   const borderColor = "#414141";
 
-  // Exibir/ocultar menus noite e dia
   [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.style.display = "none");
   [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.style.display = "flex");
 
-  // Ativar classes de tema
   [optInicio, optAlunos, optPagamentos, optUsuarios].forEach(el => el.classList.add("noite"));
   [optInicioN, optAlunosN, optPagamentosN, optUsuariosN].forEach(el => el.classList.add("night"));
 
-  // Estilização básica
   Object.assign(config1.style, { color: textColor });
   Object.assign(config1on.style, { color: textColor });
   Object.assign(copy.style, { color: textColor });
@@ -305,8 +308,6 @@ function applyNightTheme() {
   Object.assign(userout.style, { color: textColor });
   Object.assign(temaDia.style, { display: "block", color: textColor });
   temaNoite.style.display = "none";
-
-  // Containers e seções
   Object.assign(optconfigs.style, { backgroundColor: bgColor, border: "none" });
   Object.assign(linetopconfig.style, { backgroundColor: bgColor });
   Object.assign(configsection.style, { backgroundColor: bgColor });
@@ -322,17 +323,15 @@ function applyNightTheme() {
   Object.assign(iconePesquisa.style, { color: textColor, backgroundColor: bgColor});
   Object.assign(inputPesquisa.style, { backgroundColor: bgColor, color: textColor });
   Object.assign(body.style, { backgroundColor: bgColor });
-
-  // Mostrar botões corretos
+  Object.assign(popupficha.style, { backgroundColor: bgColor });
+  Object.assign(h4titulopgt.style, { color: textColor });
+  Object.assign(loading.style, { color: textColor });
+  Object.assign(titulopopup.style, { borderBottom: `1px solid ${textColor}` });
   optConfigN.style.display = "flex";
   optConfig.style.display = "none";
-
-  // Ícones e textos
   opticons.forEach(icon => icon.style.color = textColor);
   paragraphs.forEach(p => p.style.color = textColor);
   footers.forEach(f => f.style.backgroundColor = bgColor);
-
-  // Tabelas
   thElements.forEach(th => {
     Object.assign(th.style, {
       backgroundColor: headerColor,
@@ -410,149 +409,283 @@ document.getElementById('popup').style.display = 'none';
 document.getElementById('overlay').style.display = 'none';
 });
 });
-document.querySelectorAll('.ficha').forEach(button => {
-  button.addEventListener('click', function() {
-      const el = document.getElementById('conteudofichapgt');
-     
-      el.scrollTop = 0;
-          
-       
-      const alunoIdFicha = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
-      console.log(alunoIdFicha);
-     
-      document.getElementById('popupficha').style.display = 'block';
-      document.getElementById('overlay').style.display = 'block';
-      document.getElementById('fechar').style.display = "block";
-      document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
- 
 
-      // Realiza a requisição para buscar os dados do aluno
-      fetch(`/inicio/pendentes/${alunoIdFicha}`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-          },
-      })
-      .then(response => response.json())
-    
-      .then(data => {
-          console.log(data);
-          if (data.error) {
-              document.getElementById('popupficha').querySelector('p').textContent = data.error;
-              document.getElementById('fechar').style.display = "block";
-              document.getElementById('overlay').style.display = 'block';
-          } else {
-              const el = document.getElementById('conteudofichapgt');
-   
-    
-    function calcularIdade(dataNascStr) {
-      const partes = dataNascStr.split('/'); // ["21", "04", "1998"]
-      const dia = parseInt(partes[0], 10);
-      const mes = parseInt(partes[1], 10) - 1; // mês começa do 0 (jan = 0)
-      const ano = parseInt(partes[2], 10);
-  
-      const dataNasc = new Date(ano, mes, dia);
-      const hoje = new Date();
-  
-      let idade = hoje.getFullYear() - dataNasc.getFullYear();
-      const m = hoje.getMonth() - dataNasc.getMonth();
-  
-      if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) {
-          idade--;
-      }
-  
-      return idade;
+function setupFichaButtons() {
+  document.querySelectorAll('.ficha').forEach(button => {
+    button.addEventListener('click', function() {
+      handleFichaClick(this);
+    });
+  });
+}
+
+function handleFichaClick(button) {
+  const alunoIdFicha = button.getAttribute('data-id');
+  const idPagamento = button.getAttribute('data-idpgt');
+
+  document.getElementById('popupficha').style.display = 'block';
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('fechar').style.display = "block";
+  document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);
+  const savedTheme = localStorage.getItem('theme');
+  document.getElementById("conteudo-anamnese2").innerHTML = `<h4 id="loading">CARREGANDO...</h4>`;
+  const loading = document.getElementById("loading");
+  if (savedTheme === 'night') {
+    loading.style.color = "#fff";
+  } else {
+    loading.style.color = "#333";
+  }
+
+  fetch(`/inicio/pendentes/${idPagamento}/${alunoIdFicha}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById("conteudo-anamnese2").innerHTML = `${data.error}`;
+    } else {
+      renderStudentForm(data, idPagamento);
+      setupFormSubmit();
+    }
+  })
+  .catch(error => {
+    console.error('Erro ao buscar dados do aluno:', error);
+    document.getElementById("conteudo-anamnese2").innerHTML = "Ocorreu um erro ao visualizar os dados.";
+  });
+}
+
+function renderStudentForm(data, idPagamento) {
+
+  function calcularIdade(dataNascStr) {
+    const partes = dataNascStr.split('/');
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1;
+    const ano = parseInt(partes[2], 10);
+
+    const dataNasc = new Date(ano, mes, dia);
+    const hoje = new Date();
+
+    let idade = hoje.getFullYear() - dataNasc.getFullYear();
+    const m = hoje.getMonth() - dataNasc.getMonth();
+
+    if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) {
+      idade--;
+    }
+
+    return idade;
   }
 
   const idade = calcularIdade(data.data_nascimento);
 
-              document.getElementById('nomepgt').textContent = `NOME COMPLETO: ${data.nome ?? 'Sem dados'}`;
-              document.getElementById('ruapgt').textContent = `RUA: ${data.rua ?? 'Sem dados'}`;
-              document.getElementById('complementopgt').textContent = `COMPLEMENTO: ${data.complemento ?? 'Sem dados'}`;
-              document.getElementById('cidadepgt').textContent = `CIDADE: ${data.cidade ?? 'Sem dados'}`;
-              document.getElementById('numeropgt').textContent = `NUMERO: ${data.numero ?? 'Sem dados'}`;
-              document.getElementById('bairropgt').textContent = `BAIRRO: ${data.bairro ?? 'Sem dados'}`;
-              document.getElementById('ceppgt').textContent = `CEP: ${data.cep ?? 'Sem dados'}`;
-              document.getElementById('telefonepgt').textContent = `TELEFONE: ${data.telefone ?? 'Sem dados'}`;
-              document.getElementById('telefone_familiarpgt').textContent = `TELEFONE FAMILIAR: ${data.telefone_familiar ?? 'Sem dados'}`;
-              document.getElementById('data_vencimento').textContent = `${data.data_vencimento ?? 'Sem dados'}`;
-              document.getElementById('valor').textContent = `R$${data.valor ?? 'Sem dados'}`;
-              document.getElementById('planopgt').textContent = `PLANO: ${data.plano_aluno ?? 'Sem dados'}`;
-              document.getElementById('diapgt').textContent = `DIA DE PAGAMENTO: ${data.data_pagamento ?? 'Sem dados'}`;
-              document.getElementById('situacao').value = `${data.situacao ?? 'Sem dados'}`;
-              // estilos
-              document.getElementById('nomepgt').style.fontWeight = 'bold';
-              document.getElementById('ruapgt').style.fontWeight = 'bold';
-              document.getElementById('telefonepgt').style.fontWeight = 'bold';
-              document.getElementById('planopgt').style.fontWeight = 'bold';
-              document.getElementById('situacao').style.color = 'red';
-              document.getElementById('diapgt').style.fontWeight = "bold";
-            
-          }
-      })
-      .catch(error => {
-          console.error('Erro ao buscar dados do aluno:', error);
-          document.getElementById('popupficha').querySelector('p').textContent = "Ocorreu um erro ao visualizar os dados."; 
-          document.getElementById('confirmar').style.display = 'none';  
-          document.getElementById('fechar').textContent = 'Fechar'; 
-     
-      });
+  const hoje = new Date();
+  const dia = String(hoje.getDate()).padStart(2, '0');
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const ano = hoje.getFullYear();
+
+  document.getElementById("close").style.display = "block"; 
+  document.getElementById("conteudo-anamnese2").innerHTML = `
+    <div class="ladoesquerdoformpgt">
+      <div class="compact">
+        <h5 class="h5fichapgt"><strong>NOME COMPLETO: ${data.nome ?? 'Sem Dados'}</strong></h5>
+      </div>
+      <div class="compact">
+        <h5 class="h5fichapgt"><strong>TELEFONE: ${data.telefone ?? 'Sem Dados'}</strong></h5>
+        <h5 class="h5fichapgt">TELEFONE FAMILIAR: ${data.telefone_familiar ?? 'Sem Dados'}</h5>
+      </div>
+      <div class="barrinha"></div>
+      <div class="compact">
+        <h5 class="h5fichapgt"><strong>RUA: ${data.rua ?? 'Sem Dados'}</strong></h5>
+        <h5 class="h5fichapgt">NÚMERO: ${data.numero ?? 'Sem Dados'}</h5>
+      </div>
+      <div class="compact">
+        <h5 class="h5fichapgt">COMPLEMENTO: ${data.complemento ?? 'Sem Dados'}</h5>
+        <h5 class="h5fichapgt">BAIRRO: ${data.bairro ?? 'Sem Dados'}</h5>
+      </div>
+      <div class="compact">
+        <h5 class="h5fichapgt">CIDADE: ${data.cidade ?? 'Sem Dados'}</h5>
+        <h5 class="h5fichapgt">CEP: ${data.cep ?? 'Sem Dados'}</h5>
+      </div>
+      <div class="barrinha"></div>
+      <div class="compact">
+        <h5 class="h5fichapgt"><strong>DIA DE PAGAMENTO: ${data.data_pagamento ?? 'Sem Dados'}</strong></h5>
+        <h5 class="h5fichapgt"><strong>PLANO ALUNO: ${data.plano_aluno ?? 'Sem Dados'}</strong></h5>
+      </div>
+      <div class="barrinha"></div>
+
+      <div class="boxpgt">
+        <form id="formpgt" method="post">
+          <table id="tablepgt">
+            <thead>
+              <tr>
+                <th>DATA DE VENCIMENTO</th>
+                <th>VALOR COBRADO</th>
+                <th>SITUAÇÃO DO PAGAMENTO</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody class="tbodypagamentos">
+              <tr>
+                <td>${data.data_vencimento ?? 'Sem Dados'}</td>
+                <td id="valor">R$${data.valor ?? 'Sem Dados'}</td>
+                <td class="tdstatus"><span class="status">${data.situacao ?? 'Sem Dados'}</span></td>
+                <td class="actions" ><button type="submit" class="atualizarpgt" id="save">Atualizar</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <input type="hidden" name="id_pgt" value="${idPagamento}">
+          <input type="hidden" name="data_pagamento" value="${dia}/${mes}/${ano}">
+          <input type="hidden" name="plano_aluno" value="${data.plano_aluno}">
+          <input type="hidden" name="valor" value="${data.valor}">
+        </form>
+      </div>
+    </div>
+  `;
+  const h5 = document.querySelectorAll(".h5fichapgt");
+  const th = document.querySelectorAll("th");
+  const td = document.querySelectorAll("td");
+ console.log(th);
+const savedTheme = localStorage.getItem('theme');
+
+th.forEach(td => {
+  if (savedTheme === 'night') {
+    td.style.backgroundColor = "#212529";
+    td.style.color = "#fff";
+    td.style.border = "1px solid #414141"
+    th[0].style.backgroundColor = "#a02c2c";
+    th[1].style.backgroundColor = "#a02c2c";
+    th[2].style.backgroundColor = "#a02c2c";
+    th[3].style.backgroundColor = "#a02c2c";
+    th[4].style.backgroundColor = "#a02c2c";
+    th[5].style.backgroundColor = "#a02c2c";
+    th[6].style.backgroundColor = "#a02c2c";
+    th[7].style.backgroundColor = "#a02c2c";
+    th[8].style.backgroundColor = "#a02c2c";
+    th[9].style.backgroundColor = "#a02c2c";
+    th[10].style.backgroundColor = "#a02c2c";
+  } else {
+  }
+});
+
+h5.forEach(element => {
+  if (savedTheme === 'night') {
+    element.style.color = "#fff";
+  } else {
+  }
+});
+td.forEach(td => {
+  if (savedTheme === 'night') {
+    td.style.backgroundColor = "#212529";
+    td.style.color = "#fff";
+    td.style.border = "1px solid #414141"
+  } else {
+  }
+});
+
+
+}
+
+function setupFormSubmit() {
+  const form = document.getElementById('formpgt');
+  if (!form) return;
+
+  form.removeEventListener('submit', handleFormSubmit);
   
+  form.addEventListener('submit', handleFormSubmit);
+}
+
+function handleFormSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const dados = {};
+  
+  formData.forEach((value, key) => {
+    dados[key] = value;
   });
 
-});
+  console.log('Dados do formulário:', dados);
 
+  fetch('/inicio/pendentes/atualizar/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: JSON.stringify(dados)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Resposta do servidor:', data);
 
+    if (data.error) {
+      document.getElementById("close").style.display = "none"; 
+      document.getElementById("conteudo-anamnese2").innerHTML = `Erro.`;
+    } else {
+      document.getElementById("close").style.display = "none"; 
+      document.getElementById("conteudo-anamnese2").innerHTML = `<h4 id="loading"> Pagamento atualizado com sucesso!</h4>`;
+      const loading = document.getElementById("loading");
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'night') {
+        loading.style.color = "#fff";
+      } else {
+      }
+   setTimeout(() => {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('popupficha').style.display = 'none';
+}, 2000);
 
+      const alunoIdFicha = dados.id_pgt;
+      const button = document.querySelector(`.ficha[data-idpgt="${alunoIdFicha}"]`);
+      if (button) {
+        const row = button.closest('tr');
+        if (row) row.remove();
+      }
 
-
-
-const atualizar = document.getElementById("save");
-
-atualizar.addEventListener('click', function (e) {
-    e.preventDefault(); // Impede que o botão envie o formulário de forma tradicional
-
-    // Aqui você coleta os dados do formulário
-    const form = document.getElementById('formpgt');
-
-    // Opcional: se você tiver inputs, pode usar isso
-    const formData = new FormData(form);
-    const dados = {};
-    formData.forEach((value, key) => {
-        dados[key] = value;
-    });
-
-    console.log(formData);
-
-    fetch(`/inicio/pendentes/${alunoIdFicha}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify(dados) // envia os dados como JSON
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-
-        if (data.error) {
-            document.getElementById('popupficha').querySelector('p').textContent = data.error;
+      const tableRows = document.querySelectorAll('table tbody tr');
+      if (tableRows.length === 0) {
+        const noPaymentsRow = document.createElement('tr');
+        noPaymentsRow.innerHTML = '<td id="nolist" colspan="7">Nenhum pagamento pendente encontrado.</td>';
+        document.querySelector('table tbody').appendChild(noPaymentsRow);
+        const nolist = document.getElementById("nolist");
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'night') {
+          nolist.style.backgroundColor = "#212529";
+          nolist.style.color = "#fff";
+          nolist.style.borderLeft = "none";
+          nolist.style.borderBottom = "#414141";
         } else {
-            // sucesso - exiba algo se quiser
-            document.getElementById('popupficha').querySelector('p').textContent = 'Pagamento atualizado com sucesso.';
         }
+      }
+    }
+  })
+  .catch(error => {
+    console.error('Erro ao atualizar:', error);
+    alert('Erro ao enviar dados. Por favor, tente novamente.');
+  });
+}
 
-        document.getElementById('fechar').style.display = "block";
-        document.getElementById('overlay').style.display = 'block';
-    })
-    .catch(error => {
-        console.error('Erro ao atualizar:', error);
-        document.getElementById('popupficha').querySelector('p').textContent = "Erro ao enviar dados."; 
-        document.getElementById('fechar').textContent = 'Fechar'; 
-    });
+document.addEventListener('DOMContentLoaded', function() {
+  setupFichaButtons();
+  
+  document.getElementById('fechar')?.addEventListener('click', function() {
+    document.getElementById('popupficha').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  });
 });
+
+window.fecharAnamnese = function() {
+  document.getElementById('popupficha').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+};
+
+
+
+
+
+
 
 
 
