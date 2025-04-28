@@ -43,7 +43,6 @@ const pesquisa = document.getElementById("search");
 const iconePesquisa = document.getElementById("searchicon");
 const inputPesquisa = document.getElementById("searchinput");
 const body = document.getElementById("body");
-const pendente = document.querySelector(".pendente");
 const popupficha = document.getElementById("popupficha");
 const h4titulopgt = document.getElementById("h4titulopgt");
 const loading = document.getElementById("loading");
@@ -233,7 +232,6 @@ function applyDayTheme() {
   Object.assign(inputPesquisa.style, { backgroundColor: bgColor, color: textColor });
   Object.assign(iconePesquisa.style, { color: textColor });
   Object.assign(body.style, { backgroundColor: bgColor });
-  Object.assign(pendente.style, { color: "red" });
   Object.assign(popupficha.style, { backgroundColor: bgColor });
   Object.assign(h4titulopgt.style, { color: textColor });
   Object.assign(loading.style, { color: textColor });
@@ -601,71 +599,117 @@ function handleFormSubmit(e) {
   const form = e.target;
   const formData = new FormData(form);
   const dados = {};
-  
+
   formData.forEach((value, key) => {
     dados[key] = value;
   });
 
   console.log('Dados do formulário:', dados);
 
-  fetch('/inicio/pendentes/atualizar/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-    },
-    body: JSON.stringify(dados)
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Resposta do servidor:', data);
+  // Mostra o popup de confirmação
+  document.getElementById("popupficha").style.display = 'none';
+  document.getElementById("fechar").style.display = 'none';
+  document.getElementById("overlay").style.display = 'block';
+  const popup = document.getElementById('popup');
+  popup.style.display = 'block';
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'night') {
+    popup.style.backgroundColor = '#212529';
+    popup.style.color= "#fff";
+  }
+  else{
+    popup.style.backgroundColor = '#fff';
+    popup.style.color= "#333";
+  }
 
-    if (data.error) {
-      document.getElementById("close").style.display = "none"; 
-      document.getElementById("conteudo-anamnese2").innerHTML = `Erro.`;
-    } else {
-      document.getElementById("close").style.display = "none"; 
-      document.getElementById("conteudo-anamnese2").innerHTML = `<h4 id="loading"> Pagamento atualizado com sucesso!</h4>`;
-      const loading = document.getElementById("loading");
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'night') {
-        loading.style.color = "#fff";
+  const confirmarBtn = document.getElementById('confirmarpagar');
+  const fecharBtn = document.getElementById('fecharpagar');
+
+  // Remover event listeners antigos para evitar múltiplos envios
+  confirmarBtn.onclick = null;
+  fecharBtn.onclick = null; // <-- Aqui corrigi
+
+  confirmarBtn.onclick = function() {
+    popup.innerHTML = 'Atualizando...'; // Esconde o popup antes de enviar
+
+    fetch('/inicio/pendentes/atualizar/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      },
+      body: JSON.stringify(dados)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Resposta do servidor:', data);
+
+      if (data.error) {
+        document.getElementById("close").style.display = "none"; 
+        document.getElementById("conteudo-anamnese2").innerHTML = `Erro.`;
       } else {
-      }
-   setTimeout(() => {
-  document.getElementById('overlay').style.display = 'none';
-  document.getElementById('popupficha').style.display = 'none';
-}, 2000);
-
-      const alunoIdFicha = dados.id_pgt;
-      const button = document.querySelector(`.ficha[data-idpgt="${alunoIdFicha}"]`);
-      if (button) {
-        const row = button.closest('tr');
-        if (row) row.remove();
-      }
-
-      const tableRows = document.querySelectorAll('table tbody tr');
-      if (tableRows.length === 0) {
-        const noPaymentsRow = document.createElement('tr');
-        noPaymentsRow.innerHTML = '<td id="nolist" colspan="7">Nenhum pagamento pendente encontrado.</td>';
-        document.querySelector('table tbody').appendChild(noPaymentsRow);
-        const nolist = document.getElementById("nolist");
+        document.getElementById("close").style.display = "none"; 
+        document.getElementById("popup").innerHTML = `<h4 id="loading">Pagamento atualizado com sucesso!</h4>`;
+       
+        const loading = document.getElementById("loading");
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'night') {
-          nolist.style.backgroundColor = "#212529";
-          nolist.style.color = "#fff";
-          nolist.style.borderLeft = "none";
-          nolist.style.borderBottom = "#414141";
-        } else {
+          loading.style.color = "#fff";
+        }
+
+        setTimeout(() => {
+          document.getElementById('overlay').style.display = 'none';
+          document.getElementById('popup').style.display = 'none';
+          popup.innerHTML = `<div class="popup-content">
+          <h4 id="h4confimar">Tem certeza?</h4>
+          <div class="boxbtn">
+          <button id="confirmarpagar">Sim</button>
+          <button id="fecharpagar">Não</button>
+          <button id="fechar" style="display: none;" >Cancelar</button>
+          </div>
+      </div>`;
+        }, 2000);
+
+        const alunoIdFicha = dados.id_pgt;
+        const button = document.querySelector(`.ficha[data-idpgt="${alunoIdFicha}"]`);
+        if (button) {
+          const row = button.closest('tr');
+          if (row) row.remove();
+        }
+
+        const tableRows = document.querySelectorAll('table tbody tr');
+        if (tableRows.length === 1) {
+          const noPaymentsRow = document.createElement('tr');
+          const noPaymentsCell = document.createElement('td');
+          noPaymentsCell.id = "nolist";
+          noPaymentsCell.setAttribute('colspan', '7');
+          noPaymentsCell.textContent = 'Nenhum pagamento pendente encontrado.';
+          noPaymentsRow.appendChild(noPaymentsCell);
+          document.querySelector('table tbody').appendChild(noPaymentsRow);
+        
+          const nolist = document.getElementById("nolist");
+          if (savedTheme === 'night') {
+            popup.style.backgroundColor = '#212529';
+            nolist.style.backgroundColor = "#212529";
+            nolist.style.color = "#fff";
+            nolist.style.borderLeft = "none";
+            nolist.style.borderBottom = "1px solid #414141";
+          }
         }
       }
-    }
-  })
-  .catch(error => {
-    console.error('Erro ao atualizar:', error);
-    alert('Erro ao enviar dados. Por favor, tente novamente.');
-  });
+    })
+    .catch(error => {
+      console.error('Erro ao atualizar:', error);
+      alert('Erro ao enviar dados. Por favor, tente novamente.');
+    });
+  };
+
+  fecharBtn.onclick = function() {
+    popup.style.display = 'none'; // Fecha o popup sem fazer nada
+    document.getElementById('overlay').style.display = 'none'; // também esconde o overlay
+  };
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
   setupFichaButtons();
@@ -683,7 +727,10 @@ window.fecharAnamnese = function() {
 
 
 
-
+function fechar(){
+  document.getElementById('popupficha').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+}
 
 
 
