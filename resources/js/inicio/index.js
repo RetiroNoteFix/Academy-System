@@ -413,14 +413,67 @@ function formatarTelefone(telefone) {
   return `55${numeros}`;
 }
 
+const modalcobranca = document.getElementById("popupconfig");
+const optCobranca = document.getElementById("optCobranca");
+const overlay = document.getElementById("overlay");
+const nomealuno = "${nomealuno}";
+const datavencimento = "${datavencimento}";
+const valor = "${valor}";
 
-function salvarMensagem(mensagem){
+optCobranca.addEventListener('click', function () {
+  modalcobranca.style.display = "block";
+  overlay.style.display = 'block';
+
+  modalcobranca.innerHTML = `
+    <div class="popup-content">
+      <h2 id="h4confimar">NOVA MENSAGEM</h2>
+      <h5 id="h4confimar2">${nomealuno} é o nome do aluno. <br> ${datavencimento} é a data de vencimento do pagamento. <br> ${valor} é o valor da cobrança.</h5>
+      <div class="boxmsgcobranca">
+        <textarea name="" id="msgcobranca" cols="50" rows="10">Olá {nomealuno}! Esperamos que esteja tudo bem com você. Verificamos que a sua mensalidade com vencimento em ${datavencimento}, e valor de ${valor} ainda está pendente. Caso já tenha feito o pagamento, por favor, desconsidere esta mensagem. Qualquer dúvida, estamos à disposição!</textarea>
+      </div>
+      <div class="boxbtn">
+        <button class="save" id="savemsg">Salvar</button>
+        <button class="msg" id="resetmmsg">Resetar</button>
+        <button class="fechar" id="fecharcobranca">Cancelar</button>
+      </div>
+    </div>`;
+
+  document.getElementById("savemsg").addEventListener('click', function () {
+    const mensagem = document.getElementById("msgcobranca").value;
+    salvarMensagem(mensagem);
+    modalcobranca.innerHTML = `<p>Mensagem atualizada com sucesso!</p>`;
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      modalcobranca.style.display = "none";
+    }, 2000);
+  });
+
+  document.getElementById("resetmmsg").addEventListener('click', function () {
+    document.getElementById("msgcobranca").value = localStorage.getItem("msgOriginal");
+  });
+
+  document.getElementById("fecharcobranca").addEventListener('click', function () {
+    overlay.style.display = 'none';
+    modalcobranca.style.display = "none";
+  });
+
+  if (!localStorage.getItem("msgOriginal")) {
+    localStorage.setItem("msgOriginal", `Olá ${nomealuno}! Esperamos que esteja tudo bem com você. Verificamos que a sua mensalidade com vencimento em ${datavencimento}, e valor de ${valor} ainda está pendente. Caso já tenha feito o pagamento, por favor, desconsidere esta mensagem. Qualquer dúvida, estamos à disposição!`);
+  }
+
+  const msgSalva = localStorage.getItem("msg");
+  if (msgSalva) {
+    document.getElementById("msgcobranca").value = msgSalva;
+  }
+});
+
+function salvarMensagem(mensagem) {
   localStorage.setItem("msg", mensagem);
-}
-const mensagem = "Olá! sua mensalidade está atrasada!";
-salvarMensagem(mensagem);
 
-let msg = localStorage.getItem("msg");
+}
+
+
+
 
 function setupFichaButtons() {
   
@@ -432,10 +485,22 @@ function setupFichaButtons() {
  
   document.querySelectorAll('.msg').forEach(buttonmsg => {
     buttonmsg.addEventListener('click', function() {
+      let msg = localStorage.getItem("msg");
       const telefone = buttonmsg.getAttribute('data-telefone');
       console.log(telefone);
       let telefoneFormatado = formatarTelefone(telefone);
-      window.location.href = `https://api.whatsapp.com/send/?phone=${telefoneFormatado}&text=${msg}`;
+      const nomealuno = buttonmsg.getAttribute('data-nomealuno');
+      const valor = buttonmsg.getAttribute('data-valor');
+      const datavencimentoRaw = buttonmsg.getAttribute('data-vencimento');
+const apenasData = datavencimentoRaw.split(' ')[0];
+const partes = apenasData.split('-'); 
+const datavencimento = `${partes[2]}/${partes[1]}/${partes[0]}`; 
+
+      const mensagem = msg
+  .replace(/\${nomealuno}/g, nomealuno)
+  .replace(/\${valor}/g, `R$${valor}`)
+  .replace(/\${datavencimento}/g, datavencimento);
+      window.location.href = `https://api.whatsapp.com/send/?phone=${telefoneFormatado}&text=${mensagem}`;
     });
   });
 }

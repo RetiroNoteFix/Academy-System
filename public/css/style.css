@@ -148,6 +148,7 @@ main{
    border-top-left-radius: 5px;
    border-bottom-left-radius: 5px;
 }
+
 .icon{
 border-left: 1px solid #000;
 }
@@ -496,11 +497,15 @@ table tr:hover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.boxbtn{
+.boxbtn, .boxmsgcobranca{
     display: flex;
     justify-content: center;
     margin: auto;
 }
+.boxmsgcobranca{
+    flex-direction: column;
+}
+
 #maincontent.hidden, 
 #mainheader2.hidden,
 #mainheader.hidden,
@@ -552,6 +557,10 @@ table tr:hover {
     width: 98%;
     height: 40px;
 }
+#msgcobranca{
+    border: 1px solid #000;
+    padding: 5;
+}
 
 #optconfigname{
     transition: 0.6s ease;
@@ -560,7 +569,7 @@ table tr:hover {
     font-size: 14px;
     line-height: 1.2;
 }
-#optconfigicon1, #optconfigicon1on{
+#optconfigicon1, #optconfigicon1on, #optconfigicon{
     transition: 0.6s ease;
     margin: 10px 0px 0px 5px;
     color: #333;
@@ -739,6 +748,10 @@ align-items: center;
 #h4confimar{
     font-weight: 500;
 }
+#h4confimar2{
+    font-weight: 500;
+    text-align: left;
+}
 #white{
     color: #fff;
 }
@@ -825,7 +838,7 @@ align-items: center;
     gap: 5px;
     cursor: pointer;
 }
-#save, #close, #save2, #close2{
+#save, #close, #save2, #close2, .save, .fechar{
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 10px;
@@ -882,11 +895,11 @@ align-items: center;
     margin-right: 5px;
     margin-top: 5px;
 }
-#addaluno, #btncadastraraluno, #close, .excluir, #close2, #close3, #fecharpagar{
+#addaluno, #btncadastraraluno, #close, .excluir, #close2, #close3, #fecharpagar, .fechar{
     transition: 0.6s ease;
     background: #fd0000;
 }
-#addaluno:hover, #btncadastraraluno:hover,#close:hover, .excluir:hover, #close2:hover, #close3:hover, #fecharpagar:hover{
+#addaluno:hover, #btncadastraraluno:hover,#close:hover, .excluir:hover, #close2:hover, #close3:hover, #fecharpagar:hover, .fechar:hover{
     background: #ca0202;
 }
 #optmenutopname, #optmenutopname2{
@@ -926,12 +939,18 @@ align-items: center;
 #tablepgt{
     width: 500px;
 }
-#alunosoff.alunoson, #anamnesebtn, #save, #pgtpndt, #save2, #confirmareditar, #confirmarpagar{
+#alunosoff.alunoson, #anamnesebtn, #save, #pgtpndt, #save2, #confirmareditar, #confirmarpagar, .save{
     color: #fff;
     transition: 0.6s ease;
     background: #00a2ff;
 }
-#alunosoff:hover.alunoson, #anamnesebtn:hover, #save:hover, #pgtpndt:hover, #confirmareditar:hover, #confirmarpagar:hover{
+.save, .fechar{
+    color: #fff;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+#alunosoff:hover.alunoson, #anamnesebtn:hover, #save:hover, #pgtpndt:hover, #confirmareditar:hover, #confirmarpagar:hover, .save:hover{
     background: #0088d6;
 }
 #alunosoff:hover{

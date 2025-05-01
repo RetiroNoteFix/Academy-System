@@ -67,12 +67,13 @@
             <div class="optconfigs" id="optInicio" title="O Menu lateral se minimiza automaticamente para um melhor aproveitamento da tela. ativando essa opção o menu lateral passa a ter uma largura fixa mantendo as opções visíveis.">
                 <i id="optconfigicon1on" class="fa-solid fa-toggle-on"></i>  <i id="optconfigicon1" class="fa-solid fa-toggle-off"></i> <p id="optconfigname">Minimizar menu automaticamente</p>
             </div><!--optInicio-->
+            <div class="optconfigs" id="optCobranca" title="Definir a mensagem de cobrança do aluno quando ele aparecer nas notificações">
+                <i  id="optconfigicon" class="fa-solid fa-pen-to-square"></i> <p id="optconfigname">Definir mensagem de cobrança</p>
+            </div><!--optInicio-->
         </section>
         <section id="maincontent">
             <div id="linetop" class="linetop"><h1 id="h1alert">NOTIFICAÇÕES</h1></div>
             <div class="list">
-                
-                
                 <div class="menutopcontent">
                     <div class="pages" id="pages"><p id="pag">Pág:</p><button id="previouspage"><i class="fa-solid fa-arrow-left"></i></button><div class="pagenumber"><p id="pagenumbercount">1</p></div><button id="nextpage"><i class="fa-solid fa-arrow-right"></i></button></div>
                     <div class="search" id="search"><input id="searchinput" type="text"><div class="icon"><i id="searchicon" class="fa-solid fa-magnifying-glass"></i></div></div>
@@ -103,7 +104,7 @@
                     <button class="ficha" title="ATUALIZAR PAGAMENTO" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}" data-idpgt="{{ $pagamento->id ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-circle-check"></i>
                     </button>
-                    <button class="msg" title="ENVIAR MENSAGEM" data-telefone="{{ $pagamento->aluno->pessoa->telefone ?? 'N/A' }}">
+                    <button class="msg" title="ENVIAR MENSAGEM"  data-vencimento="{{$pagamento->data_vencimento}}"data-valor="{{$pagamento->valor}}" data-nomealuno="{{$pagamento->aluno->pessoa->nome}}" data-telefone="{{ $pagamento->aluno->pessoa->telefone ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-comment"></i>
                     </button>
                     <button class="desativar" title="IGNORAR COBRANÇA" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
@@ -150,6 +151,20 @@
     </div>
 </div>
 </div>
+<div id="popupconfig" class="popup">
+        <div class="popup-content">
+            <h2 id="h4confimar">NOVA MENSAGEM</h2>
+            <h5 id="h4confimar2">${nomealuno} é o nome do aluno. <br> ${datavencimento} é a data de vencimento do pagamento. <br> ${valor} é o valor da cobrança.</h5>
+            <div class="boxmsgcobranca">
+           <textarea name="" id="msgcobranca" cols="50" rows="10">Olá ${nomealuno}! Esperamos que esteja tudo bem com você. Verificamos que a sua mensalidade com vencimento em ${datavencimento}, e valor de ${valor} ainda está pendente. Caso já tenha feito o pagamento, por favor, desconsidere esta mensagem. Qualquer dúvida, estamos à disposição!</textarea>
+</div>
+<div class="boxbtn">
+           <button class="save" id="savemsg">Salvar</button>
+           <button class="msg" id="resetmmsg">Resetar</button>
+           <button class="fechar" id="fecharcobranca">Cancelar</button>
+            </div>
+        </div>
+    </div>
     <div id="overlay" class="overlay"></div>
 </body>
 </html>
