@@ -514,6 +514,14 @@ function setupFichaButtons() {
       document.getElementById('overlay').style.display = 'block';
       document.getElementById('fechar').style.display = 'none';
       document.getElementById('popupficha').setAttribute('data-id', idPagamento);
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'night') {
+        document.getElementById('popup').style.color = "#fff";
+        document.getElementById('popup').style.backgroundColor = "#212529";
+      } else {
+        document.getElementById('popup').style.color = "#333";
+        document.getElementById('popup').style.backgroundColor = "#fff";
+      }
     
     });
   });
@@ -543,6 +551,14 @@ function setupFichaButtons() {
       if (tableRows.length === 0) {
         const noPaymentsRow = document.createElement('tr');
         const noPaymentsCell = document.createElement('td');
+        const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'night') {
+        noPaymentsCell.style.color = "#fff";
+        noPaymentsCell.style.backgroundColor = "#212529";
+      } else {
+        noPaymentsCell.style.color = "#333";
+        noPaymentsCell.style.backgroundColor = "#fff";
+      }
         noPaymentsCell.id = "nolist";
         noPaymentsCell.setAttribute('colspan', '7');
         noPaymentsCell.textContent = 'Nenhum pagamento pendente encontrado.';
@@ -983,5 +999,35 @@ function fechar(){
       document.getElementById('popupficha').style.display = 'none';
       document.getElementById('overlay').style.display = 'none';
   }
+  // busca
+
+  document.getElementById('searchinput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();  
+    const rows = document.querySelectorAll('#tbodyalunoson tr'); 
+
+    rows.forEach(row => {
+        const nome = row.cells[1].textContent.toLowerCase();  
+        const endereco = row.cells[2].textContent.toLowerCase();  
+        const telefone = row.cells[3].textContent.toLowerCase();  
+        const vencimento = row.cells[4].textContent.toLowerCase();  
+        const situacao = row.cells[5].textContent.toLowerCase();  
+
+        const nomeMatch = nome.split(' ').some(word => word.startsWith(searchTerm));
+        const enderecoMatch = endereco.split(' ').some(word => word.startsWith(searchTerm));
+        const telefoneMatch = telefone.startsWith(searchTerm);
+        const vencimentoMatch = vencimento.startsWith(searchTerm);  
+        const situacaoMatch = situacao.startsWith(searchTerm);  
+
+     
+        if (nomeMatch || enderecoMatch || telefoneMatch || vencimentoMatch || situacaoMatch) {
+            row.style.display = ''; 
+        } else {
+            row.style.display = 'none'; 
+        }
+    });
+});
+
+
+
 loadTheme();
 window.fecharAnamnese = fecharAnamnese;

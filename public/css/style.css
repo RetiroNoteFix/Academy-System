@@ -118,6 +118,7 @@ main{
 #nextpage, #previouspage{
     cursor: pointer;
     border: none;
+    margin-top: 3px;
     background: none;
 }
 .pagenumber{

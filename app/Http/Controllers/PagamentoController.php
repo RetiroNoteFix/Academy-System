@@ -77,12 +77,12 @@ class PagamentoController extends Controller
     {
         $usuarioNome = Session::get('usuario_nome');
     $pendente = null;
-        $pagamentos = Pagamento::where('situacao', 'pendente')->get();
+    $pagamentos = Pagamento::with('aluno.pessoa')
+    ->where('situacao', 'pendente')  
+    ->paginate(100); 
         foreach ($pagamentos as $pagamento){
     
             $pendente = strtoupper($pagamento->situacao);
-            
-    
     
         }
         return view('inicio.index', compact('pagamentos', 'usuarioNome', 'pendente'));
@@ -106,11 +106,11 @@ class PagamentoController extends Controller
             $pagamento = Pagamento::findOrFail($id);
 
             if ($pagamento) {
-                // Atualiza os dados do pagamento
+            
                 $pagamento->update([
                     'data_pagamento' => $dataFormatada,
                     'plano_aluno' => $request->plano_aluno,
-                    'valor' => $request->valor, // Aqui usa o valor tratado
+                    'valor' => $request->valor, 
                     'situacao' => "pago",
                 ]);
                 return response()->json(['success' => 'Pagamento atualizado com sucesso!']);

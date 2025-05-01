@@ -3,14 +3,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css')}}">
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name') }}</title>
 </head>
-<body id="body">
+<body id="body" x-data="paginationApp">
 
 <div class="menu">
         <div id="linhamenu">
@@ -74,10 +74,40 @@
         <section id="maincontent">
             <div id="linetop" class="linetop"><h1 id="h1alert">NOTIFICAÇÕES</h1></div>
             <div class="list">
-                <div class="menutopcontent">
-                    <div class="pages" id="pages"><p id="pag">Pág:</p><button id="previouspage"><i class="fa-solid fa-arrow-left"></i></button><div class="pagenumber"><p id="pagenumbercount">1</p></div><button id="nextpage"><i class="fa-solid fa-arrow-right"></i></button></div>
-                    <div class="search" id="search"><input id="searchinput" type="text"><div class="icon"><i id="searchicon" class="fa-solid fa-magnifying-glass"></i></div></div>
-                </div><!--menu top content-->
+            <div class="menutopcontent">
+            <div class="pages" id="pages">
+    <p id="pag">Pág:</p>
+    <a 
+        href="{{ $pagamentos->previousPageUrl() }}" 
+        class="pagination-button" 
+        @class(['disabled' => $pagamentos->onFirstPage()])
+    >
+        <button id="previouspage" {{ $pagamentos->onFirstPage() ? 'disabled' : '' }}>
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+    </a>
+
+    <div class="pagenumber">
+        <p id="pagenumbercount">{{ $pagamentos->currentPage() }}</p>
+    </div>
+    <a 
+        href="{{ $pagamentos->nextPageUrl() }}" 
+        class="pagination-button" 
+        @class(['disabled' => $pagamentos->currentPage() == $pagamentos->lastPage()])
+    >
+        <button id="nextpage" {{ $pagamentos->currentPage() == $pagamentos->lastPage() ? 'disabled' : '' }}>
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </a>
+</div>
+
+    <div class="search" id="search">
+        <input id="searchinput" type="text">
+        <div class="icon">
+            <i id="searchicon" class="fa-solid fa-magnifying-glass"></i>
+        </div>
+    </div>
+</div><!--menu top content-->
                 <table border="1" style="margin-bottom:10px;">
                 <thead>
                     <tr>
