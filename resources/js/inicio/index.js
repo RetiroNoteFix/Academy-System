@@ -408,10 +408,34 @@ document.getElementById('overlay').style.display = 'none';
 });
 });
 
+function formatarTelefone(telefone) {
+  let numeros = telefone.replace(/\D/g, '');
+  return `55${numeros}`;
+}
+
+
+function salvarMensagem(mensagem){
+  localStorage.setItem("msg", mensagem);
+}
+const mensagem = "Olá! sua mensalidade está atrasada!";
+salvarMensagem(mensagem);
+
+let msg = localStorage.getItem("msg");
+
 function setupFichaButtons() {
+  
   document.querySelectorAll('.ficha').forEach(button => {
     button.addEventListener('click', function() {
       handleFichaClick(this);
+    });
+  });
+ 
+  document.querySelectorAll('.msg').forEach(buttonmsg => {
+    buttonmsg.addEventListener('click', function() {
+      const telefone = buttonmsg.getAttribute('data-telefone');
+      console.log(telefone);
+      let telefoneFormatado = formatarTelefone(telefone);
+      window.location.href = `https://api.whatsapp.com/send/?phone=${telefoneFormatado}&text=${msg}`;
     });
   });
 }

@@ -103,7 +103,7 @@
                     <button class="ficha" title="ATUALIZAR PAGAMENTO" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}" data-idpgt="{{ $pagamento->id ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-circle-check"></i>
                     </button>
-                    <button class="msg" title="ENVIAR MENSAGEM" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
+                    <button class="msg" title="ENVIAR MENSAGEM" data-telefone="{{ $pagamento->aluno->pessoa->telefone ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-comment"></i>
                     </button>
                     <button class="desativar" title="IGNORAR COBRANÇA" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
