@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('plano_aluno', 50)->nullable();
             $table->decimal('valor', 10, 2)->nullable();
             $table->date('data_vencimento')->nullable();
-            $table->enum('situacao', ['pago', 'pendente', 'pausado'])->default('pendente');
+            $table->enum('situacao', ['pago', 'pendente', 'pausado', 'ignorado'])->default('pendente');
             $table->date('pausado_em')->nullable();
             $table->string('ativado_em', 50)->nullable();
             $table->timestamps();

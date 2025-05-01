@@ -47,6 +47,7 @@ const popupficha = document.getElementById("popupficha");
 const h4titulopgt = document.getElementById("h4titulopgt");
 const loading = document.getElementById("loading");
 const titulopopup = document.getElementById("titulopopup");
+const optconfigicon = document.getElementById("optconfigicon");
 
 
 
@@ -236,7 +237,8 @@ function applyDayTheme() {
   Object.assign(h4titulopgt.style, { color: textColor });
   Object.assign(loading.style, { color: textColor });
   Object.assign(titulopopup.style, { borderBottom: `1px solid ${textColor}` });
-  
+  Object.assign(optconfigicon.style, { color: textColor });
+
 
   // Ícones
   opticons.forEach(icon => icon.style.color = textColor);
@@ -325,6 +327,8 @@ function applyNightTheme() {
   Object.assign(h4titulopgt.style, { color: textColor });
   Object.assign(loading.style, { color: textColor });
   Object.assign(titulopopup.style, { borderBottom: `1px solid ${textColor}` });
+  Object.assign(optconfigicon.style, { color: textColor });
+
   optConfigN.style.display = "flex";
   optConfig.style.display = "none";
   opticons.forEach(icon => icon.style.color = textColor);
@@ -420,6 +424,10 @@ const nomealuno = "${nomealuno}";
 const datavencimento = "${datavencimento}";
 const valor = "${valor}";
 
+
+
+
+
 optCobranca.addEventListener('click', function () {
   modalcobranca.style.display = "block";
   overlay.style.display = 'block';
@@ -437,6 +445,21 @@ optCobranca.addEventListener('click', function () {
         <button class="fechar" id="fecharcobranca">Cancelar</button>
       </div>
     </div>`;
+    const msgcobranca = document.getElementById("msgcobranca");
+    const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'night') {
+    modalcobranca.style.color = "#fff";
+    modalcobranca.style.backgroundColor = "#212529";
+    msgcobranca.style.color = "#fff";
+    msgcobranca.style.border = "1px solid #fff";
+    msgcobranca.style.backgroundColor = "#212529";
+  } else {
+    modalcobranca.style.color = "#333";
+    modalcobranca.style.backgroundColor = "#fff";
+    msgcobranca.style.color = "#333";
+    msgcobranca.style.border = "1px solid #000";
+    msgcobranca.style.backgroundColor = "#fff";
+  }
 
   document.getElementById("savemsg").addEventListener('click', function () {
     const mensagem = document.getElementById("msgcobranca").value;
@@ -482,8 +505,78 @@ function setupFichaButtons() {
       handleFichaClick(this);
     });
   });
+
+  document.querySelectorAll('.desativar').forEach(button => {
+    button.addEventListener('click', function() {
+      const idPagamento = button.getAttribute('data-id');
+    
+      document.getElementById('popup').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('fechar').style.display = 'none';
+      document.getElementById('popupficha').setAttribute('data-id', idPagamento);
+    
+    });
+  });
  
+ document.getElementById("confirmarpagar").addEventListener('click', function(){
+  const idPagamento =  document.getElementById('popupficha').getAttribute('data-id');
+  fetch(`/inicio/ignorar/${idPagamento}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      console.log(error);
+    } else {
+      document.getElementById('popup').innerHTML = `<h4 id="loading">Pagamento ignorado com sucesso!</h4>`;
+      const button = document.querySelector(`.desativar[data-id="${idPagamento}"]`);
+      if (button) {
+        const row = button.closest('tr');
+        if (row) row.remove();
+      }
+
+      const tableRows = document.querySelectorAll('table tbody tr');
+      if (tableRows.length === 0) {
+        const noPaymentsRow = document.createElement('tr');
+        const noPaymentsCell = document.createElement('td');
+        noPaymentsCell.id = "nolist";
+        noPaymentsCell.setAttribute('colspan', '7');
+        noPaymentsCell.textContent = 'Nenhum pagamento pendente encontrado.';
+        noPaymentsRow.appendChild(noPaymentsCell);
+        document.querySelector('table tbody').appendChild(noPaymentsRow);
+      }
+      setTimeout(() => {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('popup').innerHTML = `<div class="popup-content">
+        <h4 id="h4confimar">Tem certeza?</h4>
+        <div class="boxbtn">
+        <button id="confirmarpagar">Sim</button>
+        <button id="fecharpagar">Não</button>
+        <button id="fechar" style="display: none;" >Cancelar</button>
+        </div>
+    </div>`;
+    setupFichaButtons();
+      }, 2000);
+    }
+  })
+  .catch(error => {
+    console.error('Erro ao buscar dados do aluno:', error);
+    document.getElementById("conteudo-anamnese2").innerHTML = "Ocorreu um erro ao visualizar os dados.";
+  });
+ });
+
+ document.getElementById("fecharpagar").addEventListener('click', function(){
+  document.getElementById('popup').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+ });
+
   document.querySelectorAll('.msg').forEach(buttonmsg => {
+   
     buttonmsg.addEventListener('click', function() {
       let msg = localStorage.getItem("msg");
       const telefone = buttonmsg.getAttribute('data-telefone');
@@ -695,7 +788,6 @@ function handleFormSubmit(e) {
 
   console.log('Dados do formulário:', dados);
 
-  // Mostra o popup de confirmação
   document.getElementById("popupficha").style.display = 'none';
   document.getElementById("fechar").style.display = 'none';
   document.getElementById("overlay").style.display = 'block';
@@ -714,12 +806,11 @@ function handleFormSubmit(e) {
   const confirmarBtn = document.getElementById('confirmarpagar');
   const fecharBtn = document.getElementById('fecharpagar');
 
-  // Remover event listeners antigos para evitar múltiplos envios
   confirmarBtn.onclick = null;
-  fecharBtn.onclick = null; // <-- Aqui corrigi
+  fecharBtn.onclick = null; 
 
   confirmarBtn.onclick = function() {
-    popup.innerHTML = 'Atualizando...'; // Esconde o popup antes de enviar
+    popup.innerHTML = 'Atualizando...';
 
     fetch('/inicio/pendentes/atualizar/', {
       method: 'POST',
@@ -794,11 +885,10 @@ function handleFormSubmit(e) {
   };
 
   fecharBtn.onclick = function() {
-    popup.style.display = 'none'; // Fecha o popup sem fazer nada
-    document.getElementById('overlay').style.display = 'none'; // também esconde o overlay
+    popup.style.display = 'none'; 
+    document.getElementById('overlay').style.display = 'none'; 
   };
 }
-
 
 document.addEventListener('DOMContentLoaded', function() {
   setupFichaButtons();
@@ -820,59 +910,6 @@ function fechar(){
   document.getElementById('popupficha').style.display = 'none';
   document.getElementById('overlay').style.display = 'none';
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // foto de perfil
 

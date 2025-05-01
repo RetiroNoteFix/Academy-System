@@ -107,7 +107,7 @@
                     <button class="msg" title="ENVIAR MENSAGEM"  data-vencimento="{{$pagamento->data_vencimento}}"data-valor="{{$pagamento->valor}}" data-nomealuno="{{$pagamento->aluno->pessoa->nome}}" data-telefone="{{ $pagamento->aluno->pessoa->telefone ?? 'N/A' }}">
                     <i id="btnacticon" class="fa-solid fa-comment"></i>
                     </button>
-                    <button class="desativar" title="IGNORAR COBRANÇA" data-id="{{ $pagamento->id_aluno ?? 'N/A' }}">
+                    <button class="desativar" title="IGNORAR COBRANÇA" data-id="{{ $pagamento->id ?? 'N/A' }}">
                         <i id="btnacticon" class="fa-solid fa-circle-xmark"></i>
                     </button>
                 </div>

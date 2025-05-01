@@ -86,4 +86,5 @@ Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');
 Route::post('/inicio/pendentes/{id}/{idaluno}', [PagamentoController::class, 'visualizarNotificacao'])->name('inicio.pendentes');
 Route::post('/inicio/pendentes/atualizar/', [PagamentoController::class, 'atualizarPendente'])->name('inicio.pendentes.atualizar');
+Route::post('/inicio/ignorar/{id}', [PagamentoController::class, 'ignorarPendente'])->name('inicio.ignorar');
 Route::get('/usuarios/visualizar/{id}', [UsuarioController::class, 'visualizar'])->name('usuarios.visualizar');

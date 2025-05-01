@@ -27,7 +27,15 @@ class PagamentoController extends Controller
             $pagamento = Pagamento::findOrFail($id);
             
             // Quebra o endereço em partes
-            $enderecos = explode(",", $aluno->pessoa->endereco);
+            $endereco = "";
+            if ($aluno->pessoa->endereco === null || " "){
+                $endereco = "Sem dados, Sem dados, Sem dados, Sem dados, Sem dados, Sem dados";
+             }
+             else{
+                $endereco = $aluno->pessoa->endereco;
+             }
+            $enderecos = explode(",", $endereco);
+           
             
             // Formatação das datas
             $dataFormatada = Carbon::parse($aluno->pessoa->data_nascimento)->format('d/m/Y');
@@ -104,6 +112,27 @@ class PagamentoController extends Controller
                     'plano_aluno' => $request->plano_aluno,
                     'valor' => $request->valor, // Aqui usa o valor tratado
                     'situacao' => "pago",
+                ]);
+                return response()->json(['success' => 'Pagamento atualizado com sucesso!']);
+            } else {
+                return response()->json(['error' => 'Pagamento não encontrado'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar o pagamento: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function ignorarPendente(Request $request, $id)
+{
+       
+        try {
+           
+            $pagamento = Pagamento::findOrFail($id);
+
+            if ($pagamento) {
+              
+                $pagamento->update([
+                    'situacao' => "ignorado",
                 ]);
                 return response()->json(['success' => 'Pagamento atualizado com sucesso!']);
             } else {
