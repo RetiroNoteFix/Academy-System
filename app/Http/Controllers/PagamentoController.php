@@ -40,11 +40,14 @@ class PagamentoController extends Controller
             // Formatação das datas
             $dataFormatada = Carbon::parse($aluno->pessoa->data_nascimento)->format('d/m/Y');
             $dataFormatada2 = Carbon::parse($pagamento->data_vencimento)->format('d/m/Y');
-            $diaFormatado = Carbon::parse($aluno->data_pagamento)->format('d');
+            $diaFormatado = Carbon::parse($pagamento->data_pagamento)->format('d');
 
             // Formatação de dados
             $pagamento->plano_aluno = strtoupper($pagamento->plano_aluno);
             $pagamento->situacao = strtoupper($pagamento->situacao);
+            if ($pagamento->data_vencimento === null){
+                $dataFormatada2 = null;
+            }
 
             return response()->json([
                 'idaluno' => $aluno->id_aluno,

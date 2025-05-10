@@ -103,12 +103,12 @@ configsection.classList.toggle("exibir");
 let autoCollapseEnabled = false;
 
 function applyCompactMargins() {
-menu.style.width = "40px";
-mainContent.style.marginLeft = "40px";
-configsection.style.marginLeft = "40px";
-copy.style.marginLeft = "0px";
-pagetitle.style.marginLeft = "40px";
-userout.style.marginLeft = "8px";
+    menu.style.width = "50px";
+    mainContent.style.marginLeft = "50px";
+    configsection.style.marginLeft = "50px";
+    copy.style.marginLeft = "0px";
+    pagetitle.style.marginLeft = "50px";
+    userout.style.marginLeft = "13px";
 setTimeout(() => {
 boxbuttons.forEach(button => {
     button.classList.remove('short');
@@ -131,17 +131,35 @@ userout.style.marginLeft = "105px";
 
 }
 
-function toggleAutoCollapse() {
-if (autoCollapseEnabled) {
-menu.removeEventListener('mouseover', restoreExpandedMargins);
-menu.removeEventListener('mouseout', applyCompactMargins);
-} else {
-menu.addEventListener('mouseover', restoreExpandedMargins);
-menu.addEventListener('mouseout', applyCompactMargins);
+function activateAutoCollapse() {
+  menu.addEventListener('mouseover', restoreExpandedMargins);
+  menu.addEventListener('mouseout', applyCompactMargins);
+  configsection.addEventListener('mouseover', restoreExpandedMargins);
+  configsection.addEventListener('mouseout', applyCompactMargins);
+  config1.style.display = "none";
+  config1on.style.display = "block";
+  applyCompactMargins();
 }
-autoCollapseEnabled = !autoCollapseEnabled;
 
-localStorage.setItem('autoCollapseEnabled', autoCollapseEnabled);
+function deactivateAutoCollapse() {
+  menu.removeEventListener('mouseover', restoreExpandedMargins);
+  menu.removeEventListener('mouseout', applyCompactMargins);
+  configsection.removeEventListener('mouseover', restoreExpandedMargins);
+  configsection.removeEventListener('mouseout', applyCompactMargins);
+  config1.style.display = "block";
+  config1on.style.display = "none";
+  restoreExpandedMargins();
+}
+
+function toggleAutoCollapse() {
+  autoCollapseEnabled = !autoCollapseEnabled;
+  localStorage.setItem('autoCollapseEnabled', autoCollapseEnabled);
+
+  if (autoCollapseEnabled) {
+    activateAutoCollapse();
+  } else {
+    deactivateAutoCollapse();
+  }
 }
 
 function loadSavedState() {
@@ -375,38 +393,7 @@ temaNoite.addEventListener('click', function() {
 applyNightTheme();
 saveTheme('night'); 
 
-optAlunosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optPagamentosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optConfigN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optUsuariosN.addEventListener("mouseover", function() {
-optInicioN.style.backgroundColor = "#212529";
-optInicioN.style.border = "none";
-});
-optAlunosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optPagamentosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optUsuariosN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
-optConfigN.addEventListener("mouseout", function() {
-optInicioN.style.backgroundColor = "#535151";
-optInicioN.style.borderLeft = "2px solid #a02c2c";
-});
+
 });
 menu.addEventListener("mouseover", () => {
 mainContent.classList.add("expanded");
@@ -424,7 +411,42 @@ userout.classList.remove("expanded");
 });
 
 let alunoId = null;
-
+optInicioN.addEventListener("mouseover", function() {
+    optAlunosN.style.backgroundColor = "#212529";
+    optAlunosN.style.border = "none";
+    });
+    optAlunosN.addEventListener("mouseover", function() {
+        optAlunosN.style.backgroundColor = "#535151";
+        optAlunosN.style.borderLeft = "2px solid #a02c2c";
+        });
+    optPagamentosN.addEventListener("mouseover", function() {
+        optAlunosN.style.backgroundColor = "#212529";
+    optAlunosN.style.border = "none";
+    });
+    optConfigN.addEventListener("mouseover", function() {
+        optAlunosN.style.backgroundColor = "#212529";
+    optAlunosN.style.border = "none";
+    });
+    optUsuariosN.addEventListener("mouseover", function() {
+        optAlunosN.style.backgroundColor = "#212529";
+    optAlunosN.style.border = "none";
+    });
+    optInicioN.addEventListener("mouseout", function() {
+        optAlunosN.style.backgroundColor = "#535151";
+    optAlunosN.style.borderLeft = "2px solid #a02c2c";
+    });
+    optPagamentosN.addEventListener("mouseout", function() {
+        optAlunosN.style.backgroundColor = "#535151";
+    optAlunosN.style.borderLeft = "2px solid #a02c2c";
+    });
+    optUsuariosN.addEventListener("mouseout", function() {
+        optAlunosN.style.backgroundColor = "#535151";
+    optAlunosN.style.borderLeft = "2px solid #a02c2c";
+    });
+    optConfigN.addEventListener("mouseout", function() {
+        optAlunosN.style.backgroundColor = "#535151";
+    optAlunosN.style.borderLeft = "2px solid #a02c2c";
+    });
 document.querySelectorAll('.desativar').forEach(button => {
     button.addEventListener('click', function() {
         alunoId = this.getAttribute('data-id');
@@ -447,66 +469,105 @@ window.location.reload();
 
 
 document.getElementById('confirmar').addEventListener('click', () => {
-    document.getElementById('overlay').style.display = 'block';
-    const alunoId = document.getElementById('popup').getAttribute('data-id');  
-    if (alunoId) {
-        fetch(`/alunos/desativar/${alunoId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            
-            if (data.error) {
-                document.getElementById('popup').querySelector('p').textContent = data.error;  
-                document.getElementById('confirmar').style.display = 'none';  
-                document.getElementById('fechar').textContent = 'Fechar';  
-                document.getElementById('fechar').style.display = "block";
-                document.getElementById('overlay').style.display = 'block';
+    const overlay = document.getElementById('overlay');
+    const popup = document.getElementById('popup');
+    const alunoId = popup.getAttribute('data-id');  
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    if (!alunoId) return;
+
+    // Exibe o overlay enquanto o processo ocorre
+    overlay.style.display = 'block';
+
+    // Envia a requisição para desativar o aluno
+    fetch(`/alunos/desativar/${alunoId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        const popupMessage = popup.querySelector('p');
+        const fecharButton = document.getElementById('fechar');
+
+        if (data.error) {
+            // Exibe a mensagem de erro e ajusta os botões
+            popupMessage.textContent = data.error;
+            fecharButton.textContent = 'Fechar';
+            fecharButton.style.display = "block";
+            overlay.style.display = 'block';
+            return;
+        }
+ document.getElementById('confirmar').style.display = 'none';  
+        popupMessage.textContent = "Desativado com sucesso!";
+        fecharButton.style.display = "none";
+
+        
+        const row = document.querySelector(`button[data-id="${alunoId}"]`)?.closest('tr');
+        if (row) row.remove();
+      
+        const tableBody = document.querySelector('table tbody');
+        if (tableBody && tableBody.querySelectorAll('tr').length === 0) {
+            const noPaymentsRow = document.createElement('tr');
+            const noPaymentsCell = document.createElement('td');
+            const theme = localStorage.getItem('theme');
+
+            noPaymentsCell.id = "nolist";
+            noPaymentsCell.colSpan = document.querySelectorAll('table thead th').length;
+            noPaymentsCell.textContent = 'Nenhum aluno encontrado.';
+
+            if (theme === 'night') {
+                noPaymentsCell.style.color = "#fff";
+                noPaymentsCell.style.backgroundColor = "#212529";
             } else {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('popup').querySelector('p').textContent = "Desativado com sucesso!"; 
-                document.getElementById('confirmar').style.display = 'none'; 
-                document.getElementById('fechar').style.display = "none";
-                const row = document.querySelector(`button[data-id="${alunoId}"]`).closest('tr');
-                row.remove(); 
-                setTimeout(function() {
-                   closePopup();
-                }, 1500);
-                
+                noPaymentsCell.style.color = "#333";
+                noPaymentsCell.style.backgroundColor = "#fff";
             }
-        })
-        .catch(error => {
-            console.error('Erro ao desativar aluno:', error);
-            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao desativar."; 
-            document.getElementById('confirmar').style.display = 'none';  
-            document.getElementById('fechar').textContent = 'Fechar'; 
-        });
-    }
+
+            noPaymentsRow.appendChild(noPaymentsCell);
+            tableBody.appendChild(noPaymentsRow);
+        }
+
+        setTimeout(closePopup, 1500);
+
+    })
+    .catch(error => {
+        console.error('Erro ao desativar aluno:', error);
+        popup.querySelector('p').textContent = "Ocorreu um erro ao desativar.";
+        document.getElementById('fechar').textContent = 'Fechar';
+        document.getElementById('fechar').style.display = 'block';
+    });
 });
+
 
 
 document.querySelectorAll('.ativar').forEach(button => {
     button.addEventListener('click', function() {
-        alunoIdOFF = this.getAttribute('data-id');
-        document.getElementById('popup').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja ativar?';  
-        document.getElementById('confirmarativar').style.display = 'inline-block';  
+        const alunoIdOFF = this.getAttribute('data-id');
+        const popup = document.getElementById('popup');
+        const overlay = document.getElementById('overlay');
+        
+        popup.setAttribute('data-id', alunoIdOFF);
+        popup.querySelector('p').textContent = 'Tem certeza de que deseja ativar?';
+        document.getElementById('confirmarativar').style.display = 'inline-block';
         document.getElementById('confirmar').style.display = 'none';  
-        document.getElementById('confirmarapagar').style.display = 'none'; 
-        document.getElementById('fechar').textContent = 'Cancelar';  
-        document.getElementById('fechar').style.display = "block";
-        document.getElementById('popup').setAttribute('data-id',  alunoIdOFF); 
+        document.getElementById('confirmarapagar').style.display = 'none';
+        document.getElementById('fechar').textContent = 'Cancelar';
+        document.getElementById('fechar').style.display = 'block';
+        
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
     });
 });
 
+// Confirmação de ativação
 document.getElementById('confirmarativar').addEventListener('click', () => {
-    document.getElementById('overlay').style.display = 'block';
     const alunoIdOFF = document.getElementById('popup').getAttribute('data-id');  
+    const popup = document.getElementById('popup');
+    const overlay = document.getElementById('overlay');
+    
     if (alunoIdOFF) {
         fetch(`/alunos/ativar/${alunoIdOFF}`, {
             method: 'POST',
@@ -517,35 +578,61 @@ document.getElementById('confirmarativar').addEventListener('click', () => {
         })
         .then(response => response.json())
         .then(data => {
-            
             if (data.error) {
-                document.getElementById('popup').querySelector('p').textContent = data.error;  
+                popup.querySelector('p').textContent = data.error;  
                 document.getElementById('confirmar').style.display = 'none';  
                 document.getElementById('fechar').textContent = 'Fechar';  
-                document.getElementById('fechar').style.display = "block";
-                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('fechar').style.display = 'block';
             } else {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('popup').querySelector('p').textContent = "Ativado com sucesso!"; 
-                document.getElementById('confirmar').style.display = 'none'; 
+                popup.querySelector('p').textContent = "Ativado com sucesso!"; 
                 document.getElementById('confirmarativar').style.display = 'none'; 
-                document.getElementById('fechar').style.display = "none";
-                const row = document.querySelector(`button[data-id="${alunoIdOFF}"]`).closest('tr');
-                row.remove(); 
-                setTimeout(function() {
-                   closePopup();
-                }, 1500);
+                document.getElementById('fechar').style.display = 'none';
                 
+                // Remove a linha do aluno
+                const row = document.querySelector(`button[data-id="${alunoIdOFF}"]`)?.closest('tr');
+                if (row) row.remove();
+                
+                // Verifica se precisa adicionar a mensagem "Nenhum aluno encontrado"
+                ['tbodyalunoson', 'tbodyalunosoff'].forEach(tbodyId => {
+                    const tableBody = document.getElementById(tbodyId);
+                    const rows = tableBody.querySelectorAll('tr:not(#nolist)');
+
+                    if (rows.length === 0) {
+                        const noDataRow = document.createElement('tr');
+                        const noDataCell = document.createElement('td');
+                        const theme = localStorage.getItem('theme');
+        
+                        noDataCell.id = "nolist";
+                        noDataCell.colSpan = document.querySelectorAll('table thead th').length;
+                        noDataCell.textContent = 'Nenhum aluno encontrado.';
+        
+                        if (theme === 'night') {
+                            noDataCell.style.color = "#fff";
+                            noDataCell.style.backgroundColor = "#212529";
+                        } else {
+                            noDataCell.style.color = "#333";
+                            noDataCell.style.backgroundColor = "#fff";
+                        }
+        
+                        noDataRow.appendChild(noDataCell);
+                        tableBody.appendChild(noDataRow);
+                    }
+                });
+
+                setTimeout(() => closePopup(), 1500);
             }
         })
         .catch(error => {
-            console.error('Erro ao desativar aluno:', error);
-            document.getElementById('popup').querySelector('p').textContent = "Ocorreu um erro ao ativar."; 
+            console.error('Erro ao ativar aluno:', error);
+            popup.querySelector('p').textContent = "Ocorreu um erro ao ativar."; 
             document.getElementById('confirmar').style.display = 'none';  
             document.getElementById('fechar').textContent = 'Fechar'; 
+            document.getElementById('fechar').style.display = 'block';
         });
     }
 });
+
+
 
 
 document.querySelectorAll('.apagar').forEach(button => {
@@ -608,6 +695,30 @@ document.getElementById('confirmarapagar').addEventListener('click', () => {
 });
 
 
+function calcularIdade(dataNascimento) {
+    let idadeout = "Sem dados";  
+    
+    if (!dataNascimento || dataNascimento === "") {
+        return idadeout;
+    }
+
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+
+    if (isNaN(nascimento)) {
+        return idadeout; 
+    }
+
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+
+    idadeout = `${idade} Anos`;  
+    return idadeout;
+}
 
 
 document.querySelectorAll('.ficha').forEach(button => {
@@ -622,7 +733,6 @@ document.querySelectorAll('.ficha').forEach(button => {
         document.getElementById('overlay').style.display = 'block';
         document.getElementById('fechar').style.display = "block";
         document.getElementById('popupficha').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
-   
 
         // Realiza a requisição para buscar os dados do aluno
         fetch(`/alunos/visualizar/${alunoIdFicha}`, {
@@ -641,16 +751,27 @@ document.querySelectorAll('.ficha').forEach(button => {
                 document.getElementById('fechar').style.display = "block";
                 document.getElementById('overlay').style.display = 'block';
             } else {
+                const idadeout = calcularIdade(data.data_nascimento);
+
                 const el = document.getElementById('conteudoficha');
       el.scrollTop = 0;
-                document.getElementById('nome').value = `${data.nome}`;
+                //dados pessoa
+                document.getElementById('nome').value = data.nome ?? "Sem Dados";
                 document.getElementById('data_nascimento').value = data.data_nascimento ?? "";
-                document.getElementById('idade').value = data.idade ?? "Sem dados";
+                document.getElementById('idade').value = `${idadeout}`;
                 document.getElementById('cpf').value = data.cpf ?? "Sem dados";
                 document.getElementById('rg').value = data.rg ?? "Sem dados";
                 document.getElementById('telefone').value = data.telefone ?? "Sem dados";
-                document.getElementById('telefone_familia').value = data.telefone_familia = "Sem dados";
-                document.getElementById('email').value = data.email = "Sem dados";
+                document.getElementById('telefone_familia').value = data.telefone_familia ?? "Sem dados";
+                document.getElementById('email').value = data.email ?? "Sem dados";
+                document.getElementById('rua').value = data.rua ?? "Sem dados";
+                document.getElementById('numero').value = data.numero ?? "Sem dados";
+                document.getElementById('complemento').value = data.complemento ?? "Sem dados";
+                document.getElementById('bairro').value = data.bairro ?? "Sem dados";
+                document.getElementById('cidade').value = data.cidade ?? "Sem dados";
+                document.getElementById('cep').value = data.cep ?? "Sem dados";
+
+                // dados aluno
                 document.getElementById('cirurgia').value = data.cirurgia ?? "Sem dados";
                 document.getElementById('dorme_bem').value = data.dorme_bem ?? "Sem dados";
                 document.getElementById('lesao_detalhes_input2').value = data.lesao_detalhes_input ?? "Sem dados";
@@ -665,61 +786,94 @@ document.querySelectorAll('.ficha').forEach(button => {
                 document.getElementById('diabetes').value = data.diabetes ?? "Sem dados";
                 document.getElementById('obesidade').value = data.obesidade ?? "Sem dados";
                 document.getElementById('colesterol_elevado').value = data.colesterol_elevado ?? "Sem dados";
-
                 const dataInput1 = data.input_sim1;
-                const dataInput2 = data.input_sim2;
-                const dataInput3 = data.input_sim3;
-                const dataInput4 = data.input_sim4;
-                const dataInput5 = data.input_sim5;
-                const dataInput6 = data.input_sim6;
-                const dataInput7 = data.input_sim7;
+const dataInput2 = data.input_sim2;
+const dataInput3 = data.input_sim3;
+const dataInput4 = data.input_sim4;
+const dataInput5 = data.input_sim5;
+const dataInput6 = data.input_sim6;
+const dataInput7 = data.input_sim7;
+if (dataInput1 === "sim") {
+    document.getElementById('input-sim1').checked = true;
+    bloquearGrupo('par_q1');
+} else {
+    document.getElementById('input-nao1').checked = true;
+    bloquearGrupo('par_q1');
+}
 
-                if (dataInput1 === "Sim"){
-                    document.getElementById('input-sim1').checked = true;
-                } else {
-                    document.getElementById('input-nao1').checked = true;
-                }
-                 if (dataInput2 === "Sim"){
-                    document.getElementById('input-sim2').checked = true;
-                } else {
-                    document.getElementById('input-nao2').checked = true;
-                }
-                 if (dataInput3 === "Sim"){
-                    document.getElementById('input-sim3').checked = true;
-                } else {
-                    document.getElementById('input-nao3').checked = true;
-                }
-                 if (dataInput4 === "Sim"){
-                    document.getElementById('input-sim4').checked = true;
-                } else {
-                    document.getElementById('input-nao4').checked = true;
-                }
-                 if (dataInput5 === "Sim"){
-                    document.getElementById('input-sim5').checked = true;
-                } else {
-                    document.getElementById('input-nao5').checked = true;
-                }
-                 if (dataInput6 === "Sim"){
-                    document.getElementById('input-sim6').checked = true;
-                } else {
-                    document.getElementById('input-nao6').checked = true;
-                }
-                 if (dataInput7 === "Sim"){
-                    document.getElementById('input-sim7').checked = true;
-                } else {
-                    document.getElementById('input-nao7').checked = true;
-                }
+if (dataInput2 === "sim") {
+    document.getElementById('input-sim2').checked = true;
+    bloquearGrupo('par_q2');
+} else {
+    document.getElementById('input-nao2').checked = true;
+    bloquearGrupo('par_q2');
+}
 
-                document.getElementById('endereco').value = data.endereco ?? 'Sem dados';
+if (dataInput3 === "sim") {
+    document.getElementById('input-sim3').checked = true;
+    bloquearGrupo('par_q3');
+} else {
+    document.getElementById('input-nao3').checked = true;
+    bloquearGrupo('par_q3');
+}
+
+if (dataInput4 === "sim") {
+    document.getElementById('input-sim4').checked = true;
+    bloquearGrupo('par_q4');
+} else {
+    document.getElementById('input-nao4').checked = true;
+    bloquearGrupo('par_q4');
+}
+
+if (dataInput5 === "sim") {
+    document.getElementById('input-sim5').checked = true;
+    bloquearGrupo('par_q5');
+} else {
+    document.getElementById('input-nao5').checked = true;
+    bloquearGrupo('par_q5');
+}
+
+if (dataInput6 === "sim") {
+    document.getElementById('input-sim6').checked = true;
+    bloquearGrupo('par_q6');
+} else {
+    document.getElementById('input-nao6').checked = true;
+    bloquearGrupo('par_q6');
+}
+
+if (dataInput7 === "sim") {
+    document.getElementById('input-sim7').checked = true;
+    bloquearGrupo('par_q7');
+} else {
+    document.getElementById('input-nao7').checked = true;
+    bloquearGrupo('par_q7');
+}
+document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+    radio.addEventListener('click', function (e) {
+        if (this.dataset.locked === 'true') {
+            e.preventDefault();
+            return;
+        }
+
+        const groupRadios = document.querySelectorAll(`input[name="${this.name}"]`);
+        groupRadios.forEach(r => r.dataset.locked = 'true');
+    });
+});
+function bloquearGrupo(groupName) {
+    const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+    radios.forEach(r => r.dataset.locked = 'true');
+}
+
+                document.getElementById('modalidade_anterior').value = data.modalidade_anterior ?? "Sem dados";
                 document.getElementById('modalidade_atual').value = data.modalidade_atual ?? "Sem dados";
                 document.getElementById('objetivo_atividade_fisica').value = data.objetivo_atividade_fisica ?? "Sem dados";
-                document.getElementById('soubeDa_academia').value = data.soubeDa_academia ?? "Sem dados";
+                document.getElementById('como_soube_da_academia').value = data.como_soube_da_academia ?? "Sem dados";
                 document.getElementById('peso').value = data.peso ?? "Sem dados";
                 document.getElementById('tipo_sanguineo').value = data.tipo_sanguineo ?? "Sem dados";
                 document.getElementById('pressao_arterial').value = data.pressao_arterial ?? "Sem dados";
                 document.getElementById('fumar').value = data.fumar ?? "Sem dados";
                 document.getElementById('faz_dieta').value = data.faz_dieta ?? "Sem dados";
-                document.getElementById('bebida_alcoolica').value = data.bebida_alcoolica ?? "Sem dados";
+                document.getElementById('bebida_alcoolica').value = data.usa_bebida_alcoolica ?? "Sem dados";
                 document.getElementById('sedentario').value = data.sedentario ?? "Sem dados";
                 document.getElementById('input-altura').value = data.altura ?? "Sem dados";
                 document.getElementById('input-torax').value = data.torax ?? "Sem dados";
@@ -731,10 +885,15 @@ document.querySelectorAll('.ficha').forEach(button => {
                 document.getElementById('input-pernas').value = data.pernas ?? "Sem dados";
                 document.getElementById('input-panturrilha').value = data.panturrilha ?? "Sem dados";
                 document.getElementById('input-observacoes').value = data.observacoes ?? "Sem dados";
+                // dados pagamento
+                document.getElementById('valor').value = `R$${data.valor ?? "Sem dados"}`;
+                document.getElementById('data_pagamento').value = data.data_pagamento ?? "Sem dados";
+                document.getElementById('plano').value = data.plano_aluno ?? "Sem dados";
+                //desabilitação de itens do modal
                 document.getElementById('confirmar').style.display = 'none'; 
                 document.getElementById('confirmarativar').style.display = 'none'; 
                 document.getElementById('fechar').style.display = "none";
-                
+ 
             }
         })
         .catch(error => {
@@ -752,23 +911,14 @@ document.querySelectorAll('.ficha').forEach(button => {
 
 document.querySelectorAll('.editar').forEach(button => {
     button.addEventListener('click', function() {
-        const el = document.getElementById('conteudoficha2');
-        el.scrollTop = 0;
-            
-         
-        const alunoIdFicha2 = this.getAttribute('data-id');  // Pega o ID do aluno do botão clicado
-        document.getElementById('save').style.display = 'none';
-        document.getElementById('close3').style.display = 'none';
-        document.getElementById('confirmareditar').style.display = 'none';
-        document.getElementById('perguntaedit').style.display = 'none';
+
+        const alunoIdFicha = this.getAttribute('data-id');
+        document.getElementById('popupeditar').setAttribute('data-id', alunoIdFicha);  // Armazena o ID no popup
         document.getElementById('popupeditar').style.display = 'block';
         document.getElementById('overlay').style.display = 'block';
-        document.getElementById('fechar').style.display = "block";
-        document.getElementById('popupeditar').setAttribute('data-id', alunoIdFicha2);  // Armazena o ID no popup
-   
-
-        // Realiza a requisição para buscar os dados do aluno
-        fetch(`/alunos/visualizar/${alunoIdFicha2}`, {
+        document.getElementById('popupeditar').innerHTML = `Carregando...`
+       
+        fetch(`/alunos/visualizar/${alunoIdFicha}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -783,104 +933,589 @@ document.querySelectorAll('.editar').forEach(button => {
                 document.getElementById('fechar').style.display = "block";
                 document.getElementById('overlay').style.display = 'block';
             } else {
-                const el = document.getElementById('conteudoficha2');
-      el.scrollTop = 0;
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('idalunoedit').value = `${data.idaluno}`;
-                document.getElementById('nome2').value = `${data.nome}`;
-                document.getElementById('data_nascimento2').value = data.data_nascimento ?? "";
-                document.getElementById('idade2').value = data.idade ?? "Sem dados";
-                document.getElementById('cpf2').value = data.cpf ?? "Sem dados";
-                document.getElementById('rg2').value = data.rg ?? "Sem dados";
-                document.getElementById('telefone2').value = data.telefone ?? "Sem dados";
-                document.getElementById('telefone_familia2').value = data.telefone_familia = "Sem dados";
-                document.getElementById('email2').value = data.email = "Sem dados";
-                document.getElementById('cirurgia2').value = data.cirurgia ?? "Sem dados";
-                document.getElementById('dorme_bem2').value = data.dorme_bem ?? "Sem dados";
-                document.getElementById('lesao_detalhes_input22').value = data.lesao_detalhes_input ?? "Sem dados";
-                document.getElementById('coluna_detalhes_input22').value = data.coluna_detalhes_input ?? "Sem dados";
-                document.getElementById('tempo_sem_medico2').value = data.tempo_sem_medico ?? "Sem dados";
-                document.getElementById('uso_medicamento2').value = data.uso_medicamento ?? "Sem dados";
-                document.getElementById('problema_saude2').value = data.problema_saude ?? "Sem dados";
-                document.getElementById('varizes2').value = data.varizes ?? "Sem Dados";
-                document.getElementById('infarto2').value = data.infarto ?? "Sem dados";
-                document.getElementById('doenca_detalhes_input22').value = data.doenca_detalhes_input ?? "Sem dados";
-                document.getElementById('derrame2').value = data.derrame ?? "Sem dados";
-                document.getElementById('diabetes2').value = data.diabetes ?? "Sem dados";
-                document.getElementById('obesidade2').value = data.obesidade ?? "Sem dados";
-                document.getElementById('colesterol_elevado2').value = data.colesterol_elevado ?? "Sem dados";
+                const idadeout = calcularIdade(data.data_nascimento);
+                document.getElementById('popupeditar').innerHTML = `  <div class="conteudo-ficha">
+                <div class="form-titulo" id="titulopopup">
+                        <div class="topinfoedit">
+                            <div class="ladoesquerdoinfo">
+                                <h4 id="nomealunoficha">EDITAR ALUNO:</h4>
+                                <input type="text" name="idalunoedit" id="idalunoedit" style="opacity: 0;">
+                            </div><!--ladoesquerdoinfo-->
+                            <div class="btnamnese">
+    
+                                <button class="addaluno" id="save2">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    Salvar
+                                </button>
+                                <button class="addaluno" id="close2" onclick="fecharAnamnese()">
+                                    <i class="fa-solid fa-xmark"></i>Fechar</button>
+    
+                            </div>
+                        </div><!--topinfoedit-->
+                </div>
+                <div class="conteudo-anamnese" id="conteudoficha">
+                  <form id="formedit" action="" method="post">
+                    <div class="ladoesquerdoform">
+                       <div class="form-titulo">
+                            <h1 id="h1tituloinfo">INFOMAÇÕES PESSOAIS</h1>
+                        </div>
+                  
+                        <div class="form-group">
+                            <label for="nome">NOME COMPLETO:</label>
+                            <input type="text" id="nome" name="nome" value="${data.nome ?? "Sem dados"}" required maxlenght="255"
+                                placeholder="Nome completo" >
+                        </div>
+                        <div class="compact">
+                            <div class="form-group" id="inputdata">
+                                <label for="data_nascimento">DATA DE NASCIMENTO:</label>
+                                <input type="date" id="data_nascimento" value="${data.data_nascimento}" name="data_nascimento" maxlength="10"
+                                    >
+                            </div>
+                            <div class="form-group">
+                                <label for="idade">IDADE:</label>
+                                <input type="text" id="idade" value="${idadeout  ?? "Sem dados"}" name="idade" readonly placeholder="Idade" >
+                            </div>
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="cpf">CPF:</label>
+                                <input type="text" id="cpf" value="${data.cpf ?? "Sem dados"}" name="cpf" maxlength="14"
+                                    placeholder="000.000.000-00" >
+                            </div>
+                            <div class="form-group">
+                                <label for="rg">RG:</label>
+                                <input type="text"id="rg" value="${data.rg ?? "Sem dados"}" name="rg" placeholder="00.000.000-00" maxlength="13"
+                                    pattern="\d{2}\.\d{3}\.\d{3}-[\d{2}]" >
+                            </div>
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="telefone">TELEFONE:</label>
+                                <input class="smallinput" value="${data.telefone ?? "Sem dados"}" type="tel" id="telefone" name="telefone" maxlength="15"
+                                    placeholder="(00) 00000-0000" >
+                            </div>
+                            <div class="form-group">
+                                <label for="telefone_familia">TELEFONE FAMILIAR:</label>
+                                <input type="tel" id="telefone_familia" value="${data.telefone_familia ?? "Sem dados"}" maxlength="15" name="telefone_familia"
+                                    placeholder="(00) 00000-0000" >
+                            </div>
+                        </div><!--compact-->
+                        <div class="form-group">
+                            <label for="email">EMAIL:</label>
+                            <input type="email" id="email" value="${data.email ?? "Sem dados"}" name="email" placeholder="email@email.com" >
+                        </div>
+                        <br><br><br><br><p id='space'></p>
+                        <div class="form-titulo">
+                            <h5>HISTÓRICO DE SAÚDE</h5>
+                        </div>
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="cirurgia">QUAL CIRURGIA JÁ FEZ:</label>
+                                <input type="text" id="cirurgia" value="${data.cirurgia ?? "Sem dados"}" name="cirurgia" placeholder="Descreva a cirurgia"
+                                    >
+                            </div>
+                            <div class="form-group">
+                                <label for="dorme_bem">QUANTAS HORAS DE SONO:</label>
+                                <input type="text" id="dorme_bem" value="${data.dorme_bem ?? "Sem dados"}" name="dorme_bem"
+                                    placeholder="Quantidade de horas de sono" >
+                            </div>
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="lesao_detalhes">LESÃO ARTICULAR:</label>
+                                <input type="text" id="lesao_detalhes_input2" value="${data.lesao_detalhes_input ?? "Sem dados"}" name="lesao_detalhes"
+                                    placeholder="Descreva a lesão">
+                            </div>
+                            <div class="form-group">
+                                <label for="coluna_detalhes">PROBLEMA DE COLUNA:</label>
+                                <input type="text" id="coluna_detalhes_input2" value="${data.coluna_detalhes_input ?? "Sem dados"}" name="coluna_detalhes"
+                                    placeholder="Descreva o problema">
+    
+                            </div>
+                        </div><!--compact-->
+                        <div class="form-group">
+                            <label for="tempo_sem_medico">ÚLTIMA VEZ QUE FOI AO MÉDICO:</label>
+                            <input type="text" id="tempo_sem_medico" value="${data.tempo_sem_medico ?? "Sem dados"}" name="tempo_sem_medico"
+                                placeholder="Ex: 6 meses, 1 ano">
+                        </div>
+                        <div class="form-group">
+                            <label for="uso_medicamento">USA QUAL MEDICAMENTO:</label>
+                            <input type="text" id="uso_medicamento" value="${data.uso_medicamento ?? "Sem dados"}" name="uso_medicamento"
+                                placeholder="Medicamento usado">
+                        </div>
+    
+                        <div class="form-group">
+                            <label for="problema_saude">TEM QUAL PROBLEMA DE SAÚDE</label>
+                            <input type="text" id="problema_saude" value="${data.problema_saude ?? "Sem dados"}"name="problema_saude"
+                                placeholder="Descreva o problema de saúde">
+                        </div>
+                        <div class="compact">
+                            <div class="form-group" id="infartoS">
+                                <label for="varizes">TEM VARIZES:</label>
+                                <select class="smallinput" id="varizes" name="varizes">
+                                <option value="" disabled selected>${data.varizes ?? "Sem dados"}</option>
+                                <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="infarto">INFARTO:</label>
+                                <select "id="infarto" name="infarto">
+                                 <option value="" disabled selected>${data.infarto ?? "Sem dados"}</option>
+                                 <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+                            </div>
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="doenca_detalhes">DOENÇA CARDÍACA:</label>
+                                <input type="text" id="doenca_detalhes_input2" value="${data.doenca_detalhes_input ?? "Sem dados"}" name="doenca_detalhes"
+                                    placeholder="Descreva a doença">
+    
+                            </div>
+                            <div class="form-group">
+                                <label for="derrame">DERRAME:</label>
+                                <select id="derrame"  name="derrame">
+                                <option value="" disabled selected>${data.derrame ?? "Sem dados"}</option>
+                                 <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="diabetes">DIABETES:</label>
+                                <select  class="smallinput" id="diabetes" name="diabetes">
+                                 <option value="" disabled selected>${data.diabetes ?? "Sem dados"}</option>
+                                 <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="obesidade">OBESIDADE:</label>
+                                <select id="obesidade" name="obesidade"> 
+                                <option value="" disabled selected>${data.obesidade ?? "Sem dados"}</option>
+                                 <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+                            </div>
+                        </div><!--compact-->
+                        <div class="form-group">
+                            <label for="colesterol_elevado">COLESTEROL ALTO:</label>
+                            <select id="colesterol_elevado" value="${data.colesterol_elevado ?? "Sem dados"}" name="colesterol_elevado">
+                                <option value="" disabled selected>${data.colesterol_elevado ?? "Sem dados"}</option>
+                                 <option value="Sim">Sim</option>
+                                <option value="Não">Não</option>
+                                </select>
+    
+                        </div>
+                        <h2 id="titulo-parq">QUESTIONÁRIO PAR-Q</h2>
+                        <table id="tabela-parq">
+                            <tr id="cabecalho-tabela">
+                                <th id="sim-header">SIM</th>
+                                <th id="nao-header">NÃO</th>
+                                <th id="questao-header">QUESTÕES</th>
+                            </tr>
+                            <tr id="linha-1">
+                                <td class="sim" id="sim1"><label id="label-sim1"><input type="radio"
+                                            name="par_q1" value="sim" id="input-sim12"></label></td>
+                                <td class="nao" id="nao1"><label id="label-nao1"><input type="radio"
+                                            name="par_q1" value="não" id="input-nao12"></label></td>
+                                <td class="questao" id="questao1">1- Seu médico alguma vez disse que você tem problema no
+                                    coração e que deve apenas praticar atividades físicas recomendadas por médico?</td>
+                            </tr>
+                            <tr id="linha-2">
+                                <td class="sim" id="sim2"><label id="label-sim2"><input type="radio"
+                                            name="par_q2" value="sim" id="input-sim22"></label></td>
+                                <td class="nao" id="nao2"><label id="label-nao2"><input type="radio"
+                                            name="par_q2" value="não" id="input-nao22"></label></td>
+                                <td class="questao" id="questao2">2- Você sente dor no peito quanto pratica atividade
+                                    física?</td>
+                            </tr>
+                            <tr id="linha-3">
+                                <td class="sim" id="sim3"><label id="label-sim3"><input type="radio"
+                                            name="par_q3" value="sim" id="input-sim32"></label></td>
+                                <td class="nao" id="nao3"><label id="label-nao3"><input type="radio"
+                                            name="par_q3" value="não" id="input-nao32"></label></td>
+                                <td class="questao" id="questao3">3- No mês passado, você teve dor no peito quanto não
+                                    estava praticando atividade física?</td>
+                            </tr>
+                            <tr id="linha-4">
+                                <td class="sim" id="sim4"><label id="label-sim4"><input value="sim" type="radio"
+                                            name="par_q4" id="input-sim42"></label></td>
+                                <td class="nao" id="nao4"><label id="label-nao4"><input type="radio"
+                                            name="par_q4" value="não" id="input-nao42"></label></td>
+                                <td class="questao" id="questao4">4- Você perde o equilíbrio devido a tonturas ou alguma
+                                    vez perdeu a consciência?</td>
+                            </tr>
+                            <tr id="linha-5">
+                                <td class="sim" id="sim5"><label id="label-sim5"><input value="sim" type="radio"
+                                            name="par_q5" id="input-sim52"></label></td>
+                                <td class="nao" id="nao5"><label id="label-nao5"><input type="radio"
+                                            name="par_q5" value="não" id="input-nao52"></label></td>
+                                <td class="questao" id="questao5">5- Você tem problema ósseo ou articular que poderia
+                                    ficar pior por alguma mudança em sua atividade física?</td>
+                            </tr>
+                            <tr id="linha-6">
+                                <td class="sim" id="sim6"><label id="label-sim6"><input  value="sim" type="radio"
+                                            name="par_q6" id="input-sim62"></label></td>
+                                <td class="nao" id="nao6"><label id="label-nao6"><input type="radio"
+                                            name="par_q6" value="não" id="input-nao62"></label></td>
+                                <td class="questao" id="questao6">6- Seu médico está atualmente receitando algum remédio
+                                    (por exemplo, diuréticos) para pressão arterial ou problema cardíaco?</td>
+                            </tr>
+                            <tr id="linha-7">
+                                <td class="sim" id="sim7"><label id="label-sim7"><input value="sim" type="radio"
+                                            name="par_q7" id="input-sim72"></label></td>
+                                <td class="nao" id="nao7"><label id="label-nao7"><input type="radio"
+                                            name="par_q7" value="não" id="input-nao72"></label></td>
+                                <td class="questao" id="questao7">7- Você sabe de qualquer outra razão pela qual não deva
+                                    praticar atividade física?</td>
+                            </tr>
+                        </table>
+    
+                    </div><!--ladoesquerdoform-->
+                    <div class="ladodireitoform">
+                        <div class="form-titulo">
+                            <h1>ENDEREÇO</h1>
+                        </div>
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="rua">RUA:</label>
+                                <input type="text" id="rua" value="${data.rua ?? "Sem dados"}" name="rua" placeholder="Digite sua rua"
+                                    >
+                            </div>
+                            <div class="form-group">
+                                <label for="numero">Nº:</label>
+                                <input type="text" id="numero" value="${data.numero ?? "Sem dados"}" name="numero"
+                                    placeholder="Número da residência" >
+                            </div>
+    
+    
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="complemento">COMPLEMENTO:</label>
+                                <input type="text" id="complemento" value="${data.complemento ?? "Sem dados"}" name="complemento"
+                                    placeholder="Apartamento, bloco, sala (opcional)" >
+                            </div>
+                            <div class="form-group">
+                                <label for="bairro">BAIRRO:</label>
+                                <input type="text" id="bairro" value="${data.bairro ?? "Sem dados"}" name="bairro"
+                                    placeholder="Digite seu bairro" >
+                            </div>
+    
+                        </div><!--compact-->
+                        <div class="compact">
+                            <div class="form-group">
+                                <label for="cidade">CIDADE:</label>
+                                <input type="text" id="cidade" name="cidade"
+                                    placeholder="Digite sua cidade" value="${data.cidade ?? "Sem dados"}" >
+                            </div>
+                            <div class="form-group">
+                                <label for="cep">CEP:</label>
+                                <input type="text" id="cep" value="${data.cep ?? "Sem dados"}" name="cep" placeholder="00000-000"
+                                    maxlength="9" >
+                            </div>
+    
+                        </div><!--compact-->
+                        <div class="form-titulo">
+                            <h1>PAGAMENTO</h1>
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">VALOR:</label>
+                            <input type="text"value="R$${data.valor ?? "Sem dados"}"  id="valor" name="valor" placeholder="R$0,00" maxlength="100"
+                                required >
+                        </div>
+                        <div class="compact">
+    
+                            <div class="form-group">
+                                <label for="data_pagamento">DATA DE PAGAMENTO:</label>
+                                <input type="date" value="${data.data_pagamento ?? "Sem dados"}" id="data_pagamento" name="data_pagamento" required >
+                            </div>
+                            <div class="form-group">
+                                <label for="plano">Plano:</label>
+                                <select id="plano"  name="plano" required >
+                                <option value="" disabled selected>${data.plano_aluno ?? "Sem dados"}</option>
+                                <option value="MENSAL">MENSAL</option>
+                                <option value="SEMESTRAL">SEMESTRAL</option>
+                                <option value="ANUAL" >ANUAL</option>
+                                </select>
+                            </div>
+                        </div><!--compact-->
+                        <br><br>
+                        <div class="form-titulo">
+                            <h4 id="h5form">HISTÓRICO E OBJETIVO NA ACADEMIA</h4>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalidade_anterior">QUE MODALIDADE JÁ FEZ:</label>
+                            <input type="text" value="${data.modalidade_anterior ?? "Sem dados"}" id="modalidade_anterior" name="modalidade_anterior"
+                                placeholder="Descreva quais modalidades já realizou">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalidade_atual">QUE MODALIDADE PRATICA ATUALMENTE:</label>
+                            <input type="text" value="${data.modalidade_atual ?? "Sem dados"}" id="modalidade_atual" name="modalidade_atual"
+                                placeholder="Descreva qual modalidade realiza atualmente">
+                        </div>
+                        <div class="form-group">
+                            <label for="objetivo_atividade_fisica">QUAL O SEU OBJETIVO:</label>
+                            <input type="text" value="${data.objetivo_atividade_fisica ?? "Sem dados"}" id="objetivo_atividade_fisica" name="objetivo_atividade_fisica"
+                                placeholder="Descreva qual seu objetivo com a atividade física">
+                        </div>
+                        <div class="form-group">
+                            <label for="como_soube_da_academia">COMO SOUBE DA ACADEMIA:</label>
+                            <input type="text" value="${data.como_soube_da_academia ?? "Sem dados"}" id="como_soube_da_academia" name="como_soube_da_academia"
+                                placeholder="Como conheceu nossa academia?">
+                        </div>
+                        <div class="form-titulo">
+            <h5>DADOS ANTROPOMÉTRICOS E DE SAÚDE</h5>
+        </div>
+        <div class="compact">
+            <div class="form-group">
+                <label for="peso">PESO:</label>
+                <input type="text" id="peso" value="${data.peso ?? "Sem dados"}" name="peso" placeholder="Peso" >
+            </div>
+            <div class="form-group">
+                <label for="tipo_sanguineo">TIPO SANGUÍNEO:</label>
+                <select id="tipo_sanguineo" name="tipo_sanguineo" >
+                    <option value="" disabled selected>${data.tipo_sanguineo ?? "Sem dados"}</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label id="labe" for="pressao_arterial">PRESSÃO:</label>
+                <select id="pressao_arterial" name="pressao_arterial" >
+                    <option value="" disabled selected>${data.pressao_arterial ?? "Sem dados"}</option>
+                    <option value="Baixa">Baixa</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Pré Hipertensão">Pré-hipertensão</option>
+                    <option value="Hipertensão Estágio 1">Hipertensão Estágio 1</option>
+                    <option value="Hipertensão Estágio 2">Hipertensão Estágio 2</option>
+                    <option value="Crise Hipertensiva">Crise Hipertensiva</option>
+                </select>
+            </div>
+        </div><!--compact-->
+        <div class="form-titulo">
+            <h5>ESTILO DE VIDA</h5>
+        </div>
+        <div class="compact">
+        <div class="form-group">
+            <label for="fuma">FUMA:</label>
+            <select class="smallinput" id="fumar" name="fuma" >
+            <option value="" disabled selected>${data.fumar ?? "Sem dados"}</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="As Vezes">As Vezes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="faz_dieta">FAZ DIETA:</label>
+            <select id="faz_dieta" name="faz_dieta" >
+            <option value="" disabled selected>${data.faz_dieta ?? "Sem dados"}</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="As Vezes">As Vezes</option>
+            </select>
+        </div>
+    </div><!--compact-->
+    <div class="compact">
+        <div class="form-group">
+            <label for="usa_bebida_alcoolica">CONSOME ÁLCOOL:</label>
+            <select  id="bebida_alcoolica" name="usa_bebida_alcoolica" >
+            <option value="" disabled selected>${data.usa_bebida_alcoolica ?? "Sem dados"}</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="As Vezes">As Vezes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sedentario">SEDENTÁRIO:</label>
+            <select id="sedentario" name="sedentario" >
+            <option value="" disabled selected>${data.sedentario ?? "Sem dados"}</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="As Vezes">As Vezes</option>
+            </select>
+        </div>
+    </div><!--compact-->
+    <div class="form-titulo" id="titulomedida">
+        <h4 id="titilo-parq">MEDIDAS ANTROPOMÉTRICAS</h4>
+    </div>
+                        <table id="tabela-medidas">
+                            <tr id="linha-altura">
+                                <th id="th-torax">ALTURA:</th>
+                                <td class="input-coluna" id="td-altura"><input id="input-altura" value="${data.altura ?? "Sem dados"}" type="text"
+                                        name="altura" placeholder="Metros"></td>
+                            </tr>
+                            <tr id="linha-torax">
+                                <th id="th-torax">TÓRAX:</th>
+                                <td class="input-coluna" id="td-torax"><input id="input-torax" value="${data.torax ?? "Sem dados"}" type="text"
+                                        name="torax" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-cintura">
+                                <th id="th-cintura">CINTURA:</th>
+                                <td class="input-coluna" id="td-cintura"><input id="input-cintura" value="${data.cintura ?? "Sem dados"}" type="text"
+                                        name="cintura" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-abdome">
+                                <th id="th-abdome">ABDOME:</th>
+                                <td class="input-coluna" id="td-abdome"><input id="input-abdome" value="${data.abdome ?? "Sem dados"}" type="text"
+                                        name="abdome" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-quadril">
+                                <th id="th-quadril">QUADRIL:</th>
+                                <td class="input-coluna" id="td-quadril"><input id="input-quadril" value="${data.quadril ?? "Sem dados"}" type="text"
+                                        name="quadril" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-bracos">
+                                <th id="th-bracos">BRAÇOS (direito e esquerdo):</th>
+                                <td class="input-coluna" id="td-bracos"><input id="input-bracos" value="${data.bracos ?? "Sem dados"}" type="text"
+                                        name="bracos" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-antebracos">
+                                <th id="th-antebracos">ANTEBRAÇOS (direito e esquerdo):</th>
+                                <td class="input-coluna" id="td-antebracos"><input id="input-antebracos" value="${data.antebracos ?? "Sem dados"}" type="text"
+                                        name="antebracos" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-pernas">
+                                <th id="th-pernas">PERNA (direita e esquerda):</th>
+                                <td class="input-coluna" id="td-pernas"><input id="input-pernas" value="${data.pernas ?? "Sem dados"}" type="text"
+                                        name="pernas" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-panturrilha">
+                                <th id="th-panturrilha">PANTURRILHA (direita e esquerda):</th>
+                                <td class="input-coluna" id="td-panturrilha"><input id="input-panturrilha"
+                                        type="text" name="panturrilha" value="${data.panturrilha ?? "Sem dados"}" placeholder="Centímetros"></td>
+                            </tr>
+                            <tr id="linha-observacoes">
+                                <th id="th-observacoes">OBSERVAÇÕES:</th>
+                                <td class="input-coluna" id="td-observacoes"><input id="input-observacoes"
+                                        type="text" name="obs" placeholder="Observações" value="${data.observacoes ?? "Sem dados"}"></td>
+                            </tr>
+                        </table>
+                        
+                    </div><!--ladodireitoform-->
+                    </form>
+                </div>
+               
+            </div>
+             
+            
+        </div>
+        
+        
+    `;
+    const el = document.getElementById('conteudoficha');
+    el.scrollTop = 0;
+    const dataInput1 = data.input_sim1;
+    const dataInput2 = data.input_sim2;
+    const dataInput3 = data.input_sim3;
+    const dataInput4 = data.input_sim4;
+    const dataInput5 = data.input_sim5;
+    const dataInput6 = data.input_sim6;
+    const dataInput7 = data.input_sim7;
+    if (dataInput1 === "sim"){
+        document.getElementById('input-sim12').checked = true;
+    } else {
+        document.getElementById('input-nao12').checked = true;
+    }
+     if (dataInput2 === "sim"){
+        document.getElementById('input-sim22').checked = true;
+    } else {
+        document.getElementById('input-nao22').checked = true;
+    }
+     if (dataInput3 === "sim"){
+        document.getElementById('input-sim32').checked = true;
+    } else {
+        document.getElementById('input-nao32').checked = true;
+    }
+     if (dataInput4 === "sim"){
+        document.getElementById('input-sim42').checked = true;
+    } else {
+        document.getElementById('input-nao42').checked = true;
+    }
+     if (dataInput5 === "sim"){
+        document.getElementById('input-sim52').checked = true;
+    } else {
+        document.getElementById('input-nao52').checked = true;
+    }
+     if (dataInput6 === "sim"){
+        document.getElementById('input-sim62').checked = true;
+    } else {
+        document.getElementById('input-nao62').checked = true;
+    }
+     if (dataInput7 === "sim"){
+        document.getElementById('input-sim72').checked = true;
+    } else {
+        document.getElementById('input-nao72').checked = true;
+    }
 
-                const dataInput1 = data.input_sim1;
-                const dataInput2 = data.input_sim2;
-                const dataInput3 = data.input_sim3;
-                const dataInput4 = data.input_sim4;
-                const dataInput5 = data.input_sim5;
-                const dataInput6 = data.input_sim6;
-                const dataInput7 = data.input_sim7;
+    document.getElementById('save2').addEventListener('click', function () {
+    // Exibe o popup de confirmação
+    document.getElementById("popupeditar").style.display = "none";
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("popup").innerHTML = ` <div class="popup-content">
+            <h4 id="h4confimar">Tem certeza?</h4>
+            <div class="boxbtn">
+                <button id="confirmarpagar">Sim</button>
+                <button id="fecharpagar">Não</button>
+            </div>
+        </div>`;
+   
+    document.getElementById("overlay").style.display = "block";
 
-                if (dataInput1 === "Sim"){
-                    document.getElementById('input-sim12').checked = true;
-                } else {
-                    document.getElementById('input-nao12').checked = true;
-                }
-                 if (dataInput2 === "Sim"){
-                    document.getElementById('input-sim22').checked = true;
-                } else {
-                    document.getElementById('input-nao22').checked = true;
-                }
-                 if (dataInput3 === "Sim"){
-                    document.getElementById('input-sim32').checked = true;
-                } else {
-                    document.getElementById('input-nao32').checked = true;
-                }
-                 if (dataInput4 === "Sim"){
-                    document.getElementById('input-sim42').checked = true;
-                } else {
-                    document.getElementById('input-nao42').checked = true;
-                }
-                 if (dataInput5 === "Sim"){
-                    document.getElementById('input-sim52').checked = true;
-                } else {
-                    document.getElementById('input-nao52').checked = true;
-                }
-                 if (dataInput6 === "Sim"){
-                    document.getElementById('input-sim62').checked = true;
-                } else {
-                    document.getElementById('input-nao62').checked = true;
-                }
-                 if (dataInput7 === "Sim"){
-                    document.getElementById('input-sim72').checked = true;
-                } else {
-                    document.getElementById('input-nao72').checked = true;
-                }
+    // Configura os botões de confirmação
+    const confirmarBtn = document.getElementById("confirmarpagar");
+    const fecharBtn = document.getElementById("fecharpagar");
 
-                document.getElementById('endereco2').value = data.endereco ?? 'Sem dados';
-                document.getElementById('modalidade_atual2').value = data.modalidade_atual ?? "Sem dados";
-                document.getElementById('objetivo_atividade_fisica2').value = data.objetivo_atividade_fisica ?? "Sem dados";
-                document.getElementById('soubeDa_academia2').value = data.soubeDa_academia ?? "Sem dados";
-                document.getElementById('peso2').value = data.peso ?? "Sem dados";
-                document.getElementById('tipo_sanguineo2').value = data.tipo_sanguineo ?? "Sem dados";
-                document.getElementById('pressao_arterial2').value = data.pressao_arterial ?? "Sem dados";
-                document.getElementById('fumar2').value = data.fumar ?? "Sem dados";
-                document.getElementById('faz_dieta2').value = data.faz_dieta ?? "Sem dados";
-                document.getElementById('bebida_alcoolica2').value = data.bebida_alcoolica ?? "Sem dados";
-                document.getElementById('sedentario2').value = data.sedentario ?? "Sem dados";
-                document.getElementById('input-altura2').value = data.altura ?? "Sem dados";
-                document.getElementById('input-torax2').value = data.torax ?? "Sem dados";
-                document.getElementById('input-cintura2').value = data.cintura ?? "Sem dados";
-                document.getElementById('input-abdome2').value = data.abdome ?? "Sem dados";
-                document.getElementById('input-quadril2').value = data.quadril ?? "Sem dados";
-                document.getElementById('input-bracos2').value = data.bracos ?? "Sem dados";
-                document.getElementById('input-antebracos2').value = data.antebracos ?? "Sem dados";
-                document.getElementById('input-pernas2').value = data.pernas ?? "Sem dados";
-                document.getElementById('input-panturrilha2').value = data.panturrilha ?? "Sem dados";
-                document.getElementById('input-observacoes2').value = data.observacoes ?? "Sem dados";
-                document.getElementById('confirmar').style.display = 'none'; 
-                document.getElementById('confirmarativar').style.display = 'none'; 
-                document.getElementById('fechar').style.display = "none";
-                
+    // Ao clicar em "Sim"
+    confirmarBtn.onclick = function () {
+         document.getElementById("popup").innerHTML = `Editando...`;
+        const form = document.getElementById('formedit');
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const formData = new FormData(form);
+        
+        fetch(`/alunos/editar/${alunoIdFicha}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById("popup").textContent = `${data.success}`;
+
+            setTimeout(() => {
+    document.getElementById("popup").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+}, 2000);
+        })
+        .catch(error => {
+            console.error('Erro ao enviar:', error);
+        });
+    };
+
+    // Ao clicar em "Não"
+    fecharBtn.onclick = function () {
+        // Apenas fecha o popup
+        document.getElementById("popup").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+    };
+});
+
             }
         })
+       
         .catch(error => {
             console.error('Erro ao buscar dados do aluno:', error);
             document.getElementById('popupeditar').querySelector('h4').textContent = "Ocorreu um erro ao visualizar os dados."; 
@@ -892,51 +1527,6 @@ document.querySelectorAll('.editar').forEach(button => {
     });
 
 });
-
-
-const saveedit = document.getElementById("save2");
-const closeconfirm = document.getElementById("close3");
-
-    saveedit.addEventListener('click', function() {
-        event.preventDefault();
-        saveedit.style.display = "none";
-        closeconfirm.style.display = "block";
-        document.getElementById('perguntaedit').style.display = 'block';
-        document.getElementById('confirmareditar').style.display = 'block';
-        document.getElementById('close2').style.display = 'none';
-     alunoIdEdit = document.getElementById('idalunoedit').value;
-        console.log(alunoIdEdit);
-        console.log(sa);
-        document.getElementById('popup').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-        document.getElementById('popup').querySelector('p').textContent = 'Tem certeza de que deseja excluir?';  
-        document.getElementById('confirmareditar').style.display = 'block';  
-        document.getElementById('confirmar').style.display = 'none';
-        document.getElementById('confirmarativar').style.display = 'none';    
-        document.getElementById('fechar').textContent = 'Cancelar';  
-        document.getElementById('fechar').style.display = "block";
-        document.getElementById('popup').setAttribute('data-id',  alunoIdEdit); 
-    });
-
-    closeconfirm.addEventListener('click', function() {
-        event.preventDefault();
-        closeconfirm.style.display = "none";
-        document.getElementById('confirmareditar').style.display = 'none';  
-        document.getElementById('perguntaedit').style.display = 'none';  
-        saveedit.style.display = "block";
-        document.getElementById('close2').style.display = 'block';
-    });
-
-
-   
-
-
-
-
-
-
-
-
 
 
 
@@ -1013,6 +1603,30 @@ document.getElementById('fechar').addEventListener('click', () => {
         userIcon.textContent = "";
       }
     });
+    //pesquisa
+
+     document.getElementById('searchinput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();  
+    const rows = document.querySelectorAll('#tbodyalunoson tr'); 
+
+    rows.forEach(row => {
+        const nome = row.cells[1].textContent.toLowerCase();  
+        const endereco = row.cells[2].textContent.toLowerCase();  
+        const telefone = row.cells[3].textContent.toLowerCase();  
+       
+
+        const nomeMatch = nome.split(' ').some(word => word.startsWith(searchTerm));
+        const enderecoMatch = endereco.split(' ').some(word => word.startsWith(searchTerm));
+        const telefoneMatch = telefone.startsWith(searchTerm);
+
+     
+        if (nomeMatch || enderecoMatch || telefoneMatch) {
+            row.style.display = ''; 
+        } else {
+            row.style.display = 'none'; 
+        }
+    });
+});
 
 loadTheme();
 

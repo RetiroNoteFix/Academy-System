@@ -387,12 +387,16 @@ table tr:hover {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    align-items: center;
     display: flex;
     width: 100%;
     height: 40px;
 }
 #optInicio{
     margin-top:5px;
+}
+#optinicioOFF{
+    margin-top: 5px;
 }
 #optInicio, 
 #optAlunosON, 
@@ -414,6 +418,10 @@ table tr:hover {
    background-color: #e0dfdf;
    border-left: 2px solid #616161;
 }
+#optInicioNOFF{
+    height: 40px;
+}
+
 #optInicioN, #optAlunosN, #optPagamentosN, #optUsuariosN{
     transition: 0.6s ease;
     white-space: nowrap;
@@ -425,7 +433,7 @@ table tr:hover {
     display: none;
     background-color: #212529;
 }
-#optAlunosN:hover, #optPagamentosN:hover, #optUsuariosN:hover, #optConfigN:hover{
+#optAlunosN:hover, #optPagamentosN:hover, #optUsuariosN:hover, #optConfigN:hover, #optInicioNOFF:hover{
     background-color: #535151;
     border-left: 2px solid #a02c2c;
 }
@@ -475,6 +483,9 @@ table tr:hover {
     color: #fff;
     font-size: 30px;
     cursor: pointer;
+}
+#opticon9{
+    margin: 0px 0px 0px 9px;
 }
 #optname {
     transition: 0.6s ease;
@@ -1051,7 +1062,8 @@ gap: 70px;
 #coluna_detalhes_input,
 #doenca_detalhes_input,
 #lesao_detalhes_input2,
-#doenca_detalhes_input2
+#doenca_detalhes_input2,
+#data_pagamento
 {
     padding: 0;
     height: 30px;
@@ -1060,10 +1072,16 @@ gap: 70px;
 #endereco{
     padding: 2px;
 }
-#rua, #bairro, #peso, #tipo_sanguineo{
+#rua, #bairro, #peso, #tipo_sanguineo {
     padding: 0;
     height: 30px;
     width: 152px;
+}
+#rua, #complemento, #cidade{
+    width: 96%;
+}
+#bairro, #numero, #cep{
+   width: 100%; 
 }
 .btnadc{
     margin-top: 13px;
@@ -1360,6 +1378,10 @@ gap: 70px;
         text-decoration: none;
         
     }
+    #formedit{
+        display: flex;
+        gap: 8px;
+    }
 
 /*modal pagamento*/
 #situacao{
@@ -1367,14 +1389,16 @@ gap: 70px;
     color: red;
     font-weight: bold;
 }
-
+#space{
+    margin-top: 12px;
+}
 #valor{
     background: none;
-    width: 70px;
+    width: 100%;
     font-weight: bold;
-    
-    margin-left: 16px;
+
 }
+
 /*fim login*/
 
 /* Responsividade para telas médias (tablets, entre 481px e 1024px) */

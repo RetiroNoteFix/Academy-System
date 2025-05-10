@@ -388,38 +388,38 @@
                 <th id="questao-header">QUESTÕES</th>
             </tr>
             <tr id="linha-1">
-                <td class="sim" id="sim1"><label id="label-sim1"><input type="radio" value="Sim" name="par_q1" id="input-sim1"></label></td>
-                <td class="nao" id="nao1"><label id="label-nao1"><input type="radio" value="Não" name="par_q1" id="input-nao1"></label></td>
+                <td class="sim" id="sim1"><label id="label-sim1"><input type="radio" value="sim" name="par_q1" id="input-sim1"></label></td>
+                <td class="nao" id="nao1"><label id="label-nao1"><input type="radio" value="" name="par_q1" id="input-nao1"></label></td>
                 <td class="questao" id="questao1">1- Seu médico alguma vez disse que você tem problema no coração e que deve apenas praticar atividades físicas recomendadas por médico?</td>
             </tr>
             <tr id="linha-2">
-                <td class="sim" id="sim2"><label id="label-sim2"><input type="radio" value="Sim" name="par_q2" id="input-sim2"></label></td>
-                <td class="nao" id="nao2"><label id="label-nao2"><input type="radio" value="Não" name="par_q2" id="input-nao2"></label></td>
+                <td class="sim" id="sim2"><label id="label-sim2"><input type="radio" value="sim" name="par_q2" id="input-sim2"></label></td>
+                <td class="nao" id="nao2"><label id="label-nao2"><input type="radio" value="" name="par_q2" id="input-nao2"></label></td>
                 <td class="questao" id="questao2">2- Você sente dor no peito quanto pratica atividade física?</td>
             </tr>
             <tr id="linha-3">
-                <td class="sim" id="sim3"><label id="label-sim3"><input type="radio" value="Sim" name="par_q3" id="input-sim3"></label></td>
-                <td class="nao" id="nao3"><label id="label-nao3"><input type="radio" value="Não" name="par_q3" id="input-nao3"></label></td>
+                <td class="sim" id="sim3"><label id="label-sim3"><input type="radio" value="sim" name="par_q3" id="input-sim3"></label></td>
+                <td class="nao" id="nao3"><label id="label-nao3"><input type="radio" value="" name="par_q3" id="input-nao3"></label></td>
                 <td class="questao" id="questao3">3- No mês passado, você teve dor no peito quanto não estava praticando atividade física?</td>
             </tr>
             <tr id="linha-4">
-                <td class="sim" id="sim4"><label id="label-sim4"><input type="radio" value="Sim" name="par_q4" id="input-sim4"></label></td>
-                <td class="nao" id="nao4"><label id="label-nao4"><input type="radio" value="Não" name="par_q4" id="input-nao4"></label></td>
+                <td class="sim" id="sim4"><label id="label-sim4"><input type="radio" value="sim" name="par_q4" id="input-sim4"></label></td>
+                <td class="nao" id="nao4"><label id="label-nao4"><input type="radio" value="" name="par_q4" id="input-nao4"></label></td>
                 <td class="questao" id="questao4">4- Você perde o equilíbrio devido a tonturas ou alguma vez perdeu a consciência?</td>
             </tr>
             <tr id="linha-5">
-                <td class="sim" id="sim5"><label id="label-sim5"><input type="radio" value="Sim" name="par_q5" id="input-sim5"></label></td>
-                <td class="nao" id="nao5"><label id="label-nao5"><input type="radio" value="Não" name="par_q5" id="input-nao5"></label></td>
+                <td class="sim" id="sim5"><label id="label-sim5"><input type="radio" value="sim" name="par_q5" id="input-sim5"></label></td>
+                <td class="nao" id="nao5"><label id="label-nao5"><input type="radio" value="" name="par_q5" id="input-nao5"></label></td>
                 <td class="questao" id="questao5">5- Você tem problema ósseo ou articular que poderia ficar pior por alguma mudança em sua atividade física?</td>
             </tr>
             <tr id="linha-6">
-                <td class="sim" id="sim6"><label id="label-sim6"><input type="radio" value="Sim" name="par_q6" id="input-sim6"></label></td>
-                <td class="nao" id="nao6"><label id="label-nao6"><input type="radio" value="Não" name="par_q6" id="input-nao6"></label></td>
+                <td class="sim" id="sim6"><label id="label-sim6"><input type="radio" value="sim" name="par_q6" id="input-sim6"></label></td>
+                <td class="nao" id="nao6"><label id="label-nao6"><input type="radio" value="" name="par_q6" id="input-nao6"></label></td>
                 <td class="questao" id="questao6">6- Seu médico está atualmente receitando algum remédio (por exemplo, diuréticos) para pressão arterial ou problema cardíaco?</td>
             </tr>
             <tr id="linha-7">
-                <td class="sim" id="sim7"><label id="label-sim7"><input type="radio" value="Sim" name="par_q7" id="input-sim7"></label></td>
-                <td class="nao" id="nao7"><label id="label-nao7"><input type="radio" value="Não" name="par_q7" id="input-nao7"></label></td>
+                <td class="sim" id="sim7"><label id="label-sim7"><input type="radio" value="sim" name="par_q7" id="input-sim7"></label></td>
+                <td class="nao" id="nao7"><label id="label-nao7"><input type="radio" value="" name="par_q7" id="input-nao7"></label></td>
                 <td class="questao" id="questao7">7- Você sabe de qualquer outra razão pela qual não deva praticar atividade física?</td>
             </tr>
         </table>
@@ -432,12 +432,12 @@
         <h4 id="h5form">HISTÓRICO E OBJETIVO NA ACADEMIA</h4>
     </div>
         <div class="form-group">
-            <label for="modalidade_anterior">QUE MODALIDADE FAZ OU JÁ FEZ:</label>
+            <label for="modalidade_anterior">QUE MODALIDADE JÁ FEZ:</label>
             <input type="text" id="jaFez_modalidade" name="modalidade_anterior" placeholder="Descreva quais modalidades já realizou" >
         </div>
-        <div class="form-group" style="display:none;">
+        <div class="form-group">
             <label for="modalidade_atual">QUE MODALIDADE PRATICA ATUALMENTE:</label>
-            <input type="text" value="musculacao" id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
+            <input type="text"  id="modalidade_atual" name="modalidade_atual" placeholder="Descreva qual modalidade realiza atualmente" >
         </div>
         <div class="form-group">
             <label for="objetivo_atividade_fisica">QUAL O SEU OBJETIVO:</label>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Crypt;
 
 class Aluno extends Model
 {
@@ -70,6 +71,10 @@ class Aluno extends Model
         'situacao',
         'plano',
     ];
+
+    public function setCpfAttribute($value) {
+        $this->attributes['cpf'] = Crypt::encryptString($value);
+    }
 
     protected $casts = [
         'valor' => 'decimal:2',

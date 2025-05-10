@@ -82,7 +82,7 @@ Route::post('/usuarios/criar/store', [UsuarioController::class, 'cadastrar'])->n
 Route::post('/alunos/desativar/{id}', [AlunoController::class, 'desativar'])->name('alunos.desativar');
 Route::post('/alunos/ativar/{id}', [AlunoController::class, 'ativar'])->name('alunos.ativar');
 Route::post('/alunos/apagar/{id}', [AlunoController::class, 'apagar'])->name('alunos.apagar');
-Route::post('/alunos/editar/', [AlunoController::class, 'editar'])->name('alunos.editar');
+Route::post('/alunos/editar/{id}', [AlunoController::class, 'editar'])->name('alunos.editar');
 Route::post('/alunos/visualizar/{id}', [AlunoController::class, 'visualizar'])->name('alunos.visualizar');
 Route::post('/inicio/pendentes/{id}/{idaluno}', [PagamentoController::class, 'visualizarNotificacao'])->name('inicio.pendentes');
 Route::post('/inicio/pendentes/atualizar/', [PagamentoController::class, 'atualizarPendente'])->name('inicio.pendentes.atualizar');
