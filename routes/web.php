@@ -59,14 +59,6 @@ Route::get('/usuarios', function () {
     return $controller->listar();
 })->name("usuarios.index");
 
-Route::get('/inicio', function () {
-    if (!Session::has('usuario_id')) {
-        return redirect()->route('login')->with('error', 'Você precisa estar logado.');
-    }
-    $usuarioNome = Session::get('usuario_nome');
-    return view('inicio.index', compact('usuarioNome'));
-})->name('inicio.index');
-
 
 Route::get('/inicio', function () {
     if (!Session::has('usuario_id')) {
@@ -88,3 +80,5 @@ Route::post('/inicio/pendentes/{id}/{idaluno}', [PagamentoController::class, 'vi
 Route::post('/inicio/pendentes/atualizar/', [PagamentoController::class, 'atualizarPendente'])->name('inicio.pendentes.atualizar');
 Route::post('/inicio/ignorar/{id}', [PagamentoController::class, 'ignorarPendente'])->name('inicio.ignorar');
 Route::get('/usuarios/visualizar/{id}', [UsuarioController::class, 'visualizar'])->name('usuarios.visualizar');
+Route::get('/alunos/buscar', [AlunoController::class, 'buscar'])->name('alunos.buscar');
+Route::get('/alunos/buscar_inativo', [AlunoController::class, 'buscarInativo'])->name('alunos.buscar_inativo');

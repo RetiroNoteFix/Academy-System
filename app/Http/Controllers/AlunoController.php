@@ -15,81 +15,18 @@ class AlunoController extends Controller
 {
     public function cadastrar(Request $request)
     {
-        dd($request);
+     
             DB::beginTransaction();
             try {
                 // Validação dos dados
                 $validated = $request->validate([
                     // Dados Pessoa
                     'nome' => 'required|string|max:255',
-                    'cpf' => 'nullable|string|max:14',
-                    'rg' => 'nullable|string|max:14',
-                    'email' => 'nullable|email',
-                    'telefone' => 'nullable|string|max:20',
-                    'telefone_familiar' => 'nullable|string|max:20',
-                    'rua' => 'nullable|string|max:50',
-                    'numero' => 'nullable|string|max:50',
-                    'complemento' => 'nullable|string|max:50',
-                    'bairro' => 'nullable|string|max:50',
-                    'cidade' => 'nullable|string|max:50',
-                    'estado' => 'nullable|string|max:50',
-                    'cep' => 'nullable|string|max:50',
-                    'data_nascimento' => 'nullable|date',
-                  
-                    // Dados aluno
-                    'tipo_sanguineo' => 'nullable|string|max:50',
-                    'modalidade_atual' => 'nullable|string|max:50',
-                    'soubeDa_academia' => 'nullable|string|max:50',
-                    'objetivo' => 'nullable|string|max:50',
-                    'idade' => 'nullable|string|max:50',
-                    'peso' => 'nullable|string|max:50',
-                    'altura' => 'nullable|string|max:50',
-                    'fumar' => 'nullable|string|max:50',
-                    'faz_dieta' => 'nullable|string|max:50',
-                    'bebida_alcoolica' => 'nullable|string|max:50',
-                    'sedentario' => 'nullable|string|max:50',
-                    'jaFez_modalidade' => 'nullable|string|max:50',
-                    'varizes' => 'nullable|string|max:50',
-                    'pressao_arterial' => 'nullable|string|max:50',
-                    'cirurgia' => 'nullable|string|max:50',
-                    'dorme_bem' => 'nullable|string|max:50',
-                    'lesao_articular' => 'nullable|string|max:50',
-                    'lesao_detalhes' => 'nullable|string|max:50',
-                    'problema_coluna' => 'nullable|string|max:50',
-                    'coluna_detalhes' => 'nullable|string|max:50',
-                    'tempo_sem_medico' => 'nullable|string|max:50',
-                    'uso_medicamento' => 'nullable|string|max:50',
-                    'problema_saude' => 'nullable|string|max:50',
-                    'par_q1' => 'nullable|string|max:50',
-                    'par_q2' => 'nullable|string|max:50',
-                    'par_q3' => 'nullable|string|max:50',
-                    'par_q4' => 'nullable|string|max:50',
-                    'par_q5' => 'nullable|string|max:50',
-                    'par_q6' => 'nullable|string|max:50',
-                    'par_q7' => 'nullable|string|max:50',
-                    'obesidade' => 'nullable|string|max:50',
-                    'diabetes' => 'nullable|string|max:50',
-                    'colesterol_elevado' => 'nullable|string|max:50',
-                    'infarto' => 'nullable|string|max:50',
-                    'doenca_cardiaca' => 'nullable|string|max:50',
-                    'doenca_detalhes' => 'nullable|string|max:50',
-                    'derrame' => 'nullable|string|max:50',
-                    'torax' => 'nullable|string|max:50',
-                    'cintura' => 'nullable|string|max:50',
-                    'abdome' => 'nullable|string|max:50',
-                    'quadril' => 'nullable|string|max:50',
-                    'bracos' => 'nullable|string|max:50',
-                    'antebracos' => 'nullable|string|max:50',
-                    'panturrilha' => 'nullable|string|max:50',
-                    'pernas' => 'nullable|string|max:50',
-                    'obsmedida' => 'nullable|string|max:50',
                     'valor' => 'required|string|max:50',
-                    'dataPagamento' => 'required|string|max:50',
-                    'situacao' => 'nullable|string|max:50',
-                    'plano' => 'required|in:Mensal,Trimestral,Anual',
+                    'data_pagamento' => 'required|date|max:50',
+                    'plano' => 'required|in:mensal,semestral,anual',
                 ]);
 
-                //formatando o endereço
                 $endereco = implode(', ', array_filter([
                     $request->rua, 
                     $request->numero, 
@@ -100,78 +37,69 @@ class AlunoController extends Controller
                 ]));
                 // 1. Cadastro da Pessoa
                 $pessoa = Pessoa::create([
-                    'nome' => $request->nome,
-                    'cpf' => $request->cpf,
-                    'rg' => $request->rg,
-                    'email' => $request->email,
-                    'telefone' => $request->telefone,
-                    'telefone_familiar' => $request->telefone_familia,
-                    'dataNascimento' => $request->data_nascimento,
-                    'endereco' => $endereco, 
-                ]);
+    'nome' => $request->nome,
+    'cpf' => encrypt($request->cpf),
+    'rg' => encrypt($request->rg),
+    'email' => encrypt($request->email),
+    'telefone' => encrypt($request->telefone),
+    'telefone_familiar' => encrypt($request->telefone_familia),
+    'data_nascimento' => $request->data_nascimento,
+    'endereco' => encrypt($endereco),
+]);
                 
                 // 2. Cadastro do Aluno
                 $aluno = Aluno::create([
 
-                    'idPessoa' => $pessoa->idPessoa,
-    'fuma' => $request->fumar,
-    'fazDieta' => $request->faz_dieta,
-    'usaBebidaAlcoolica' => $request->bebida_alcoolica,
-    'sedentario' => $request->sedentario,
-    'modalidadeAnterior' => $request->jaFez_modalidade,
-    'temVarizes' => $request->varizes,
-    'pressaoArterial' => $request->pressao_arterial,
-    'cirurgia' => $request->cirurgia,
-    'dormeBem' => $request->dorme_bem,
-    'lesaoArticular' => empty($request->lesao_articular) && empty($request->lesao_detalhes)
+                    'id_pessoa' => $pessoa->id,
+                    'tipo_sanguineo' => $request->tipo_sanguineo,
+                    'modalidade' => $request->modalidade_atual,
+                    'como_soube_da_academia' => $request->como_soube_da_academia,
+                    'objetivo' => $request->objetivo_atividade_fisica,
+                    'peso' => $request->peso,
+                    'altura' => $request->altura,
+                    'fuma' => $request->fuma,
+                    'faz_dieta' => $request->faz_dieta,
+                    'usa_bebida_alcoolica' => $request->usa_bebida_alcoolica,
+                    'sedentario' => $request->sedentario,
+                    'modalidade_anterior' => $request->modalidade_anterior,
+                    'tem_varizes' => $request->varizes,
+                    'pressao_arterial' => $request->pressao_arterial,
+                    'cirurgia' => $request->cirurgia,
+                    'dorme_bem' => $request->dorme_bem,
+                    'lesao_articular' => empty($request->lesao_articular) && empty($request->lesao_detalhes)
     ? null
     : trim(($request->lesao_articular ?? '') . ' ' . ($request->lesao_detalhes ?? '')),
-    'problemaColuna' => empty($request->problema_coluna) && empty($request->coluna_detalhes)
+                    'problema_coluna' => empty($request->problema_coluna) && empty($request->coluna_detalhes)
     ? null
     : trim(($request->problema_coluna ?? '') . ' ' . ($request->coluna_detalhes ?? '')),
-    'tempoMedico' => $request->tempo_sem_medico,
-    'medicamento' => $request->uso_medicamento,
-    'problemaSaude' => $request->problema_saude,
-    'parqProblemaCoracao' => $request->par_q1,
-    'parqDorPeitoComAtividade' => $request->par_q2,
-    'parqDorPeitoSemAtividade' => $request->par_q3,
-    'parqEquilibrio' => $request->par_q4,
-    'parqProblemaOsseo' => $request->par_q5,
-    'parqReceitaMedica' => $request->par_q6,
-    'parqRazao' => $request->par_q7,
-    'obesidade' => $request->obesidade,
-    'diabetes' => $request->diabetes,
-    'colesterolElevado' => $request->colesterol_elevado,
-    'infarto' => $request->infarto,
-    'doencaCardiaca' => empty($request->doenca_cardiaca) && empty($request->doenca_detalhes)
+                    'tempo_medico' => $request->tempo_sem_medico,
+                    'medicamento' => $request->uso_medicamento,
+                    'problema_saude' => $request->problema_saude,
+                    'parq_problema_coracao' => $request->par_q1,
+                    'parq_dor_peito_com_atividade' => $request->par_q2,
+                    'parq_dor_peito_sem_atividade' => $request->par_q3,
+                    'parq_equilibrio' => $request->par_q4,
+                    'parq_problema_osseo' => $request->par_q5,
+                    'parq_receita_medica' => $request->par_q6,
+                    'parq_razao' => $request->par_q7,
+                    'obesidade' => $request->obesidade,
+                    'diabetes' => $request->diabetes,
+                    'colesterol_elevado' => $request->colesterol_elevado,
+                    'infarto' => $request->infarto,
+                    'doenca_cardiaca' => empty($request->doenca_cardiaca) && empty($request->doenca_detalhes)
     ? null
     : trim(($request->doenca_cardiaca ?? '') . ' ' . ($request->doenca_detalhes ?? '')),
-    'derrame' => $request->derrame,
-    'medidaTorax' => $request->torax,
-    'medidaCintura' => $request->cintura,
-    'medidaAbdome' => $request->abdome,
-    'medidaQuadril' => $request->quadril,
-    'medidaBracos' => $request->bracos,
-    'medidaAntebracos' => $request->antebracos,
-    'medidaPanturrilha' => $request->panturrilha,
-    'medidaPernas' => $request->pernas,
-    'tipoSanguineo' => $request->tipo_sanguineo,
-    'modalidade' => $request->modalidade_atual,
-    'comoSoubeAcademia' => $request->soubeDa_academia,
-    'objetivo' => $request->objetivo_atividade_fisica,
-    'idade' => $request->idade,
-    'peso' => $request->peso,
-    'altura' => $request->altura,
-    'observacoes' => $request->obsmedida, 
-    // convertendo valor para decimal
-    $valor = $request->valor,
-    $valor = str_replace(['R$', ' '], '', $valor),
-    $valor = str_replace(',', '.', $valor), 
-    'valor' => floatval($valor),
- 'data_pagamento' => Carbon::parse($request->dataPagamento)->format('Y-m-d'),
-    'situacao' => "ativo",
-    'plano' => $request->plano,
-                      
+                    'derrame' => $request->derrame,
+                    'medida-torax' => $request->torax,
+                    'medida-cintura' => $request->cintura,
+                    'medida-abdome' => $request->abdome,
+                    'medida-quadril' => $request->quadril,
+                    'medida-bracos' => $request->bracos,
+                    'medida-antebracos' => $request->antebracos,
+                    'medida-panturrilha' => $request->panturrilha,
+                    'medida-pernas' => $request->pernas,
+                    'observacoes' => $request->obs, 
+                    'situacao' => "ativo",    
                 ]);
                 
                 DB::commit();
@@ -192,13 +120,61 @@ class AlunoController extends Controller
             }
     }
 
-    public function listar()
-    {
-        $usuarioNome = Session::get('usuario_nome');
 
-        $alunos = Aluno::with('pessoa')->where('situacao', 'ativo')->get();
-        $alunosoff = Aluno::with('pessoa')->where('situacao', 'inativo')->get();
-        return view('alunos.index', compact('alunos', 'alunosoff', 'usuarioNome'));
+public function buscar(Request $request)
+{
+    $termo = $request->query('termo', '');
+    $situacao = $request->query('situacao', 'ativo'); // padrão é ativo
+
+    // Corrige o erro de ordenação e carrega os dados corretamente
+    $alunos = Aluno::where('situacao', $situacao)
+        ->join('pessoas', 'alunos.id_pessoa', '=', 'pessoas.id')
+        ->where(function($query) use ($termo) {
+            $query->where('pessoas.nome', 'LIKE', "$termo%");
+        })
+        ->orderBy('pessoas.nome', 'asc')
+        ->select('alunos.*', 'pessoas.nome as pessoa_nome', 'pessoas.telefone as pessoa_telefone', 'pessoas.endereco as pessoa_endereco')
+        ->get();
+
+    return response()->json($alunos);
+}
+
+public function buscarInativo(Request $request)
+{
+    $termo = $request->query('termo', '');
+    $situacao = $request->query('situacao', 'ativo'); // padrão é ativo
+
+    // Corrige o erro de ordenação e carrega os dados corretamente
+    $alunos = Aluno::where('situacao', 'inativo')
+        ->join('pessoas', 'alunos.id_pessoa', '=', 'pessoas.id')
+        ->where(function($query) use ($termo) {
+            $query->where('pessoas.nome', 'LIKE', "$termo%");
+        })
+        ->orderBy('pessoas.nome', 'asc')
+        ->select('alunos.*', 'pessoas.nome as pessoa_nome', 'pessoas.telefone as pessoa_telefone', 'pessoas.endereco as pessoa_endereco')
+        ->get();
+
+    return response()->json($alunos);
+}
+
+public function listar()
+{
+    $usuarioNome = Session::get('usuario_nome');
+
+    
+    $alunos = Aluno::select('alunos.*')
+        ->join('pessoas', 'alunos.id_pessoa', '=', 'pessoas.id')
+        ->where('situacao', 'ativo')
+        ->orderBy('pessoas.nome', 'asc')
+        ->paginate(100);
+
+    $alunosoff = Aluno::select('alunos.*')
+        ->join('pessoas', 'alunos.id_pessoa', '=', 'pessoas.id')
+        ->where('situacao', 'inativo')
+        ->orderBy('pessoas.nome', 'asc')
+        ->paginate(100);
+
+    return view('alunos.index', compact('alunos', 'alunosoff', 'usuarioNome'));
 }
 
 
@@ -239,17 +215,36 @@ public function ativar($id)
 public function apagar($id)
 {
     try {
+        // Inicia a transação para garantir consistência
+        \DB::beginTransaction();
+
+        // Busca o aluno pelo ID
         $aluno = Aluno::findOrFail($id);
         $idPessoa = $aluno->id_pessoa;
+        
+        // Apaga o aluno
         $aluno->delete();
-        Pessoa::findOrFail($idPessoa)->delete();
+        
+        // Apaga a pessoa associada
+        $pessoa = Pessoa::findOrFail($idPessoa);
+        $pessoa->delete();
 
-        return response()->json(['message' => 'Aluno e seus dados foram apagados com sucesso.']);
+        // Confirma a transação
+        \DB::commit();
+
+        return response()->json(['message' => 'Apagado com sucesso']);
     } catch (\Exception $e) {
+        // Reverte a transação em caso de erro
+        \DB::rollBack();
+        
+        // Loga o erro para análise futura
         \Log::error('Erro ao apagar aluno: ' . $e->getMessage());
+
+        // Retorna a mensagem de erro para o frontend
         return response()->json(['error' => 'Erro ao apagar aluno.'], 500);
     }
 }
+
 
 
 public function visualizar(Request $request, $id)
@@ -257,6 +252,7 @@ public function visualizar(Request $request, $id)
     try {
         $aluno = Aluno::with('pessoa')->findOrFail($id);  
         $pagamentos = Pagamento::where('id_aluno', $id)->firstOrFail();
+       
 
         // Trata a descriptografia dos dados pessoais
         function safeDecrypt($value, $default = "Sem dados") {
@@ -301,7 +297,7 @@ public function visualizar(Request $request, $id)
             'bairro' => $enderecos[3],
             'cidade' => $enderecos[4],
             'cep' => $enderecos[5],
-            'data_nascimento' => $aluno->pessoa->data_nascimento ?? "Sem dados",
+            'data_nascimento' => $aluno->pessoa->data_nascimento ?? '',
 
             // Dados do aluno
             'tipo_sanguineo' => $aluno->tipo_sanguineo ?? "Sem dados",
@@ -350,7 +346,7 @@ public function visualizar(Request $request, $id)
             
             // Dados de pagamento
             'valor' => $pagamentos->valor ?? "Sem dados",
-            'data_pagamento' => Carbon::parse($pagamentos->data_pagamento)->format('Y-m-d') ?? "Sem dados",
+            'data_pagamento' => $pagamentos->data_pagamento ? Carbon::parse($pagamentos->data_pagamento)->format('Y-m-d') : '',
             'plano_aluno' => strtoupper($pagamentos->plano_aluno ?? "Sem dados"),
         ]);
     } catch (\Exception $e) {

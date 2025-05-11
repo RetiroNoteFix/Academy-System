@@ -773,6 +773,7 @@ const userIcon = document.getElementById('usericon');
     });
 
 loadTheme();
+window.fecharAnamnese = fecharAnamnese;
 window.toggleLesaoInput = toggleLesaoInput;
 window.togglecolunaInput = togglecolunaInput;
 window.toggledoencaInput = toggledoencaInput;

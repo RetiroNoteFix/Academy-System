@@ -11,14 +11,15 @@ return new class extends Migration
     {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id('id');
-            $table->string('nome', 100);
-            $table->string('cpf', 15)->nullable();
-            $table->string('rg', 20)->nullable();
-            $table->string('email', 100)->nullable();
-            $table->string('telefone', 15)->nullable();
-            $table->string('telefone_familiar', 50)->nullable();
-            $table->string('endereco', 255)->nullable();
+            $table->string('nome', 255);
+            $table->string('cpf', 255)->nullable();
+            $table->string('rg', 255)->nullable();
+            $table->string('email', 255)->nullable();
+            $table->string('telefone', 255)->nullable();
+            $table->string('telefone_familiar', 255)->nullable();
+            $table->string('endereco', 500)->nullable();
             $table->date('data_nascimento')->nullable();
+            $table->string('impressao_digital', 255)->nullable();
             $table->timestamps();
         });
 
